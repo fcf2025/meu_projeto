@@ -100,9 +100,11 @@ with st.form("form_cadastro", clear_on_submit=True):
                 "Dissertação",
                 "Tese",
                 "Relatório Técnico",
+                "Informação Técnica",
                 "Nota Técnica",
                 "Legislação",
                 "Manual",
+                "Regulamentação",
                 "Outro"
             ]
                        
@@ -381,7 +383,7 @@ with st.form("form_cadastro", clear_on_submit=True):
 
         doi = st.selectbox(
         "Veículo de Publicação/Periódico",
-        options=["Revista", "Journal", "Periódico", "Conferência", "Livro", "Capítulo de Livro", "Site","Outro"],
+        options=["Revista", "Journal", "Periódico", "Conferência", "Livro", "Capítulo de Livro", "Site","Repositório","Outro"],
         index=0  # opcional: define qual opção vem selecionada por padrão
     )
 
@@ -404,6 +406,7 @@ with st.form("form_cadastro", clear_on_submit=True):
                 "",
                 "Artigo Científico",
                 "Livro",
+                "Estudo",
                 "Relatório Técnico",
                 "Nota Técnica",
                 "Legislação",
@@ -533,11 +536,8 @@ if submitted:
                 observacoes=observacoes
             )
 
-            st.success(
-                "Documento cadastrado com sucesso!"
-            )
-
-            st.balloons()
+            st.success("Cadastro realizado com sucesso!")
+            st.toast("Dados atualizados!")
 
         except Exception as e:
 
