@@ -327,6 +327,7 @@ with st.form("form_cadastro", clear_on_submit=True):
             [
                 "",
                 "Governança e Regulação",
+                "Manejo de Águas Pluviais",
                 "Barreiras e Desafios",
                 "Planejamento Urbano",  
                 "Economia e Tarifação",
