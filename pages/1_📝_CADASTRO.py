@@ -309,7 +309,7 @@ with st.form("form_cadastro", clear_on_submit=True):
     # ======================================================
 
     instituicao = st.text_input(
-        "Instituição"
+        "Instituição do Autor/Afiliação"
     )
 
     # ======================================================
@@ -379,9 +379,11 @@ with st.form("form_cadastro", clear_on_submit=True):
 
     with col1:
 
-        doi = st.text_input(
-            "DOI"
-        )
+        doi = st.selectbox(
+        "Veículo de Publicação/Periódico",
+        options=["Revista", "Journal", "Periódico", "Conferência", "Livro", "Capítulo de Livro", "Site","Outro"],
+        index=0  # opcional: define qual opção vem selecionada por padrão
+    )
 
     with col2:
 
