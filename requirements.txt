@@ -4,7 +4,4 @@ numpy
 matplotlib
 openpyxl
 reportlab
-uuid
-shutil
-matplotlib.pyplot
-utils.database 
+Pillow
