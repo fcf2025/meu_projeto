@@ -211,17 +211,16 @@ with st.sidebar:
 
     st.markdown("""
     ### Biblioteca Digital
-
-    Sistema de armazenamento e consulta bibliográfica sobre:
-
+    ### Dados abertos, Acesso Público
     - Drenagem Urbana
     - Manejo de Águas Pluviais
     - Tarifação
     - Infraestrutura Verde
     - Regulação
     - Economia Urbana
+   
     """)
-
+    
     st.markdown("---")
 
     # st.success("Sistema iniciado com sucesso.")
