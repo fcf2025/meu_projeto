@@ -543,7 +543,7 @@ if submitted:
                 st.success("Cadastro realizado com sucesso!")
                 st.toast("Dados atualizados!")
         
-            except Exception as e:
+        except Exception as e:
         
                 st.error(
                     f"Erro ao salvar documento: {e}"
