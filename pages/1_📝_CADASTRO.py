@@ -511,40 +511,43 @@ if submitted:
 
                 with open(caminho_pdf, "wb") as f:
                     f.write(uploaded_file.read())
-
+            from utils.database import verificar_documento_existente
             # ==================================================
             # INSERÇÃO
             # ==================================================
-
-            inserir_documento(
-                titulo=titulo,
-                autores=autores,
-                ano=ano,
-                tipo_documento=tipo_documento,
-                instituicao=instituicao,
-                pais=pais,
-                idioma=idioma,
-                tema=tema,
-                subtema=subtema,
-                resumo=resumo,
-                palavras_chave=palavras_chave,
-                doi=doi,
-                link=link,
-                arquivo_pdf=nome_pdf,
-                categoria=categoria,
-                metodo=metodo,
-                regiao=regiao,
-                observacoes=observacoes
-            )
-
-            st.success("Cadastro realizado com sucesso!")
-            st.toast("Dados atualizados!")
-
-        except Exception as e:
-
-            st.error(
-                f"Erro ao salvar documento: {e}"
-            )
+            # Verifica se já existe documento com mesmo título+autores ou título+ano
+            if verificar_documento_existente(titulo, autores, ano):
+                st.error("Este documento já foi cadastrado anteriormente.")
+            else:
+                inserir_documento(
+                    titulo=titulo,
+                    autores=autores,
+                    ano=ano,
+                    tipo_documento=tipo_documento,
+                    instituicao=instituicao,
+                    pais=pais,
+                    idioma=idioma,
+                    tema=tema,
+                    subtema=subtema,
+                    resumo=resumo,
+                    palavras_chave=palavras_chave,
+                    doi=doi,
+                    link=link,
+                    arquivo_pdf=nome_pdf,
+                    categoria=categoria,
+                    metodo=metodo,
+                    regiao=regiao,
+                    observacoes=observacoes
+                )
+        
+                st.success("Cadastro realizado com sucesso!")
+                st.toast("Dados atualizados!")
+        
+            except Exception as e:
+        
+                st.error(
+                    f"Erro ao salvar documento: {e}"
+                )
 
 
 # ==========================================================
