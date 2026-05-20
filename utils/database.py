@@ -28,7 +28,19 @@ def conectar_db():
     conn = sqlite3.connect(DB_PATH)
 
     return conn
+def verificar_documento_existente(titulo, autores, ano):
+    conn = sqlite3.connect("biblioteca.db")
+    cursor = conn.cursor()
 
+    cursor.execute("""
+        SELECT 1 FROM documentos
+        WHERE titulo = ? AND (autores = ? OR ano = ?)
+        LIMIT 1
+    """, (titulo, autores, ano))
+
+    existe = cursor.fetchone() is not None
+    conn.close()
+    return existe
 # ==========================================================
 # INSERIR DOCUMENTO
 # ==========================================================
