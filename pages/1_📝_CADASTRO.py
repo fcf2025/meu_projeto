@@ -97,11 +97,12 @@ with st.form("form_cadastro", clear_on_submit=True):
                 "Artigo",
                 "Livro",
                 "Capítulo",
+                "Estudo Técnico",
                 "Dissertação",
                 "Tese",
                 "Relatório Técnico",
-                "Informação Técnica",
                 "Nota Técnica",
+                "Informação Técnica",
                 "Legislação",
                 "Manual",
                 "Regulamentação",
@@ -327,7 +328,6 @@ with st.form("form_cadastro", clear_on_submit=True):
             [
                 "",
                 "Governança e Regulação",
-                "Manejo de Águas Pluviais",
                 "Barreiras e Desafios",
                 "Planejamento Urbano",  
                 "Economia e Tarifação",
@@ -407,7 +407,6 @@ with st.form("form_cadastro", clear_on_submit=True):
                 "",
                 "Artigo Científico",
                 "Livro",
-                "Estudo",
                 "Relatório Técnico",
                 "Nota Técnica",
                 "Legislação",
@@ -511,43 +510,40 @@ if submitted:
 
                 with open(caminho_pdf, "wb") as f:
                     f.write(uploaded_file.read())
-            from utils.database import verificar_documento_existente
+
             # ==================================================
             # INSERÇÃO
             # ==================================================
-            # Verifica se já existe documento com mesmo título+autores ou título+ano
-            if verificar_documento_existente(titulo, autores, ano):
-                st.error("Este documento já foi cadastrado anteriormente.")
-            else:
-                inserir_documento(
-                    titulo=titulo,
-                    autores=autores,
-                    ano=ano,
-                    tipo_documento=tipo_documento,
-                    instituicao=instituicao,
-                    pais=pais,
-                    idioma=idioma,
-                    tema=tema,
-                    subtema=subtema,
-                    resumo=resumo,
-                    palavras_chave=palavras_chave,
-                    doi=doi,
-                    link=link,
-                    arquivo_pdf=nome_pdf,
-                    categoria=categoria,
-                    metodo=metodo,
-                    regiao=regiao,
-                    observacoes=observacoes
-                )
-        
-                st.success("Cadastro realizado com sucesso!")
-                st.toast("Dados atualizados!")
-        
+
+            inserir_documento(
+                titulo=titulo,
+                autores=autores,
+                ano=ano,
+                tipo_documento=tipo_documento,
+                instituicao=instituicao,
+                pais=pais,
+                idioma=idioma,
+                tema=tema,
+                subtema=subtema,
+                resumo=resumo,
+                palavras_chave=palavras_chave,
+                doi=doi,
+                link=link,
+                arquivo_pdf=nome_pdf,
+                categoria=categoria,
+                metodo=metodo,
+                regiao=regiao,
+                observacoes=observacoes
+            )
+
+            st.success("Cadastro realizado com sucesso!")
+            st.toast("Dados atualizados!")
+
         except Exception as e:
-        
-                st.error(
-                    f"Erro ao salvar documento: {e}"
-                )
+
+            st.error(
+                f"Erro ao salvar documento: {e}"
+            )
 
 
 # ==========================================================
@@ -555,6 +551,10 @@ if submitted:
 # ==========================================================
 
 st.markdown("---")
+
+st.caption(
+    "Biblioteca Digital DMAPU • Cadastro de Bibliografia"
+)
 
 st.caption(
     "Biblioteca Digital DMAPU • Cadastro de Bibliografia"
