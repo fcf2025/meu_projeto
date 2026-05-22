@@ -424,7 +424,7 @@ with st.form("form_cadastro", clear_on_submit=True):
             "Educação Formal e Informal",
             "Sustentabilidade Urbana",
             "Economia Circular",
-            'Saúde Pública e Saneamento",
+            "Saúde Pública e Saneamento",
             "Justiça Ambiental",
             "Inovação Tecnológica",
             "Participação Comunitária",
