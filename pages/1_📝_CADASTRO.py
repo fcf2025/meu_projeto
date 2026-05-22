@@ -105,6 +105,7 @@ with st.form("form_cadastro", clear_on_submit=True):
                 "Informação Técnica",
                 "Legislação",
                 "Manual",
+                "Monografia",
                 "Regulamentação",
                 "Outro"
             ]
