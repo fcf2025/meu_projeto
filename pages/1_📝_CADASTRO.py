@@ -501,7 +501,7 @@ with st.form("form_cadastro", clear_on_submit=True):
                 "Economia",
                 "Legislação",
                 "Política Pública",
-                'Meio Ambiente",
+                "Meio Ambiente",
                 "Saúde",
                 "Educação",
                 "Tecnologia e Inovação",
