@@ -97,20 +97,33 @@ with st.form("form_cadastro", clear_on_submit=True):
                 "Artigo",
                 "Livro",
                 "Capítulo",
-                "Estudo Técnico",
                 "Dissertação",
                 "Tese",
-                "Relatório Técnico",
+                "Monografia",
+                "Trabalho de Conclusão de Curso (TCC)",
+                "Anais de Congresso / Conferência",
+                "Resenha / Revisão",
+                "Estudo Técnico",
                 "Nota Técnica",
                 "Informação Técnica",
-                "Legislação",
+                "Parecer Técnico",
+                "Norma Técnica (ABNT, ISO etc.)",
                 "Manual",
-                "Monografia",
+                "White Paper",
+                "Mapa / Planta / Desenho Técnico",
+                "Dados Estatísticos / Base de Dados",
+                "Legislação",
                 "Regulamentação",
-                "Outro"
+                "Plano / Projeto",
+                "Patente",
+                "Guia Prático / Cartilha",
+                "Boletim Técnico / Informativo",
+                "Artigo de Opinião / Editorial",
+                "Entrevista / Depoimento",
+                "Outros"
             ]
-                       
-        )
+                                               
+    )
 
     with col2:
         pais = st.selectbox(
@@ -329,10 +342,35 @@ with st.form("form_cadastro", clear_on_submit=True):
             [
                 "",
                 "Governança e Regulação",
+                "Políticas Públicas",
+                "Gestão Participativa",
+                "Instrumentos de Controle Social",
+                "Normas Técnicas e Padrões",
+                
                 "Barreiras e Desafios",
-                "Planejamento Urbano",  
+                "Conflitos Socioambientais",
+                "Limitações Financeiras",
+                "Desafios Tecnológicos",
+                "Aceitação Social",
+              
+                "Planejamento Urbano", 
+                "Mobilidade Urbana",
+                "Uso e Ocupação do Solo",
+                "Expansão Urbana",
+                "Resiliência das Cidades",
+                
                 "Economia e Tarifação",
+                "Modelos de Financiamento",
+                "Custos Operacionais",
+                "Subsídios e Incentivos",
+                "Economia Circular",
+                
                 "Engenharia de Drenagem",
+                "Controle de Cheias",
+                "Sistemas de Retenção",
+                "Tecnologias de Tratamento",
+                "Modelagem Hidrológica",
+                
                 "Sustentabilidade Urbana",
                 "Métodos Analíticos",
                 "Infraestrutura Verde",
@@ -552,11 +590,6 @@ if submitted:
 # ==========================================================
 
 st.markdown("---")
-
-st.caption(
-    "Biblioteca Digital DMAPU • Cadastro de Bibliografia"
-)
-
 st.caption(
     "Biblioteca Digital DMAPU • Cadastro de Bibliografia"
 )
