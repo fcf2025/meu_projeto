@@ -8,9 +8,6 @@ import pandas as pd
 import streamlit as st
 
 from sqlalchemy import create_engine, text
-# ==========================================================
-# CAMINHOS
-# ==========================================================
 
 # ==========================================================
 # CONEXÃO
@@ -22,6 +19,55 @@ engine = create_engine(DATABASE_URL)
 
 def conectar_db():
     return engine.connect()
+# ==========================================================
+# CRIAR TABELA
+# ==========================================================
+
+def criar_tabela():
+
+    conn = conectar_db()
+
+    query = """
+    CREATE TABLE IF NOT EXISTS bibliografia (
+
+        id SERIAL PRIMARY KEY,
+
+        titulo TEXT,
+        autores TEXT,
+        ano INTEGER,
+        instituicao TEXT,
+        tipo_documento TEXT,
+
+        pais TEXT,
+        idioma TEXT,
+
+        tema TEXT,
+        subtema TEXT,
+
+        resumo TEXT,
+        palavras_chave TEXT,
+
+        doi TEXT,
+        link TEXT,
+
+        arquivo_pdf TEXT,
+
+        categoria TEXT,
+        metodo TEXT,
+        regiao TEXT,
+        documentos TEXT,
+        observacoes TEXT
+    )
+    """
+
+    conn.execute(text(query))
+
+    conn.commit()
+
+    conn.close()
+
+
+
 
 # ==========================================================
 # INSERIR DOCUMENTO
