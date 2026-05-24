@@ -2,7 +2,7 @@
 # app.py
 # Biblioteca Digital DMAPU
 # ==========================================================
-
+from utils.database import conectar_db
 import streamlit as st
 import pandas as pd
 import sqlite3
@@ -18,7 +18,18 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+#===========================================================
+try:
 
+    conn = conectar_db()
+
+    st.success("Conectado ao PostgreSQL/Supabase!")
+
+    st.write(conn)
+
+except Exception as e:
+
+    st.error(e)
 # ==========================================================
 EXPORT_DIR = Path(__file__).parent / "exports"
 FONT_DIR = Path(__file__).parent / "fonts"
