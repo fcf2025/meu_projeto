@@ -4,30 +4,24 @@
 # Biblioteca Digital DMAPLU
 # ==========================================================
 
-import sqlite3
 import pandas as pd
-from pathlib import Path
+import streamlit as st
 
+from sqlalchemy import create_engine, text
 # ==========================================================
 # CAMINHOS
 # ==========================================================
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-DB_PATH = BASE_DIR / "database" / "bibliografia.db"
-
-
-
 
 # ==========================================================
 # CONEXÃO
 # ==========================================================
 
+DATABASE_URL = st.secrets["DATABASE_URL"]
+
+engine = create_engine(DATABASE_URL)
+
 def conectar_db():
-    # Mostra o caminho completo do arquivo
-    print ("Banco de dados em uso:", DB_PATH)
-    conn = sqlite3.connect(DB_PATH)
-    return conn
+    return engine.connect()
 
 # ==========================================================
 # INSERIR DOCUMENTO
@@ -83,7 +77,7 @@ def inserir_documento(
         regiao,
         observacoes
     )
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
 
     valores = (
@@ -144,7 +138,7 @@ def listar_documentos():
     ORDER BY id DESC
     """
 
-    df = pd.read_sql_query(query, conn)
+    df = pd.read_sql(query, conn)
 
     conn.close()
 
@@ -191,10 +185,10 @@ def buscar_documentos(
 
         query += """
         AND (
-            titulo LIKE ?
-            OR autores LIKE ?
-            OR resumo LIKE ?
-            OR palavras_chave LIKE ?
+            titulo LIKE %s
+            OR autores LIKE %s
+            OR resumo LIKE %s
+            OR palavras_chave LIKE %s
         )
         """
 
@@ -213,7 +207,7 @@ def buscar_documentos(
 
     if tema:
 
-        query += " AND tema = ? "
+        query += " AND tema = %s "
 
         parametros.append(tema)
 
@@ -223,7 +217,7 @@ def buscar_documentos(
 
     if ano:
 
-        query += " AND ano = ? "
+        query += " AND ano = %s "
 
         parametros.append(ano)
 
@@ -233,7 +227,7 @@ def buscar_documentos(
 
     if pais:
 
-        query += " AND pais = ? "
+        query += " AND pais = %s "
 
         parametros.append(pais)
 
@@ -243,7 +237,7 @@ def buscar_documentos(
 
     query += " ORDER BY ano DESC, titulo ASC "
 
-    df = pd.read_sql_query(
+    df = pd.read_sql(
         query,
         conn,
         params=parametros
@@ -267,10 +261,10 @@ def obter_documento(doc_id):
     query = """
     SELECT *
     FROM bibliografia
-    WHERE id = ?
+    WHERE id = %s
     """
 
-    df = pd.read_sql_query(
+    df = pd.read_sql(
         query,
         conn,
         params=[doc_id]
@@ -298,7 +292,7 @@ def excluir_documento(doc_id):
 
     query = """
     DELETE FROM bibliografia
-    WHERE id = ?
+    WHERE id = %s
     """
 
     cursor.execute(query, (doc_id,))
@@ -345,33 +339,33 @@ def atualizar_documento(
     UPDATE bibliografia
     SET
 
-        titulo = ?,
-        autores = ?,
-        ano = ?,
-        instituicao = ?,
-        tipo_documento = ?,
+        titulo = %s,
+        autores = %s,
+        ano = %s,
+        instituicao = %s,
+        tipo_documento = %s,
        
-        pais = ?,
-        idioma = ?,
+        pais = %s,
+        idioma = %s,
 
-        tema = ?,
-        subtema = ?,
+        tema = %s,
+        subtema = %s,
 
-        resumo = ?,
-        palavras_chave = ?,
+        resumo = %s,
+        palavras_chave = %s,
 
-        doi = ?,
-        link = ?,
+        doi = %s,
+        link = %s,
 
-        arquivo_pdf = ?,
+        arquivo_pdf = %s,
 
-        categoria = ?,
-        metodo = ?,
-        regiao = ?,
+        categoria = %s,
+        metodo = %s,
+        regiao = %s,
 
-        observacoes = ?
+        observacoes = %s
 
-    WHERE id = ?
+    WHERE id = %s
     """
 
     valores = (
@@ -429,7 +423,7 @@ def estatisticas_gerais():
     FROM bibliografia
     """
 
-    stats["total_documentos"] = pd.read_sql_query(
+    stats["total_documentos"] = pd.read_sql(
         query_total,
         conn
     )["total"][0]
@@ -440,7 +434,7 @@ def estatisticas_gerais():
     FROM bibliografia
     """
 
-    stats["total_temas"] = pd.read_sql_query(
+    stats["total_temas"] = pd.read_sql(
         query_temas,
         conn
     )["total"][0]
@@ -451,7 +445,7 @@ def estatisticas_gerais():
     FROM bibliografia
     """
 
-    stats["total_paises"] = pd.read_sql_query(
+    stats["total_paises"] = pd.read_sql(
         query_paises,
         conn
     )["total"][0]
