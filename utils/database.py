@@ -67,8 +67,6 @@ def criar_tabela():
     conn.close()
 
 
-
-
 # ==========================================================
 # INSERIR DOCUMENTO
 # ==========================================================
@@ -93,13 +91,11 @@ def inserir_documento(
     regiao,
     observacoes
 ):
-    """
-    Insere um novo documento no banco
-    """
 
     conn = conectar_db()
 
     query = text("""
+
     INSERT INTO bibliografia (
 
         titulo,
@@ -122,6 +118,7 @@ def inserir_documento(
         observacoes
 
     )
+
     VALUES (
 
         :titulo,
@@ -142,7 +139,9 @@ def inserir_documento(
         :metodo,
         :regiao,
         :observacoes
+
     )
+
     """)
 
     conn.execute(query, {
