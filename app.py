@@ -31,8 +31,6 @@ try:
 
     st.success("Conectado ao PostgreSQL/Supabase!")
 
-    st.write(conn)
-
 except Exception as e:
 
     st.error(e)
