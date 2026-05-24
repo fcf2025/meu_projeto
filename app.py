@@ -8,6 +8,12 @@ import pandas as pd
 import sqlite3
 from pathlib import Path
 from fpdf import FPDF
+
+from utils.database import criar_tabela
+
+criar_tabela()
+
+st.success("Tabela criada!")
 # ==========================================================
 # CONFIGURAÇÃO DA PÁGINA
 # ==========================================================
