@@ -37,8 +37,8 @@ def inserir_documento(
     titulo,
     autores,
     ano,
-    tipo_documento,
     instituicao,
+    tipo_documento,
     pais,
     idioma,
     tema,
@@ -67,31 +67,22 @@ def inserir_documento(
         titulo,
         autores,
         ano,
-
-        tipo_documento,
         instituicao,
+        tipo_documento,
         pais,
         idioma,
-
         tema,
         subtema,
-
         resumo,
         palavras_chave,
-
         doi,
         link,
-
         arquivo_pdf,
-
         categoria,
         metodo,
         regiao,
-
         observacoes
-
     )
-
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """
 
@@ -99,9 +90,9 @@ def inserir_documento(
         titulo,
         autores,
         ano,
-
-        tipo_documento,
         instituicao,
+        tipo_documento,
+       
         pais,
         idioma,
 
@@ -325,8 +316,9 @@ def atualizar_documento(
     titulo,
     autores,
     ano,
-    tipo_documento,
     instituicao,
+    tipo_documento,
+    
     pais,
     idioma,
     tema,
@@ -356,9 +348,9 @@ def atualizar_documento(
         titulo = ?,
         autores = ?,
         ano = ?,
-
-        tipo_documento = ?,
         instituicao = ?,
+        tipo_documento = ?,
+       
         pais = ?,
         idioma = ?,
 
@@ -386,9 +378,9 @@ def atualizar_documento(
         titulo,
         autores,
         ano,
-
-        tipo_documento,
         instituicao,
+        tipo_documento,
+        
         pais,
         idioma,
 
