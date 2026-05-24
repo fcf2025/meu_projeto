@@ -355,6 +355,7 @@ with st.form("form_cadastro", clear_on_submit=True):
                 "Resiliência das Cidades",
                 "Modelos de Financiamento",
                 "Custos Operacionais",
+                "Tarifas e Taxas",
                 "Subsídios e Incentivos",
                 "Economia Circular",
                 "Controle de Cheias",
