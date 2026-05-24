@@ -25,13 +25,8 @@ DB_PATH = BASE_DIR / "database" / "bibliografia.db"
 
 def conectar_db():
     # Mostra o caminho completo do arquivo
-    print("Banco de dados em uso:", DB_PATH)
-    """
-    Cria conexão com o banco SQLite
-    """
-
+    write ("Banco de dados em uso:", DB_PATH)
     conn = sqlite3.connect(DB_PATH)
-
     return conn
 
 # ==========================================================
