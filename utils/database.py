@@ -16,11 +16,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DB_PATH = BASE_DIR / "database" / "bibliografia.db"
 
+
+
+
 # ==========================================================
 # CONEXÃO
 # ==========================================================
 
 def conectar_db():
+    # Mostra o caminho completo do arquivo
+    print("Banco de dados em uso:", DB_PATH)
     """
     Cria conexão com o banco SQLite
     """
