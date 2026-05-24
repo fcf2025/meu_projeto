@@ -4,3 +4,5 @@ openpyxl
 fpdf2
 matplotlib
 reportlab
+sqlalchemy
+psycopg2-binary
