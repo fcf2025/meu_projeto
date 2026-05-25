@@ -39,7 +39,7 @@ st.set_page_config(
 #===========================================================
 try:
 
-    conn = conectar_db()
+    # conn = conectar_db()
 
     st.success("Conectado ao PostgreSQL/Supabase!")
 
