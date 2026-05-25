@@ -253,7 +253,7 @@ except:
     total_temas = 0
     total_paises = 0
 
-conn.close()
+#conn.close()
 
 col1, col2, col3 = st.columns(3)
 
