@@ -6,7 +6,7 @@
 import streamlit as st
 from fpdf import FPDF
 from pathlib import Path
-
+import pandas as pd
 from utils.database import criar_tabela
 
 # ==========================================================
@@ -323,7 +323,7 @@ finally:
 # EXPORTAÇÃO DE DADOS
 # ==========================================================
 
-# st.markdown("### 📤 Exportar Acervo Completo")
+st.markdown("### 📤 Exportar Acervo Completo")
 
 col1, col2 = st.columns(2)
 
