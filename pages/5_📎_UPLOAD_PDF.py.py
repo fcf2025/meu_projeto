@@ -9,7 +9,7 @@ import pandas as pd
 from pathlib import Path
 import uuid
 import shutil
-
+from sqlalchemy import text
 # ==========================================================
 # IMPORTS
 # ==========================================================
@@ -371,15 +371,17 @@ if len(arquivos_pdf) > 0:
             caminho_remover = PDF_DIR / arquivo_remover
             caminho_remover.unlink()
     
-            # Opcional: remover referência no banco
+            # Remover referência no banco (SQLAlchemy + PostgreSQL)
             conn = conectar_db()
-            conn.execute("""
-                UPDATE bibliografia
-                SET arquivo_pdf = ''
-                WHERE arquivo_pdf = ?
-            """, (arquivo_remover,))
-            conn.commit()
-            conn.close()
+            with conn.begin():
+                conn.execute(
+                    text("""
+                        UPDATE bibliografia
+                        SET arquivo_pdf = ''
+                        WHERE arquivo_pdf = :arquivo
+                    """),
+                    {"arquivo": arquivo_remover}
+                )
     
             st.success(f"PDF {arquivo_remover} removido com sucesso.")
             st.rerun()
