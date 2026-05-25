@@ -7,7 +7,7 @@
 import streamlit as st
 from pathlib import Path
 import uuid
-
+from sqlalchemy import text
 # ==========================================================
 # IMPORTS
 # ==========================================================
@@ -371,7 +371,7 @@ if salvar:
 # ATUALIZAR DOCUMENTO
 # ==========================================================
 nome_pdf = None  # ou "" se preferir
-atualizar_documento(
+def atualizar_documento(
     doc_id,
     titulo,
     autores,
@@ -386,81 +386,62 @@ atualizar_documento(
     palavras_chave,
     doi,
     link,
-    nome_pdf,
+    arquivo_pdf,
     categoria,
     metodo,
     regiao,
     observacoes
-)
-st.success("Documento atualizado com sucesso!")
-#===========================================================
-if salvar:
+):
+    """
+    Atualiza documento existente usando SQLAlchemy
+    """
+    with conectar_db() as conn:
+        query = text("""
+            UPDATE bibliografia
+            SET
+                titulo = :titulo,
+                autores = :autores,
+                ano = :ano,
+                instituicao = :instituicao,
+                tipo_documento = :tipo_documento,
+                pais = :pais,
+                idioma = :idioma,
+                tema = :tema,
+                subtema = :subtema,
+                resumo = :resumo,
+                palavras_chave = :palavras_chave,
+                doi = :doi,
+                link = :link,
+                arquivo_pdf = :arquivo_pdf,
+                categoria = :categoria,
+                metodo = :metodo,
+                regiao = :regiao,
+                observacoes = :observacoes
+            WHERE id = :id
+        """)
 
-    try:
-
-        nome_pdf = documento["arquivo_pdf"]
-
-        # ==================================================
-        # NOVO PDF
-        # ==================================================
-
-        if uploaded_file is not None:
-
-            extensao = (
-                uploaded_file.name
-                .split(".")[-1]
-            )
-
-            nome_pdf = (
-                f"{uuid.uuid4()}.{extensao}"
-            )
-
-            caminho_pdf = PDF_DIR / nome_pdf
-
-            with open(
-                caminho_pdf,
-                "wb"
-            ) as f:
-
-                f.write(
-                    uploaded_file.read()
-                )
-
-        # ==================================================
-        # ATUALIZA BANCO
-        # ==================================================
-        nome_pdf = ""
-        atualizar_documento(
-            doc_id,
-            titulo,
-            autores,
-            ano,
-            instituicao,
-            tipo_documento,
-            pais,
-            idioma,
-            tema,
-            subtema,
-            resumo,
-            palavras_chave,
-            doi,
-            link,
-            nome_pdf,
-            categoria,
-            metodo,
-            regiao,
-            observacoes
-        )
-
-        st.success(
-            "Documento atualizado com sucesso!"
-        )
-
-    except Exception as e:
-
-        st.error(
-            f"Erro ao atualizar: {e}"
-        )
+        conn.execute(query, {
+            "titulo": titulo,
+            "autores": autores,
+            "ano": ano,
+            "instituicao": instituicao,
+            "tipo_documento": tipo_documento,
+            "pais": pais,
+            "idioma": idioma,
+            "tema": tema,
+            "subtema": subtema,
+            "resumo": resumo,
+            "palavras_chave": palavras_chave,
+            "doi": doi,
+            "link": link,
+            "arquivo_pdf": arquivo_pdf,
+            "categoria": categoria,
+            "metodo": metodo,
+            "regiao": regiao,
+            "observacoes": observacoes,
+            "id": doc_id
+        })
+        conn.commit()
 # ==========================================================
 # RODAPÉ
 # ==========================================================
