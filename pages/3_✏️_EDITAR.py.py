@@ -135,68 +135,95 @@ with st.form(
         value=documento["instituicao"]
     )
 
-    # ======================================================
-    # TIPO / PAÍS / IDIOMA
-    # ======================================================
-    col1, col2, col3 = st.columns(3)
-    tipos = [
-        "",
-        "Artigo",
-        "Livro",
-        "Capítulo",
-        "Dissertação",
-        "Tese",
-        "Relatório Técnico",
-        "Nota Técnica",
-        "Legislação",
-        "Manual",
-        "Outro"
-    ]
-    temas = [
-        "",
-        "Governança e Regulação",
-        "Economia e Tarifação",
-        "Engenharia de Drenagem",
-        "Sustentabilidade Urbana",
-        "Métodos Analíticos",
-        "Infraestrutura Verde",
-        "Mudanças Climáticas",
-        "Outro"
-    ]
-    with col1:
+# ======================================================
+# TIPO / PAÍS / IDIOMA
+# ======================================================
+col1, col2, col3 = st.columns(3)
 
-        tipo_documento = st.selectbox(
-            "Tipo de Documento",
-            tipos,
-            index=(
-                tipos.index(
-                    documento["tipo_documento"]
-                )
-                if documento["tipo_documento"] in tipos
-                else 0
-            )
+tipos = [
+    "",
+    "Artigo",
+    "Livro",
+    "Capítulo",
+    "Dissertação",
+    "Tese",
+    "Relatório Técnico",
+    "Nota Técnica",
+    "Legislação",
+    "Manual",
+    "Outro"
+]
+
+temas = [
+    "",
+    "Governança e Regulação",
+    "Economia e Tarifação",
+    "Engenharia de Drenagem",
+    "Sustentabilidade Urbana",
+    "Métodos Analíticos",
+    "Infraestrutura Verde",
+    "Mudanças Climáticas",
+    "Outro"
+]
+
+paises = [
+    "",
+    "Brasil",
+    "Portugal",
+    "Estados Unidos",
+    "Reino Unido",
+    "França",
+    "Alemanha",
+    "Espanha",
+    "Itália",
+    "China",
+    "Japão",
+    "Outro"
+]
+
+idiomas = [
+    "",
+    "Português",
+    "Inglês",
+    "Espanhol",
+    "Francês",
+    "Alemão",
+    "Outro"
+]
+
+with col1:
+    tipo_documento = st.selectbox(
+        "Tipo de Documento",
+        tipos,
+        index=(
+            tipos.index(documento["tipo_documento"])
+            if documento["tipo_documento"] in tipos
+            else 0
         )
+    )
 
-    with col2:
-
-        pais = st.text_input(
-            "País",
-            value=documento["pais"]
+with col2:
+    pais = st.selectbox(
+        "País",
+        paises,
+        index=(
+            paises.index(documento["pais"])
+            if documento["pais"] in paises
+            else 0
         )
+    )
 
-    with col3:
-
-        idioma = st.selectbox(
-            "Idioma",
-            idiomas,
-            index=(
-                idiomas.index(
-                    documento["idioma"]
-                )
-                if documento["idioma"] in idiomas
-                else 0
-            )
+with col3:
+    idioma = st.selectbox(
+        "Idioma",
+        idiomas,
+        index=(
+            idiomas.index(documento["idioma"])
+            if documento["idioma"] in idiomas
+            else 0
         )
+    )
+
 
 
     # ======================================================
