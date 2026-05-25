@@ -382,7 +382,7 @@ if len(arquivos_pdf) > 0:
                     """),
                     {"arquivo": arquivo_remover}
                 )
-    
+            st.success("✅ Documento atualizado com sucesso!")
             st.success(f"PDF {arquivo_remover} removido com sucesso.")
             st.rerun()
         except Exception as e:
