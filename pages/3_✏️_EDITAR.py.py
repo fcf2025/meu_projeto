@@ -152,6 +152,8 @@ with st.form(
         "Manual",
         "Outro"
     ]
+
+    
     idiomas = [
         "",
         "Português",
