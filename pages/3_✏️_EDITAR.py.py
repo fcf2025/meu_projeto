@@ -135,7 +135,14 @@ metodos = ["", "Pesquisa de Campo – coleta de dados diretamente em ambientes r
                 "Estudo Longitudinal – acompanhamento de fenômenos ao longo do tempo.",
                 "Estudo Transversal – análise em um único momento ou recorte.",
                 "Outro"]
-regioes = ["", "Nacional", "Regional", "Local", "Internacional", "Outro"]
+regioes = ["", "Brasil",
+                "América Latina",
+                "Europa",
+                "América do Norte",
+                "Ásia",
+                "África",
+                "Global",
+                "Outro"]
 
 # Funções auxiliares para encontrar o índice atual nos selects
 def get_index(lista, valor):
