@@ -115,28 +115,6 @@ temas = ["",    "Planejamento e elaboração de Planos de Drenagem e Manejo de �
                 "Participação comunitária, educação ambiental e aceitação social de obras de drenagem",
                 "Outro"]
 
-subtemas = ["","Planejamento urbano integrado",
-            "Diagnóstico de bacias urbanas e mapas de pontos críticos de inundação",
-            "Projeção de cenários de chuva intensa e eventos extremos",
-            "Zoneamento de risco para ocupação de margens de rios e áreas de escoamento",
-            "Obras de drenagem em bairros de baixa renda e assentamentos precários",
-            "Pavimentos permeáveis e soluções de superfície porosa em vias e calçadas",
-            "Telhados e paredes verdes em edificações urbanas",
-            "Bacias de detenção e retenção em praças, parques e áreas públicas",
-            "Microrreservatórios, reservatórios subterrâneos e cisternas coletivas",
-            "Integração de poços de infiltração e valas de drenagem com sistemas viários",
-            "Modelagem computacional de inundações urbanas (softwares como InfoWorks, SWMM, etc.)",
-            "Uso de geoprocessamento e SIG para mapear áreas de risco e drenagem",
-            "Telemetria, sensores de nível e chuva e sistemas de alerta precoce",
-            "Manual de condicionantes de parcelamento e uso do solo para proteção de drenagem",
-            "Fiscalização de loteamentos e obras que interferem em bocas de lobo e canais",
-            "Participação de associações de moradores em projetos de drenagem local",
-            "Campanhas de educação ambiental sobre descarte de resíduos e entupimento de bueiros",
-            "Modelos de financiamento para obras de drenagem e manutenção de sistemas",
-            "Indicadores de desempenho de sistemas de DMAPU (velocidade de escoamento, inundação, etc.)",
-            "Integração entre DMAPU, saneamento básico e mobilidade urbana",
-            "Monitoramento pós‑obra e avaliação de risco após implantação de sistemas de drenagem",
-            "Outros"]
 veiculos = ["","Revista",
             "Journal",
             "Periódico",
@@ -243,7 +221,7 @@ with st.form("form_edicao"):
     with col_c1:
         tema = st.selectbox("Tema", temas, index=get_index(temas, documento.get("tema")))
     with col_c2:
-        subtema = st.selectbox("Subtema", subtemas, index=get_index(subtemas, documento.get("subtema"))))
+        subtema = st.text_input("Subtema", value=documento.get("subtema"))
 
     palavras_chave = st.text_input("Palavras-chave", value=documento.get("palavras_chave", ""))
     resumo = st.text_area("Resumo", value=documento.get("resumo", ""), height=150)
