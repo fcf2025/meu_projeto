@@ -253,8 +253,6 @@ except:
     total_temas = 0
     total_paises = 0
 
-#conn.close()
-
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -283,7 +281,7 @@ st.markdown("---")
 
 st.subheader("📖 Últimos documentos cadastrados")
 
-conn = conectar_db()
+#conn = conectar_db()
 
 try:
 
