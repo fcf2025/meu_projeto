@@ -134,7 +134,7 @@ with st.form(
         "Instituição",
         value=documento["instituicao"]
     )
-
+with st.form("form_edicao"):
 # ======================================================
 # TIPO / PAÍS / IDIOMA
 # ======================================================
@@ -191,41 +191,42 @@ idiomas = [
     "Outro"
 ]
 
-with col1:
-    tipo_documento = st.selectbox(
-        "Tipo de Documento",
-        tipos,
-        index=(
-            tipos.index(documento["tipo_documento"])
-            if documento["tipo_documento"] in tipos
-            else 0
-        )
+    with col1:
+        tipo_documento = st.selectbox("Tipo de Documento", tipos)
+
+    with col2:
+        pais = st.selectbox("País", paises)
+
+    with col3:
+        idioma = st.selectbox("Idioma", idiomas)
+
+    # Botão de envio (última linha do formulário)
+    salvar = st.form_submit_button("Salvar alterações")
+
+# Fora do formulário, você processa o resultado
+if salvar:
+    atualizar_documento(
+        doc_id,
+        titulo,
+        autores,
+        ano,
+        instituicao,
+        tipo_documento,
+        pais,
+        idioma,
+        tema,
+        subtema,
+        resumo,
+        palavras_chave,
+        doi,
+        link,
+        nome_pdf,
+        categoria,
+        metodo,
+        regiao,
+        observacoes
     )
-
-with col2:
-    pais = st.selectbox(
-        "País",
-        paises,
-        index=(
-            paises.index(documento["pais"])
-            if documento["pais"] in paises
-            else 0
-        )
-    )
-
-with col3:
-    idioma = st.selectbox(
-        "Idioma",
-        idiomas,
-        index=(
-            idiomas.index(documento["idioma"])
-            if documento["idioma"] in idiomas
-            else 0
-        )
-    )
-
-
-
+    st.success("Documento atualizado com sucesso!")
     # ======================================================
     # TEMA
     # ======================================================
