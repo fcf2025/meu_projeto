@@ -339,27 +339,17 @@ if salvar:
             )
 
 # ==========================================================
-# LISTAGEM PDFs
+# LISTAGEM PDFs com opção de remoção
 # ==========================================================
-
-st.markdown("---")
 
 st.subheader("📚 PDFs no Sistema")
 
-arquivos_pdf = list(
-    PDF_DIR.glob("*.pdf")
-)
+arquivos_pdf = list(PDF_DIR.glob("*.pdf"))
 
 if len(arquivos_pdf) > 0:
-
     lista_pdfs = []
-
     for arq in arquivos_pdf:
-
-        tamanho_mb = (
-            arq.stat().st_size / (1024 * 1024)
-        )
-
+        tamanho_mb = arq.stat().st_size / (1024 * 1024)
         lista_pdfs.append({
             "Arquivo": arq.name,
             "Tamanho (MB)": round(tamanho_mb, 2)
@@ -367,18 +357,27 @@ if len(arquivos_pdf) > 0:
 
     df_pdfs = pd.DataFrame(lista_pdfs)
 
-    st.dataframe(
-        df_pdfs,
-        use_container_width=True,
-        hide_index=True
+    # Mostra tabela
+    st.dataframe(df_pdfs, use_container_width=True, hide_index=True)
+
+    # Botão para selecionar e remover
+    arquivo_remover = st.selectbox(
+        "Selecione um PDF para remover",
+        [arq.name for arq in arquivos_pdf]
     )
+
+    if st.button("🗑️ Remover PDF Selecionado", use_container_width=True):
+        try:
+            caminho_remover = PDF_DIR / arquivo_remover
+            caminho_remover.unlink()
+
+            st.success(f"PDF {arquivo_remover} removido com sucesso.")
+            st.rerun()
+        except Exception as e:
+            st.error(f"Erro ao remover PDF: {e}")
 
 else:
-
-    st.info(
-        "Nenhum PDF armazenado."
-    )
-
+    st.info("Nenhum PDF armazenado."
 # ==========================================================
 # RODAPÉ
 # ==========================================================
