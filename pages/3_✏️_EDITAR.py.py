@@ -74,7 +74,33 @@ if documento is None:
 # DEFINIÇÃO DE OPÇÕES (LISTAS)
 # ==========================================================
 
-tipos = ["", "Artigo", "Livro", "Capítulo", "Dissertação", "Tese", "Relatório Técnico", "Nota Técnica", "Legislação", "Manual", "Outro"]
+tipos = ["",    "Artigo",
+                "Livro",
+                "Capítulo",
+                "Dissertação",
+                "Tese",
+                "Monografia",
+                "Trabalho de Conclusão de Curso (TCC)",
+                "Anais de Congresso / Conferência",
+                "Resenha / Revisão",
+                "Estudo Técnico",
+                "Nota Técnica",
+                "Informação Técnica",
+                "Parecer Técnico",
+                "Norma Técnica (ABNT, ISO etc.)",
+                "Manual",
+                "White Paper",
+                "Mapa / Planta / Desenho Técnico",
+                "Dados Estatísticos / Base de Dados",
+                "Legislação",
+                "Regulamentação",
+                "Plano / Projeto",
+                "Patente",
+                "Guia Prático / Cartilha",
+                "Boletim Técnico / Informativo",
+                "Artigo de Opinião / Editorial",
+                "Entrevista / Depoimento",
+                "Outros", "Outro"]
 paises = ["", "Brasil", "Portugal", "Estados Unidos", "Reino Unido", "França", "Alemanha", "Espanha", "Itália", "China", "Japão", "Outro"]
 idiomas = ["", "Português", "Inglês", "Espanhol", "Francês", "Alemão", "Outro"]
 temas = ["", "Planejamento Urbano", "Meio Ambiente", "Mobilidade", "Habitação", "Geoprocessamento", "Legislação", "Outros"]
