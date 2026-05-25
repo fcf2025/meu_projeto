@@ -25,26 +25,18 @@ def conectar_db():
 # ==========================================================
 
 def criar_tabela():
-
-    conn = conectar_db()
-
-    query = text("""
-
-    CREATE TABLE IF NOT EXISTS bibliografia (
-
-        id SERIAL PRIMARY KEY,
-
-        titulo TEXT,
-        autores TEXT,
-        ano INTEGER
-
-    )
-
-    """)
-
-    conn.execute(query)
-
-    conn.commit()
+    with conectar_db() as conn:
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS bibliografia (
+                id SERIAL PRIMARY KEY,
+                titulo TEXT,
+                autores TEXT,
+                ano INTEGER,
+                tema TEXT,
+                pais TEXT
+            )
+        """))
+        conn.commit()
 
     conn.close()
 
