@@ -335,10 +335,11 @@ with st.form(
 # ==========================================================
 
 if salvar:
-
     try:
-
         nome_pdf = documento["arquivo_pdf"]
+        # aqui você pode salvar o PDF ou processar
+    except Exception as e:
+        st.error(f"Erro ao salvar documento: {e}")
 
    # ==================================================
    # NOVO PDF
