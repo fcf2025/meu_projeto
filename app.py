@@ -285,41 +285,26 @@ st.subheader("📖 Últimos documentos cadastrados")
 
 try:
 
-    query = """
-    SELECT
-        id,
-        titulo,
-        autores,
-        ano,
-        tema,
-        pais
-    FROM bibliografia
-    ORDER BY id DESC
-    LIMIT 10
-    """
+    df_docs = listar_documentos()
 
-    df = pd.read_sql_query(query, conn)
-
-    if len(df) > 0:
+    if len(df_docs) > 0:
 
         st.dataframe(
-            df,
-            use_container_width=True,
-            hide_index=True
+            df_docs.head(10),
+            use_container_width=True
         )
 
     else:
-        st.info("Nenhum documento cadastrado ainda.")
+
+        st.info("Nenhum documento cadastrado.")
 
 except Exception as e:
+
     st.error(f"Erro ao carregar dados: {e}")
 
 finally:
     pass
-    # conn.close()
-
-
-
+  
 # ==========================================================
 # EXPORTAÇÃO DE DADOS
 # ==========================================================
