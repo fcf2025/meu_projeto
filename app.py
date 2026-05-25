@@ -41,8 +41,8 @@ st.set_page_config(
 try:
 
     # conn = conectar_db()
-
-    st.success("Conectado ao PostgreSQL/Supabase!")
+    # st.success("Sistema iniciado com sucesso.")
+    st.success("SISTEMA INICIADO")
 
 except Exception as e:
 
@@ -193,7 +193,7 @@ with st.sidebar:
     
     st.markdown("---")
 
-    st.success("Sistema iniciado com sucesso.")
+    # st.success("Sistema iniciado com sucesso.")
 
 # ==========================================================
 # GUIA RÁPIDO PDF
