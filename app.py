@@ -232,7 +232,7 @@ O sistema permitirá:
 # INDICADORES
 # ==========================================================
 
-conn = conectar_db()
+# conn = conectar_db()
 
 try:
     total_docs = pd.read_sql_query(
