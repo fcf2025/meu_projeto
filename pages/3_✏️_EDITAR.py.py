@@ -95,7 +95,25 @@ veiculos = ["","Revista",
             "Enciclopédia / Dicionário Especializado",
             "Blog Técnico ou Acadêmico",
             "Outro"]
-categorias = ["", "Acadêmico", "Técnico", "Política Pública", "Outro"]
+categorias = ["","Economia",
+                "Legislação",
+                "Política Pública",
+                "Meio Ambiente",
+                "Saúde",
+                "Educação",
+                "Tecnologia e Inovação",
+                "Engenharia",
+                "Ciências Sociais",
+                "Ciências Naturais",
+                "Gestão e Administração",
+                "Infraestrutura e Urbanismo",
+                "Direitos Humanos",
+                "Cultura e Sociedade",
+                "Energia",
+                "Agricultura e Recursos Naturais",
+                "Planejamento Urbano e Regional",
+                "Saneamento Básico",
+                "Outro"]
 metodos = ["", "Estudo de Caso", "Modelagem", "Pesquisa de Campo", "Revisão Bibliográfica", "Outro"]
 regioes = ["", "Nacional", "Regional", "Local", "Internacional", "Outro"]
 
