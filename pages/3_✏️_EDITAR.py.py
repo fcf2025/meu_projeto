@@ -262,7 +262,37 @@ if salvar:
             )
             
             st.success("✅ Documento atualizado com sucesso!")
+# ==========================================================
+# BOTÃO DE EXCLUSÃO DE DOCUMENTO
+# ==========================================================
 
+st.markdown("---")
+st.subheader("🗑️ Excluir Documento")
+
+confirmar_exclusao = st.checkbox("Confirmar exclusão deste documento")
+
+if confirmar_exclusao:
+    if st.button("Excluir este documento", use_container_width=True):
+        try:
+            # Remover PDF físico, se existir
+            arquivo_pdf = documento.get("arquivo_pdf")
+            if arquivo_pdf:
+                caminho_pdf = PDF_DIR / arquivo_pdf
+                if caminho_pdf.exists():
+                    caminho_pdf.unlink()
+
+            # Remover registro no banco (SQLAlchemy + PostgreSQL)
+            conn = conectar_db()
+            with conn.begin():
+                conn.execute(
+                    text("DELETE FROM bibliografia WHERE id = :id"),
+                    {"id": doc_id}
+                )
+
+            st.success("📌 Documento excluído com sucesso!")
+            st.rerun()
+        except Exception as e:
+            st.error(f"Erro ao excluir documento: {e}")
 # ==========================================================
 # RODAPÉ
 # ==========================================================
