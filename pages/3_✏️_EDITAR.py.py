@@ -94,9 +94,7 @@ documento = obter_documento(doc_id)
 # FORMULÁRIO
 # ==========================================================
 
-with st.form(
-    "form_edicao"
-):
+# with st.form("form_edicao"):
 
 # ======================================================
 # LINHA 1
