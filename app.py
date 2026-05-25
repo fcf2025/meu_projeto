@@ -41,7 +41,7 @@ try:
 
    # conn = conectar_db()
 
-   # st.success("Conectado ao PostgreSQL/Supabase!")
+    st.success("Conectado ao PostgreSQL/Supabase!")
 
 except Exception as e:
 
