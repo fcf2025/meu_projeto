@@ -60,6 +60,7 @@ selecionado_label = st.selectbox(
 doc_id = documentos_dict[selecionado_label]
 
 # Carregar dados atuais do documento selecionado
+documento = obter_documento(doc_id)
 if documento is None:
 
     st.error(
