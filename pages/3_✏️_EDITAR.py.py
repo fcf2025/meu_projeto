@@ -263,24 +263,27 @@ if salvar:
             
             st.success("✅ Documento atualizado com sucesso!")
 # ==========================================================
-# BOTÃO DE EXCLUSÃO
+# BOTÃO DE EXCLUSÃO DE DOCUMENTO
 # ==========================================================
 
 st.markdown("---")
 st.subheader("🗑️ Excluir Documento")
 
-if st.button("Excluir este documento", use_container_width=True):
-    try:
-        conn = conectar_db()
-        with conn.begin():
-            conn.execute(
-                text("DELETE FROM bibliografia WHERE id = :id"),
-                {"id": doc_id}
-            )
-        st.success("📌 Documento excluído com sucesso!")
-        st.rerun()
-    except Exception as e:
-        st.error(f"Erro ao excluir documento: {e}")
+confirmar_exclusao = st.checkbox("Confirmar exclusão deste documento")
+
+if confirmar_exclusao:
+    if st.button("Excluir este documento", use_container_width=True):
+        try:
+            conn = conectar_db()
+            with conn.begin():
+                conn.execute(
+                    text("DELETE FROM bibliografia WHERE id = :id"),
+                    {"id": doc_id}
+                )
+            st.success("📌 Documento excluído com sucesso!")
+            st.rerun()
+        except Exception as e:
+            st.error(f"Erro ao excluir documento: {e}")
 # ==========================================================
 # RODAPÉ
 # ==========================================================
