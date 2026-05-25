@@ -157,64 +157,6 @@ DB_DIR.mkdir(exist_ok=True)
 PDF_DIR.mkdir(exist_ok=True)
 
 EXPORT_DIR.mkdir(exist_ok=True)
-# ==========================================================
-# FUNÇÃO DE CONEXÃO
-# ==========================================================
-
-def conectar_db():
-    
-    conn = sqlite3.connect(
-        DB_PATH,
-        check_same_thread=False
-    )
-
-    return conn
-
-# ==========================================================
-# CRIAÇÃO DA TABELA PRINCIPAL
-# ==========================================================
-
-def criar_tabela():
-
-    conn = conectar_db()
-    cursor = conn.cursor()
-
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS bibliografia (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-        titulo TEXT NOT NULL,
-        autores TEXT,
-        ano INTEGER,
-
-        tipo_documento TEXT,
-        instituicao TEXT,
-        pais TEXT,
-        idioma TEXT,
-
-        tema TEXT,
-        subtema TEXT,
-
-        resumo TEXT,
-        palavras_chave TEXT,
-
-        doi TEXT,
-        link TEXT,
-
-        arquivo_pdf TEXT,
-
-        categoria TEXT,
-        metodo TEXT,
-        regiao TEXT,
-
-        observacoes TEXT,
-
-        data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-    """)
-
-    conn.commit()
-    conn.close()
 
 # ==========================================================
 # INICIALIZAÇÃO DO BANCO
