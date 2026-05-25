@@ -319,7 +319,6 @@ def atualizar_documento(
     ano,
     instituicao,
     tipo_documento,
-    
     pais,
     idioma,
     tema,
@@ -334,83 +333,62 @@ def atualizar_documento(
     regiao,
     observacoes
 ):
-    """
-    Atualiza documento existente
-    """
 
     conn = conectar_db()
 
-    cursor = conn.cursor()
+    query = text("""
 
-    query = """
     UPDATE bibliografia
     SET
+        titulo = :titulo,
+        autores = :autores,
+        ano = :ano,
+        instituicao = :instituicao,
+        tipo_documento = :tipo_documento,
+        pais = :pais,
+        idioma = :idioma,
+        tema = :tema,
+        subtema = :subtema,
+        resumo = :resumo,
+        palavras_chave = :palavras_chave,
+        doi = :doi,
+        link = :link,
+        arquivo_pdf = :arquivo_pdf,
+        categoria = :categoria,
+        metodo = :metodo,
+        regiao = :regiao,
+        observacoes = :observacoes
+    WHERE id = :doc_id
 
-        titulo = %s,
-        autores = %s,
-        ano = %s,
-        instituicao = %s,
-        tipo_documento = %s,
-       
-        pais = %s,
-        idioma = %s,
+    """)
 
-        tema = %s,
-        subtema = %s,
+    conn.execute(query, {
 
-        resumo = %s,
-        palavras_chave = %s,
+        "titulo": titulo,
+        "autores": autores,
+        "ano": ano,
+        "instituicao": instituicao,
+        "tipo_documento": tipo_documento,
+        "pais": pais,
+        "idioma": idioma,
+        "tema": tema,
+        "subtema": subtema,
+        "resumo": resumo,
+        "palavras_chave": palavras_chave,
+        "doi": doi,
+        "link": link,
+        "arquivo_pdf": arquivo_pdf,
+        "categoria": categoria,
+        "metodo": metodo,
+        "regiao": regiao,
+        "observacoes": observacoes,
+        "doc_id": doc_id
 
-        doi = %s,
-        link = %s,
-
-        arquivo_pdf = %s,
-
-        categoria = %s,
-        metodo = %s,
-        regiao = %s,
-
-        observacoes = %s
-
-    WHERE id = %s
-    """
-
-    valores = (
-        titulo,
-        autores,
-        ano,
-        instituicao,
-        tipo_documento,
-        
-        pais,
-        idioma,
-
-        tema,
-        subtema,
-
-        resumo,
-        palavras_chave,
-
-        doi,
-        link,
-
-        arquivo_pdf,
-
-        categoria,
-        metodo,
-        regiao,
-
-        observacoes,
-
-        doc_id
-    )
-
-    cursor.execute(query, valores)
+    })
 
     conn.commit()
 
     conn.close()
-
 # ==========================================================
 # ESTATÍSTICAS
 # ==========================================================
