@@ -349,6 +349,65 @@ if salvar:
 
         nome_pdf = documento["arquivo_pdf"]
 
+   # ==================================================
+   # NOVO PDF
+   # ==================================================
+
+        if uploaded_file is not None:
+
+            extensao = (
+                uploaded_file.name
+                .split(".")[-1]
+            )
+
+            nome_pdf = (
+                f"{uuid.uuid4()}.{extensao}"
+            )
+
+            caminho_pdf = PDF_DIR / nome_pdf
+
+            with open(
+                caminho_pdf,
+                "wb"
+            ) as f:
+
+                f.write(
+                    uploaded_file.read()
+                )
+
+# ==========================================================
+# ATUALIZAR DOCUMENTO
+# ==========================================================
+
+atualizar_documento(
+    doc_id,
+    titulo,
+    autores,
+    ano,
+    instituicao,
+    tipo_documento,
+    pais,
+    idioma,
+    tema,
+    subtema,
+    resumo,
+    palavras_chave,
+    doi,
+    link,
+    nome_pdf,
+    categoria,
+    metodo,
+    regiao,
+    observacoes
+)
+st.success("Documento atualizado com sucesso!")
+#===========================================================
+if salvar:
+
+    try:
+
+        nome_pdf = documento["arquivo_pdf"]
+
         # ==================================================
         # NOVO PDF
         # ==================================================
@@ -380,48 +439,36 @@ if salvar:
         # ==================================================
 
         atualizar_documento(
-
-            doc_id=doc_id,
-
-            titulo=titulo,
-            autores=autores,
-            ano=ano,
-
-            tipo_documento=tipo_documento,
-            instituicao=instituicao,
-            pais=pais,
-            idioma=idioma,
-
-            tema=tema,
-            subtema=subtema,
-
-            resumo=resumo,
-            palavras_chave=palavras_chave,
-
-            doi=doi,
-            link=link,
-
-            arquivo_pdf=nome_pdf,
-
-            categoria=categoria,
-            metodo=metodo,
-            regiao=regiao,
-
-            observacoes=observacoes
+            doc_id,
+            titulo,
+            autores,
+            ano,
+            instituicao,
+            tipo_documento,
+            pais,
+            idioma,
+            tema,
+            subtema,
+            resumo,
+            palavras_chave,
+            doi,
+            link,
+            nome_pdf,
+            categoria,
+            metodo,
+            regiao,
+            observacoes
         )
 
         st.success(
-            "Documento atualizado com sucesso."
+            "Documento atualizado com sucesso!"
         )
-
-        st.balloons()
 
     except Exception as e:
 
         st.error(
             f"Erro ao atualizar: {e}"
         )
-
 # ==========================================================
 # RODAPÉ
 # ==========================================================
