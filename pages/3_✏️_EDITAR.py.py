@@ -78,6 +78,7 @@ paises = ["", "Brasil", "Portugal", "Estados Unidos", "Reino Unido", "França", 
 idiomas = ["", "Português", "Inglês", "Espanhol", "Francês", "Alemão", "Outro"]
 temas = ["", "Planejamento Urbano", "Meio Ambiente", "Mobilidade", "Habitação", "Geoprocessamento", "Legislação", "Outros"]
 
+
 # Funções auxiliares para encontrar o índice atual nos selects
 def get_index(lista, valor):
     try:
@@ -127,7 +128,7 @@ with st.form("form_edicao"):
 
     col_l1, col_l2 = st.columns(2)
     with col_l1:
-        doi = st.text_input("Veículo de Publicação/DOI", value=documento.get("doi", ""))
+        doi = st.text_input("Veículo de Publicação", value=documento.get("doi", ""))
     with col_l2:
         link = st.text_input("Link Externo", value=documento.get("link", ""))
 
