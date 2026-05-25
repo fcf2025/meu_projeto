@@ -77,25 +77,10 @@ tipos = ["", "Artigo", "Livro", "Capítulo", "Dissertação", "Tese", "Relatóri
 paises = ["", "Brasil", "Portugal", "Estados Unidos", "Reino Unido", "França", "Alemanha", "Espanha", "Itália", "China", "Japão", "Outro"]
 idiomas = ["", "Português", "Inglês", "Espanhol", "Francês", "Alemão", "Outro"]
 temas = ["", "Planejamento Urbano", "Meio Ambiente", "Mobilidade", "Habitação", "Geoprocessamento", "Legislação", "Outros"]
-doi = ["Revista",
-            "Journal",
-            "Periódico",
-            "Conferência",
-            "Livro",
-            "Capítulo de Livro",
-            "Site",
-            "Repositório",
-            "Anais de Congresso / Proceedings",
-            "Boletim Técnico",
-            "Newsletter",
-            "Plataforma Digital Acadêmica (ex.: ResearchGate, Academia.edu)",
-            "Biblioteca Digital (ex.: BDTD, Scielo, JSTOR)",
-            "Base de Dados Estatística (ex.: IBGE, ONU Data)",
-            "Documento Oficial / Institucional (ex.: ONU, OMS, IBGE)",
-            "Enciclopédia / Dicionário Especializado",
-            "Blog Técnico ou Acadêmico",
-            "Outro"]
-
+veiculos = ["", "Revista Científica", "Conferência", "Livro", "Relatório", "Outro"]
+categorias = ["", "Acadêmico", "Técnico", "Política Pública", "Outro"]
+metodos = ["", "Estudo de Caso", "Modelagem", "Pesquisa de Campo", "Revisão Bibliográfica", "Outro"]
+regioes = ["", "Nacional", "Regional", "Local", "Internacional", "Outro"]
 
 # Funções auxiliares para encontrar o índice atual nos selects
 def get_index(lista, valor):
@@ -146,17 +131,17 @@ with st.form("form_edicao"):
 
     col_l1, col_l2 = st.columns(2)
     with col_l1:
-        doi = st.text_input("Veículo de Publicação", value=documento.get("doi", ""))
+        doi = st.selectbox("Veículo de Publicação", veiculos, index=get_index(veiculos, documento.get("doi")))
     with col_l2:
         link = st.text_input("Link Externo", value=documento.get("link", ""))
 
     col_m1, col_m2, col_m3 = st.columns(3)
     with col_m1:
-        categoria = st.text_input("Categoria", value=documento.get("categoria", ""))
+        categoria = st.selectbox("Categoria", categorias, index=get_index(categorias, documento.get("categoria")))
     with col_m2:
-        metodo = st.text_input("Método", value=documento.get("metodo", ""))
+         metodo = st.selectbox("Método", metodos, index=get_index(metodos, documento.get("metodo")))
     with col_m3:
-        regiao = st.text_input("Região", value=documento.get("regiao", ""))
+        regiao = st.selectbox("Região", regioes, index=get_index(regioes, documento.get("regiao")))
 
     observacoes = st.text_area("Observações", value=documento.get("observacoes", ""), height=100)
 
