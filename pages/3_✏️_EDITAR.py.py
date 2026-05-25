@@ -98,9 +98,9 @@ with st.form(
     "form_edicao"
 ):
 
-    # ======================================================
-    # LINHA 1
-    # ======================================================
+# ======================================================
+# LINHA 1
+# ======================================================
 
     col1, col2 = st.columns([3, 1])
 
@@ -110,9 +110,7 @@ with st.form(
             "Título *",
             value=documento["titulo"]
         )
-
     with col2:
-
         ano = st.number_input(
             "Ano",
             min_value=1900,
@@ -121,22 +119,26 @@ with st.form(
                 documento["ano"]
             ) if documento["ano"] else 2025
         )
-
     # ======================================================
     # AUTORES
     # ======================================================
-
     autores = st.text_input(
         "Autores",
         value=documento["autores"]
+    )
+    # ======================================================
+    # INSTITUIÇÃO
+    # ======================================================
+
+    instituicao = st.text_input(
+        "Instituição",
+        value=documento["instituicao"]
     )
 
     # ======================================================
     # TIPO / PAÍS / IDIOMA
     # ======================================================
-
     col1, col2, col3 = st.columns(3)
-
     tipos = [
         "",
         "Artigo",
@@ -150,7 +152,6 @@ with st.form(
         "Manual",
         "Outro"
     ]
-
     idiomas = [
         "",
         "Português",
@@ -159,7 +160,6 @@ with st.form(
         "Francês",
         "Outro"
     ]
-
     temas = [
         "",
         "Governança e Regulação",
@@ -171,7 +171,6 @@ with st.form(
         "Mudanças Climáticas",
         "Outro"
     ]
-
     with col1:
 
         tipo_documento = st.selectbox(
@@ -207,14 +206,6 @@ with st.form(
             )
         )
 
-    # ======================================================
-    # INSTITUIÇÃO
-    # ======================================================
-
-    instituicao = st.text_input(
-        "Instituição",
-        value=documento["instituicao"]
-    )
 
     # ======================================================
     # TEMA
@@ -271,7 +262,7 @@ with st.form(
     with col1:
 
         doi = st.text_input(
-            "DOI",
+            "Veículo de Publicação/Periódico",
             value=documento["doi"]
         )
 
