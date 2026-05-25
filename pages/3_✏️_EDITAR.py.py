@@ -181,15 +181,29 @@ regioes = ["", "Brasil",
                 "África",
                 "Global",
                 "Outro"]
-subtemas = ["",
-    "Gestão de risco de enchentes",
-    "Infraestrutura verde",
-    "Modelagem hidrológica",
-    "Controle de cheias",
-    "Educação ambiental",
-    "Fiscalização",
-    "Outro"
-]
+subtemas = ["","Planejamento urbano integrado",
+            "Diagnóstico de bacias urbanas e mapas de pontos críticos de inundação",
+            "Projeção de cenários de chuva intensa e eventos extremos",
+            "Zoneamento de risco para ocupação de margens de rios e áreas de escoamento",
+            "Obras de drenagem em bairros de baixa renda e assentamentos precários",
+            "Pavimentos permeáveis e soluções de superfície porosa em vias e calçadas",
+            "Telhados e paredes verdes em edificações urbanas",
+            "Bacias de detenção e retenção em praças, parques e áreas públicas",
+            "Microrreservatórios, reservatórios subterrâneos e cisternas coletivas",
+            "Integração de poços de infiltração e valas de drenagem com sistemas viários",
+            "Modelagem computacional de inundações urbanas (softwares como InfoWorks, SWMM, etc.)",
+            "Uso de geoprocessamento e SIG para mapear áreas de risco e drenagem",
+            "Telemetria, sensores de nível e chuva e sistemas de alerta precoce",
+            "Manual de condicionantes de parcelamento e uso do solo para proteção de drenagem",
+            "Fiscalização de loteamentos e obras que interferem em bocas de lobo e canais",
+            "Participação de associações de moradores em projetos de drenagem local",
+            "Campanhas de educação ambiental sobre descarte de resíduos e entupimento de bueiros",
+            "Modelos de financiamento para obras de drenagem e manutenção de sistemas",
+            "Indicadores de desempenho de sistemas de DMAPU (velocidade de escoamento, inundação, etc.)",
+            "Integração entre DMAPU, saneamento básico e mobilidade urbana",
+            "Monitoramento pós‑obra e avaliação de risco após implantação de sistemas de drenagem",
+            "Outros"]
+
 # Funções auxiliares para encontrar o índice atual nos selects
 def get_index(lista, valor):
     try:
