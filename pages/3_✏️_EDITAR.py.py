@@ -77,6 +77,24 @@ tipos = ["", "Artigo", "Livro", "Capítulo", "Dissertação", "Tese", "Relatóri
 paises = ["", "Brasil", "Portugal", "Estados Unidos", "Reino Unido", "França", "Alemanha", "Espanha", "Itália", "China", "Japão", "Outro"]
 idiomas = ["", "Português", "Inglês", "Espanhol", "Francês", "Alemão", "Outro"]
 temas = ["", "Planejamento Urbano", "Meio Ambiente", "Mobilidade", "Habitação", "Geoprocessamento", "Legislação", "Outros"]
+doi = ["Revista",
+            "Journal",
+            "Periódico",
+            "Conferência",
+            "Livro",
+            "Capítulo de Livro",
+            "Site",
+            "Repositório",
+            "Anais de Congresso / Proceedings",
+            "Boletim Técnico",
+            "Newsletter",
+            "Plataforma Digital Acadêmica (ex.: ResearchGate, Academia.edu)",
+            "Biblioteca Digital (ex.: BDTD, Scielo, JSTOR)",
+            "Base de Dados Estatística (ex.: IBGE, ONU Data)",
+            "Documento Oficial / Institucional (ex.: ONU, OMS, IBGE)",
+            "Enciclopédia / Dicionário Especializado",
+            "Blog Técnico ou Acadêmico",
+            "Outro"]
 
 
 # Funções auxiliares para encontrar o índice atual nos selects
