@@ -12,7 +12,7 @@ from utils.database import (
     listar_documentos,
     estatisticas_gerais
 )
-
+from sqlalchemy import text
 # ==========================================================
 # EXPORTS
 # ==========================================================
@@ -25,7 +25,7 @@ EXPORT_DIR = Path(__file__).parent / "exports"
 
 criar_tabela()
 
-st.success("Tabela criada com sucesso!")
+# st.success("Tabela criada com sucesso!")
 # ==========================================================
 # CONFIGURAÇÃO DA PÁGINA
 # ==========================================================
@@ -41,7 +41,7 @@ try:
 
    # conn = conectar_db()
 
-    st.success("Conectado ao PostgreSQL/Supabase!")
+   # st.success("Conectado ao PostgreSQL/Supabase!")
 
 except Exception as e:
 
@@ -237,22 +237,24 @@ O sistema permitirá:
 # ==========================================================
 
 try:
-    total_docs = pd.read_sql_query(
-        "SELECT COUNT(*) AS total FROM bibliografia",
-        conn
-    )["total"][0]
+    with conectar_db() as conn:
+        total_docs = pd.read_sql(
+            text("SELECT COUNT(*) AS total FROM bibliografia"),
+            conn
+        )["total"][0]
 
-    total_temas = pd.read_sql_query(
-        "SELECT COUNT(DISTINCT tema) AS total FROM bibliografia",
-        conn
-    )["total"][0]
+        total_temas = pd.read_sql(
+            text("SELECT COUNT(DISTINCT tema) AS total FROM bibliografia"),
+            conn
+        )["total"][0]
 
-    total_paises = pd.read_sql_query(
-        "SELECT COUNT(DISTINCT pais) AS total FROM bibliografia",
-        conn
-    )["total"][0]
+        total_paises = pd.read_sql(
+            text("SELECT COUNT(DISTINCT pais) AS total FROM bibliografia"),
+            conn
+        )["total"][0]
 
-except:
+except Exception as e:
+    st.error(f"Erro ao carregar indicadores: {e}")
     total_docs = 0
     total_temas = 0
     total_paises = 0
