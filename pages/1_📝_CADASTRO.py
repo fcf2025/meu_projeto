@@ -79,7 +79,7 @@ with st.form("form_cadastro", clear_on_submit=True):
     # ======================================================
 
     autores = st.text_input(
-        "Autores"
+        "Autor(es)"
     )
 
     # ======================================================
