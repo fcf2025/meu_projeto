@@ -370,7 +370,7 @@ if salvar:
 # ==========================================================
 # ATUALIZAR DOCUMENTO
 # ==========================================================
-
+nome_pdf = None  # ou "" se preferir
 atualizar_documento(
     doc_id,
     titulo,
