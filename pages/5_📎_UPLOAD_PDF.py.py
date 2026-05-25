@@ -57,23 +57,15 @@ st.markdown("---")
 # ==========================================================
 
 conn = conectar_db()
-query = """
-SELECT
-    id,
-    titulo,
-    autores,
-    ano,
-    arquivo_pdf
-FROM bibliografia
-ORDER BY titulo
-"""
-
-df_docs = pd.read_sql_query(
-    query,
-    conn
-)
-
-conn.close()
+with conn.begin():
+    conn.execute(
+        text("""
+            UPDATE bibliografia
+            SET arquivo_pdf = :arquivo
+            WHERE id = :id
+        """),
+        {"arquivo": novo_nome, "id": doc_id}
+    )
 
 # ==========================================================
 # VERIFICA DOCUMENTOS
@@ -191,17 +183,15 @@ if arquivo_atual:
                 # ==========================================
 
                 conn = conectar_db()
-
-                cursor = conn.cursor()
-
-                cursor.execute("""
-                UPDATE bibliografia
-                SET arquivo_pdf = ''
-                WHERE id = ?
-                """, (doc_id,))
-
-                conn.commit()
-
+                with conn.begin():
+                    conn.execute(
+                        text("""
+                            UPDATE bibliografia
+                            SET arquivo_pdf = ''
+                            WHERE id = :id
+                        """),
+                        {"id": doc_id}
+                    )
                 conn.close()
 
                 st.success(
