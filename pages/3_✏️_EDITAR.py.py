@@ -135,61 +135,49 @@ with st.form(
         value=documento["instituicao"]
     )
 with st.form("form_edicao"):
-# ======================================================
-# TIPO / PAÍS / IDIOMA
-# ======================================================
-col1, col2, col3 = st.columns(3)
+    # ======================================================
+    # TIPO / PAÍS / IDIOMA
+    # ======================================================
+    col1, col2, col3 = st.columns(3)
 
-tipos = [
-    "",
-    "Artigo",
-    "Livro",
-    "Capítulo",
-    "Dissertação",
-    "Tese",
-    "Relatório Técnico",
-    "Nota Técnica",
-    "Legislação",
-    "Manual",
-    "Outro"
-]
+    tipos = [
+        "",
+        "Artigo",
+        "Livro",
+        "Capítulo",
+        "Dissertação",
+        "Tese",
+        "Relatório Técnico",
+        "Nota Técnica",
+        "Legislação",
+        "Manual",
+        "Outro"
+    ]
 
-temas = [
-    "",
-    "Governança e Regulação",
-    "Economia e Tarifação",
-    "Engenharia de Drenagem",
-    "Sustentabilidade Urbana",
-    "Métodos Analíticos",
-    "Infraestrutura Verde",
-    "Mudanças Climáticas",
-    "Outro"
-]
+    paises = [
+        "",
+        "Brasil",
+        "Portugal",
+        "Estados Unidos",
+        "Reino Unido",
+        "França",
+        "Alemanha",
+        "Espanha",
+        "Itália",
+        "China",
+        "Japão",
+        "Outro"
+    ]
 
-paises = [
-    "",
-    "Brasil",
-    "Portugal",
-    "Estados Unidos",
-    "Reino Unido",
-    "França",
-    "Alemanha",
-    "Espanha",
-    "Itália",
-    "China",
-    "Japão",
-    "Outro"
-]
-
-idiomas = [
-    "",
-    "Português",
-    "Inglês",
-    "Espanhol",
-    "Francês",
-    "Alemão",
-    "Outro"
-]
+    idiomas = [
+        "",
+        "Português",
+        "Inglês",
+        "Espanhol",
+        "Francês",
+        "Alemão",
+        "Outro"
+    ]
 
     with col1:
         tipo_documento = st.selectbox("Tipo de Documento", tipos)
@@ -227,6 +215,7 @@ if salvar:
         observacoes
     )
     st.success("Documento atualizado com sucesso!")
+
     # ======================================================
     # TEMA
     # ======================================================
