@@ -195,8 +195,7 @@ if salvar:
             )
             
             st.success("✅ Documento atualizado com sucesso!")
-            st.balloons()
-            
+                        
             # Recarregar a página para atualizar os dados na tela
             # st.rerun() # Opcional: reatualiza a página
             
