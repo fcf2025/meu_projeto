@@ -181,7 +181,15 @@ regioes = ["", "Brasil",
                 "África",
                 "Global",
                 "Outro"]
-
+subtemas = ["",
+    "Gestão de risco de enchentes",
+    "Infraestrutura verde",
+    "Modelagem hidrológica",
+    "Controle de cheias",
+    "Educação ambiental",
+    "Fiscalização",
+    "Outro"
+]
 # Funções auxiliares para encontrar o índice atual nos selects
 def get_index(lista, valor):
     try:
@@ -221,7 +229,7 @@ with st.form("form_edicao"):
     with col_c1:
         tema = st.selectbox("Tema", temas, index=get_index(temas, documento.get("tema")))
     with col_c2:
-        subtema = st.text_input("Subtema", value=documento.get("subtema"))
+        subtema = st.selectbox("Subtema", subtemas, index=get_index(subtemas, documento.get("subtema")))
 
     palavras_chave = st.text_input("Palavras-chave", value=documento.get("palavras_chave", ""))
     resumo = st.text_area("Resumo", value=documento.get("resumo", ""), height=150)
