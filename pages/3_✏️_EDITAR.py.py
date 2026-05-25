@@ -152,7 +152,7 @@ with st.form(
         "Manual",
         "Outro"
     ]
-    pais = 
+    pais = [
         "",  # opção vazia no início
         # 🌎 América do Sul
         "Argentina",
