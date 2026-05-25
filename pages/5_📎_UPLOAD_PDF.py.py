@@ -370,22 +370,22 @@ if len(arquivos_pdf) > 0:
         try:
             caminho_remover = PDF_DIR / arquivo_remover
             caminho_remover.unlink()
-
+    
             # Opcional: remover referência no banco
             conn = conectar_db()
-            cursor = conn.cursor()
-            cursor.execute("""
-            UPDATE bibliografia
-            SET arquivo_pdf = ''
-            WHERE arquivo_pdf = ?
+            conn.execute("""
+                UPDATE bibliografia
+                SET arquivo_pdf = ''
+                WHERE arquivo_pdf = ?
             """, (arquivo_remover,))
             conn.commit()
             conn.close()
-
+    
             st.success(f"PDF {arquivo_remover} removido com sucesso.")
             st.rerun()
         except Exception as e:
             st.error(f"Erro ao remover PDF: {e}")
+
 
 else:
     st.info("Nenhum PDF armazenado.")
