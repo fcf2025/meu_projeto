@@ -281,13 +281,6 @@ if st.button("Excluir este documento", use_container_width=True):
         st.rerun()
     except Exception as e:
         st.error(f"Erro ao excluir documento: {e}")
-        
-            # Recarregar a página para atualizar os dados na tela
-            # st.rerun() # Opcional: reatualiza a página
-            
-        except Exception as e:
-            st.error(f"Erro ao salvar alterações: {e}")
-
 # ==========================================================
 # RODAPÉ
 # ==========================================================
