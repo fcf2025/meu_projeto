@@ -6,3 +6,4 @@ matplotlib
 reportlab
 SQLAlchemy
 psycopg2-binary
+fpdf
