@@ -133,6 +133,31 @@ def buscar_documentos(
     return df
 
 # ==========================================================
+# LISTAR DOCUMENTO 
+# ==========================================================
+def listar_documentos():
+
+    conn = conectar_db()
+
+    query = """
+    SELECT
+        id,
+        titulo,
+        autores,
+        ano,
+        tema,
+        pais,
+        tipo_documento
+    FROM bibliografia
+    ORDER BY id DESC
+    """
+
+    df = pd.read_sql(query, conn)
+
+    conn.close()
+
+    return df
+# ==========================================================
 # OBTER DOCUMENTO POR ID
 # ==========================================================
 
