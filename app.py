@@ -7,7 +7,11 @@ import streamlit as st
 from fpdf import FPDF
 from pathlib import Path
 import pandas as pd
-from utils.database import criar_tabela
+from utils.database import (
+    criar_tabela,
+    listar_documentos,
+    estatisticas_gerais
+)
 
 # ==========================================================
 # EXPORTS
