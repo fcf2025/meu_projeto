@@ -226,19 +226,17 @@ if salvar:
     else:
         try:
             # 1. Gerenciar o PDF
-            nome_pdf = documento.get("arquivo_pdf") # Mantém o antigo por padrão
+            nome_pdf = documento.get("arquivo_pdf")  # Mantém o antigo por padrão
 
             if uploaded_file is not None:
-                # Se enviou um novo, gera novo nome e salva
                 extensao = uploaded_file.name.split(".")[-1]
                 nome_pdf = f"{uuid.uuid4()}.{extensao}"
                 caminho_pdf = PDF_DIR / nome_pdf
-                
+
                 with open(caminho_pdf, "wb") as f:
                     f.write(uploaded_file.getbuffer())
 
-            # 2. Chamar a função de atualização
-            # Certifique-se que a ordem dos argumentos bate com sua função em database.py
+            # 2. Atualizar no banco
             atualizar_documento(
                 doc_id=doc_id,
                 titulo=titulo,
@@ -254,14 +252,17 @@ if salvar:
                 palavras_chave=palavras_chave,
                 doi=doi,
                 link=link,
-                arquivo_pdf=nome_pdf, # O nome do arquivo (novo ou mantido)
+                arquivo_pdf=nome_pdf,
                 categoria=categoria,
                 metodo=metodo,
                 regiao=regiao,
                 observacoes=observacoes
             )
-            
+
             st.success("✅ Documento atualizado com sucesso!")
+        except Exception as e:
+            st.error(f"Erro ao salvar alterações: {e}")
+
 # ==========================================================
 # BOTÃO DE EXCLUSÃO DE DOCUMENTO
 # ==========================================================
@@ -293,6 +294,7 @@ if confirmar_exclusao:
             st.rerun()
         except Exception as e:
             st.error(f"Erro ao excluir documento: {e}")
+
 # ==========================================================
 # RODAPÉ
 # ==========================================================
