@@ -133,6 +133,111 @@ def buscar_documentos(
     return df
 
 # ==========================================================
+# INSERIR DOCUMENTO
+# ==========================================================
+
+def inserir_documento(
+    titulo,
+    autores,
+    ano,
+    instituicao,
+    tipo_documento,
+    pais,
+    idioma,
+    tema,
+    subtema,
+    resumo,
+    palavras_chave,
+    doi,
+    link,
+    arquivo_pdf,
+    categoria,
+    metodo,
+    regiao,
+    observacoes
+):
+
+    conn = conectar_db()
+
+    query = text("""
+
+    INSERT INTO bibliografia (
+
+        titulo,
+        autores,
+        ano,
+        instituicao,
+        tipo_documento,
+        pais,
+        idioma,
+        tema,
+        subtema,
+        resumo,
+        palavras_chave,
+        doi,
+        link,
+        arquivo_pdf,
+        categoria,
+        metodo,
+        regiao,
+        observacoes
+
+    )
+
+    VALUES (
+
+        :titulo,
+        :autores,
+        :ano,
+        :instituicao,
+        :tipo_documento,
+        :pais,
+        :idioma,
+        :tema,
+        :subtema,
+        :resumo,
+        :palavras_chave,
+        :doi,
+        :link,
+        :arquivo_pdf,
+        :categoria,
+        :metodo,
+        :regiao,
+        :observacoes
+
+    )
+
+    """)
+
+    conn.execute(query, {
+
+        "titulo": titulo,
+        "autores": autores,
+        "ano": ano,
+        "instituicao": instituicao,
+        "tipo_documento": tipo_documento,
+        "pais": pais,
+        "idioma": idioma,
+        "tema": tema,
+        "subtema": subtema,
+        "resumo": resumo,
+        "palavras_chave": palavras_chave,
+        "doi": doi,
+        "link": link,
+        "arquivo_pdf": arquivo_pdf,
+        "categoria": categoria,
+        "metodo": metodo,
+        "regiao": regiao,
+        "observacoes": observacoes
+
+    })
+
+    conn.commit()
+
+    conn.close()
+
+
+# ==========================================================
 # LISTAR DOCUMENTO 
 # ==========================================================
 def listar_documentos():
