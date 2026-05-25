@@ -13,6 +13,7 @@ from utils.database import (
     estatisticas_gerais
 )
 from sqlalchemy import text
+from utils.database import estatisticas_gerais
 # ==========================================================
 # EXPORTS
 # ==========================================================
@@ -237,48 +238,49 @@ O sistema permitirá:
 # ==========================================================
 
 try:
-    with conectar_db() as conn:
-        total_docs = pd.read_sql(
-            text("SELECT COUNT(*) AS total FROM bibliografia"),
-            conn
-        )["total"][0]
 
-        total_temas = pd.read_sql(
-            text("SELECT COUNT(DISTINCT tema) AS total FROM bibliografia"),
-            conn
-        )["total"][0]
+    stats = estatisticas_gerais()
 
-        total_paises = pd.read_sql(
-            text("SELECT COUNT(DISTINCT pais) AS total FROM bibliografia"),
-            conn
-        )["total"][0]
+    total_docs = stats["total_documentos"]
+    total_temas = stats["total_temas"]
+    total_paises = stats["total_paises"]
 
 except Exception as e:
-    st.error(f"Erro ao carregar indicadores: {e}")
+
+    st.error(
+        f"Erro ao carregar indicadores: {e}"
+    )
+
     total_docs = 0
     total_temas = 0
     total_paises = 0
 
+# ==========================================================
+# MÉTRICAS
+# ==========================================================
+
 col1, col2, col3 = st.columns(3)
 
 with col1:
+
     st.metric(
         label="Documentos",
         value=total_docs
     )
 
 with col2:
+
     st.metric(
         label="Temas",
         value=total_temas
     )
 
 with col3:
+
     st.metric(
         label="Países",
         value=total_paises
     )
-
 # ==========================================================
 # ÁREA CENTRAL
 # ==========================================================
