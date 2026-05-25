@@ -138,6 +138,9 @@ with st.form("form_edicao"):
     # ======================================================
     # TIPO / PAÍS / IDIOMA
     # ======================================================
+    titulo = st.text_input("Título", value=documento["titulo"])
+    autores = st.text_input("Autores", value=documento["autores"])
+    ano = st.number_input("Ano", value=documento["ano"], step=1)
     col1, col2, col3 = st.columns(3)
 
     tipos = [
