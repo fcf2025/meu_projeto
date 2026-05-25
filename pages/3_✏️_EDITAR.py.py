@@ -103,7 +103,17 @@ tipos = ["",    "Artigo",
                 "Outros", "Outro"]
 paises = ["", "Brasil", "Portugal", "Estados Unidos", "Reino Unido", "França", "Alemanha", "Espanha", "Itália", "China", "Japão", "Outro"]
 idiomas = ["", "Português", "Inglês", "Espanhol", "Francês", "Alemão", "Outro"]
-temas = ["", "Planejamento Urbano", "Meio Ambiente", "Mobilidade", "Habitação", "Geoprocessamento", "Legislação", "Outros"]
+temas = ["",    "Planejamento e elaboração de Planos de Drenagem e Manejo de Águas Pluviais (PDMP)",
+                "Integração entre DMAPU e plano diretor municipal",
+                "Zoneamento de risco de inundações e ocupação de áreas críticas",
+                "Medidas estruturais de drenagem (bueiros, canais, reservatórios, bacias de detenção)",
+                "Infraestrutura verde e soluções baseadas na natureza na drenagem urbana",
+                "Modelagem hidrológica e hidráulica de bacias urbanas",
+                "Controle de cheias e gestão de eventos pluviais extremos",
+                "Gestão integrada de recursos hídricos e DMAPU",
+                "Políticas públicas, regulamentação e fiscalização do manejo de águas pluviais",
+                "Participação comunitária, educação ambiental e aceitação social de obras de drenagem",
+                "Outro", "Outros"]
 veiculos = ["","Revista",
             "Journal",
             "Periódico",
