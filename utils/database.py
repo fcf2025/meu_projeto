@@ -23,6 +23,53 @@ def conectar_db():
 # CRIAR TABELA
 # ==========================================================
 
+def criar_tabela():
+
+    conn = conectar_db()
+
+    query = text("""
+
+    CREATE TABLE IF NOT EXISTS bibliografia (
+
+        id SERIAL PRIMARY KEY,
+
+        titulo TEXT,
+        autores TEXT,
+        ano INTEGER,
+
+        instituicao TEXT,
+        tipo_documento TEXT,
+
+        pais TEXT,
+        idioma TEXT,
+
+        tema TEXT,
+        subtema TEXT,
+
+        resumo TEXT,
+        palavras_chave TEXT,
+
+        doi TEXT,
+        link TEXT,
+
+        arquivo_pdf TEXT,
+
+        categoria TEXT,
+        metodo TEXT,
+        regiao TEXT,
+
+        observacoes TEXT
+
+    )
+
+    """)
+
+    conn.execute(query)
+
+    conn.commit()
+
+    conn.close()
+
 def buscar_documentos(
     texto="",
     tema="",
@@ -120,22 +167,19 @@ def buscar_documentos(
 # ==========================================================
 
 def obter_documento(doc_id):
-    """
-    Retorna documento específico
-    """
 
     conn = conectar_db()
 
-    query = """
+    query = text("""
     SELECT *
     FROM bibliografia
-    WHERE id = %s
-    """
+    WHERE id = :id
+    """)
 
     df = pd.read_sql(
         query,
         conn,
-        params=[doc_id]
+        params={"id": doc_id}
     )
 
     conn.close()
@@ -150,20 +194,15 @@ def obter_documento(doc_id):
 # ==========================================================
 
 def excluir_documento(doc_id):
-    """
-    Remove documento do banco
-    """
 
     conn = conectar_db()
 
-    cursor = conn.cursor()
-
-    query = """
+    query = text("""
     DELETE FROM bibliografia
-    WHERE id = %s
-    """
+    WHERE id = :id
+    """)
 
-    cursor.execute(query, (doc_id,))
+    conn.execute(query, {"id": doc_id})
 
     conn.commit()
 
