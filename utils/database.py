@@ -19,6 +19,7 @@ engine = create_engine(DATABASE_URL)
 
 def conectar_db():
     return engine.connect()
+
 # ==========================================================
 # CRIAR TABELA
 # ==========================================================
@@ -35,30 +36,7 @@ def criar_tabela():
 
         titulo TEXT,
         autores TEXT,
-        ano INTEGER,
-
-        instituicao TEXT,
-        tipo_documento TEXT,
-
-        pais TEXT,
-        idioma TEXT,
-
-        tema TEXT,
-        subtema TEXT,
-
-        resumo TEXT,
-        palavras_chave TEXT,
-
-        doi TEXT,
-        link TEXT,
-
-        arquivo_pdf TEXT,
-
-        categoria TEXT,
-        metodo TEXT,
-        regiao TEXT,
-
-        observacoes TEXT
+        ano INTEGER
 
     )
 
