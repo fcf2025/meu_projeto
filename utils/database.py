@@ -23,188 +23,6 @@ def conectar_db():
 # CRIAR TABELA
 # ==========================================================
 
-def criar_tabela():
-
-    conn = conectar_db()
-
-    query = """
-    CREATE TABLE IF NOT EXISTS bibliografia (
-
-        id SERIAL PRIMARY KEY,
-
-        titulo TEXT,
-        autores TEXT,
-        ano INTEGER,
-        instituicao TEXT,
-        tipo_documento TEXT,
-
-        pais TEXT,
-        idioma TEXT,
-
-        tema TEXT,
-        subtema TEXT,
-
-        resumo TEXT,
-        palavras_chave TEXT,
-
-        doi TEXT,
-        link TEXT,
-
-        arquivo_pdf TEXT,
-
-        categoria TEXT,
-        metodo TEXT,
-        regiao TEXT,
-        documentos TEXT,
-        observacoes TEXT
-    )
-    """
-
-    conn.execute(text(query))
-
-    conn.commit()
-
-    conn.close()
-
-
-# ==========================================================
-# INSERIR DOCUMENTO
-# ==========================================================
-
-def inserir_documento(
-    titulo,
-    autores,
-    ano,
-    instituicao,
-    tipo_documento,
-    pais,
-    idioma,
-    tema,
-    subtema,
-    resumo,
-    palavras_chave,
-    doi,
-    link,
-    arquivo_pdf,
-    categoria,
-    metodo,
-    regiao,
-    observacoes
-):
-
-    conn = conectar_db()
-
-    query = text("""
-
-    INSERT INTO bibliografia (
-
-        titulo,
-        autores,
-        ano,
-        instituicao,
-        tipo_documento,
-        pais,
-        idioma,
-        tema,
-        subtema,
-        resumo,
-        palavras_chave,
-        doi,
-        link,
-        arquivo_pdf,
-        categoria,
-        metodo,
-        regiao,
-        observacoes
-
-    )
-
-    VALUES (
-
-        :titulo,
-        :autores,
-        :ano,
-        :instituicao,
-        :tipo_documento,
-        :pais,
-        :idioma,
-        :tema,
-        :subtema,
-        :resumo,
-        :palavras_chave,
-        :doi,
-        :link,
-        :arquivo_pdf,
-        :categoria,
-        :metodo,
-        :regiao,
-        :observacoes
-
-    )
-
-    """)
-
-    conn.execute(query, {
-
-        "titulo": titulo,
-        "autores": autores,
-        "ano": ano,
-        "instituicao": instituicao,
-        "tipo_documento": tipo_documento,
-        "pais": pais,
-        "idioma": idioma,
-        "tema": tema,
-        "subtema": subtema,
-        "resumo": resumo,
-        "palavras_chave": palavras_chave,
-        "doi": doi,
-        "link": link,
-        "arquivo_pdf": arquivo_pdf,
-        "categoria": categoria,
-        "metodo": metodo,
-        "regiao": regiao,
-        "observacoes": observacoes
-
-    })
-
-    conn.commit()
-
-    conn.close()
-
-# ==========================================================
-# LISTAR DOCUMENTOS
-# ==========================================================
-
-def listar_documentos():
-    """
-    Retorna todos os documentos
-    """
-
-    conn = conectar_db()
-
-    query = """
-    SELECT
-        id,
-        titulo,
-        autores,
-        ano,
-        tema,
-        pais,
-        tipo_documento
-    FROM bibliografia
-    ORDER BY id DESC
-    """
-
-    df = pd.read_sql(query, conn)
-
-    conn.close()
-
-    return df
-
-# ==========================================================
-# BUSCA GERAL
-# ==========================================================
-
 def buscar_documentos(
     texto="",
     tema="",
@@ -232,7 +50,7 @@ def buscar_documentos(
     WHERE 1=1
     """
 
-    parametros = []
+    parametros = {}
 
     # ======================================================
     # TEXTO
@@ -242,21 +60,14 @@ def buscar_documentos(
 
         query += """
         AND (
-            titulo LIKE %s
-            OR autores LIKE %s
-            OR resumo LIKE %s
-            OR palavras_chave LIKE %s
+            titulo ILIKE :termo
+            OR autores ILIKE :termo
+            OR resumo ILIKE :termo
+            OR palavras_chave ILIKE :termo
         )
         """
 
-        termo = f"%{texto}%"
-
-        parametros.extend([
-            termo,
-            termo,
-            termo,
-            termo
-        ])
+        parametros["termo"] = f"%{texto}%"
 
     # ======================================================
     # TEMA
@@ -264,9 +75,9 @@ def buscar_documentos(
 
     if tema:
 
-        query += " AND tema = %s "
+        query += " AND tema = :tema "
 
-        parametros.append(tema)
+        parametros["tema"] = tema
 
     # ======================================================
     # ANO
@@ -274,9 +85,9 @@ def buscar_documentos(
 
     if ano:
 
-        query += " AND ano = %s "
+        query += " AND ano = :ano "
 
-        parametros.append(ano)
+        parametros["ano"] = ano
 
     # ======================================================
     # PAÍS
@@ -284,9 +95,9 @@ def buscar_documentos(
 
     if pais:
 
-        query += " AND pais = %s "
+        query += " AND pais = :pais "
 
-        parametros.append(pais)
+        parametros["pais"] = pais
 
     # ======================================================
     # ORDENAÇÃO
@@ -295,7 +106,7 @@ def buscar_documentos(
     query += " ORDER BY ano DESC, titulo ASC "
 
     df = pd.read_sql(
-        query,
+        text(query),
         conn,
         params=parametros
     )
