@@ -1,11 +1,23 @@
 # ==========================================================
 # app.py
-# Biblioteca Digital DMAPU
+# Biblioteca Digital DMAPLU
 # ==========================================================
 
 import streamlit as st
 
+from pathlib import Path
+
 from utils.database import criar_tabela
+
+# ==========================================================
+# EXPORTS
+# ==========================================================
+
+EXPORT_DIR = Path(__file__).parent / "exports"
+
+# ==========================================================
+# CRIA TABELA
+# ==========================================================
 
 criar_tabela()
 
