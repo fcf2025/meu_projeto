@@ -429,7 +429,7 @@ if salvar:
         # ==================================================
         # ATUALIZA BANCO
         # ==================================================
-
+        nome_pdf = ""
         atualizar_documento(
             doc_id,
             titulo,
