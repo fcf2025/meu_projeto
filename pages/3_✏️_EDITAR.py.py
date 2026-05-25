@@ -8,13 +8,14 @@ import streamlit as st
 from pathlib import Path
 import uuid
 import pandas as pd
-
+from sqlalchemy import text
 # Importações das funções de banco de dados
 # Certifique-se de que estas funções existam em utils/database.py
 from utils.database import (
     listar_documentos,
     obter_documento,
-    atualizar_documento
+    atualizar_documento,
+    conectar_db  # certifique-se que essa função retorna a conexão SQLAlchemy
 )
 
 # ==========================================================
@@ -261,7 +262,26 @@ if salvar:
             )
             
             st.success("✅ Documento atualizado com sucesso!")
-                        
+# ==========================================================
+# BOTÃO DE EXCLUSÃO
+# ==========================================================
+
+st.markdown("---")
+st.subheader("🗑️ Excluir Documento")
+
+if st.button("Excluir este documento", use_container_width=True):
+    try:
+        conn = conectar_db()
+        with conn.begin():
+            conn.execute(
+                text("DELETE FROM bibliografia WHERE id = :id"),
+                {"id": doc_id}
+            )
+        st.success("📌 Documento excluído com sucesso!")
+        st.rerun()
+    except Exception as e:
+        st.error(f"Erro ao excluir documento: {e}")
+        
             # Recarregar a página para atualizar os dados na tela
             # st.rerun() # Opcional: reatualiza a página
             
