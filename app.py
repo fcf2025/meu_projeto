@@ -5,14 +5,11 @@
 
 import streamlit as st
 
-from utils.database import (
-    conectar_db,
-    criar_tabela
-)
+from utils.database import criar_tabela
 
 criar_tabela()
 
-st.success("Tabela criada!")
+st.success("Tabela criada com sucesso!")
 # ==========================================================
 # CONFIGURAÇÃO DA PÁGINA
 # ==========================================================
