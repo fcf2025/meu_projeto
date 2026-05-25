@@ -1,181 +1,113 @@
-# ==========================================================
-# pages/upload_pdf.py
-# ==========================================================
-
 import streamlit as st
 import pandas as pd
 from pathlib import Path
 import uuid
 from sqlalchemy import text
-
-# ==========================================================
-# IMPORTS E CONFIGURAÇÃO
-# ==========================================================
 from utils.database import conectar_db
 
-st.set_page_config(
-    page_title="Upload de PDFs",
-    page_icon="📎",
-    layout="wide"
-)
-
 # ==========================================================
-# CAMINHOS E DIRETÓRIOS
+# 1. AJUSTE DE CAMINHO (MUITO IMPORTANTE)
 # ==========================================================
+# Se seus PDFs estão na mesma pasta que os scripts (como mostra sua imagem 1)
+# mude o caminho abaixo. 
 BASE_DIR = Path(__file__).resolve().parent.parent
-PDF_DIR = BASE_DIR / "pdfs"
+PDF_DIR = BASE_DIR / "pdfs" 
 PDF_DIR.mkdir(exist_ok=True)
 
-# ==========================================================
-# FUNÇÃO DE EXECUÇÃO SQL (RESOLVE O ERRO DE CONEXÃO)
-# ==========================================================
 def executar_sql(query, params):
-    """Executa SQL tratando se a conexão é Engine ou Connection."""
     conn = conectar_db()
     try:
-        # Se for um Engine (tem o método connect)
         if hasattr(conn, 'connect'):
             with conn.connect() as connection:
                 with connection.begin():
                     connection.execute(text(query), params)
-        # Se já for uma Conexão direta
         else:
             conn.execute(text(query), params)
-            if hasattr(conn, 'commit'):
-                conn.commit()
+            if hasattr(conn, 'commit'): conn.commit()
         return True
     except Exception as e:
-        st.error(f"Erro no banco de dados: {e}")
+        st.error(f"Erro SQL: {e}")
         return False
     finally:
-        if hasattr(conn, 'close'):
-            conn.close()
+        if hasattr(conn, 'close'): conn.close()
 
 def carregar_documentos():
     conn = conectar_db()
-    query = "SELECT id, titulo, autores, ano, arquivo_pdf FROM bibliografia ORDER BY titulo ASC"
     try:
-        df = pd.read_sql(query, conn)
-        return df
-    except Exception as e:
-        st.error(f"Erro ao ler banco: {e}")
-        return pd.DataFrame()
+        return pd.read_sql("SELECT id, titulo, arquivo_pdf FROM bibliografia ORDER BY titulo", conn)
     finally:
-        if hasattr(conn, "close"):
-            conn.close()
+        if hasattr(conn, 'close'): conn.close()
 
 # ==========================================================
-# TÍTULO E CARREGAMENTO
+# UI INTERFACE
 # ==========================================================
-st.title("📎 Gerenciamento de PDFs")
+st.title("📎 Atualizar PDF")
 
 df_docs = carregar_documentos()
+documentos_dict = {f"{r['id']} - {r['titulo']}": r['id'] for _, r in df_docs.iterrows()}
+selecionado = st.selectbox("Selecione o documento:", list(documentos_dict.keys()))
+doc_id = documentos_dict[selecionado]
 
-if df_docs.empty:
-    st.warning("Nenhum documento cadastrado.")
-    st.stop()
-
-# ==========================================================
-# SELEÇÃO
-# ==========================================================
-documentos_dict = {
-    f"{row['id']} - {row['titulo']}": row["id"]
-    for _, row in df_docs.iterrows()
-}
-
-selecionado_label = st.selectbox("Selecione o documento:", list(documentos_dict.keys()))
-doc_id = documentos_dict[selecionado_label]
-documento = df_docs[df_docs["id"] == doc_id].iloc[0]
-
-# Dados do Doc em colunas
-col1, col2, col3 = st.columns(3)
-with col1: st.info(f"**Título**\n\n{documento['titulo']}")
-with col2: st.info(f"**Autores**\n\n{documento['autores']}")
-with col3: st.info(f"**Ano**\n\n{documento['ano']}")
+# Pega os dados exatos do banco para o ID selecionado
+doc_info = df_docs[df_docs['id'] == doc_id].iloc[0]
+arquivo_no_banco = doc_info['arquivo_pdf']
 
 st.markdown("---")
 
 # ==========================================================
-# STATUS DO PDF
+# DIAGNÓSTICO DO PROBLEMA
 # ==========================================================
-st.subheader("📄 Status do PDF")
-
-arquivo_atual = documento["arquivo_pdf"]
-
-# Verificação robusta de valor nulo
-if arquivo_atual and not pd.isna(arquivo_atual) and str(arquivo_atual).strip() != "":
+with st.expander("🔍 Diagnóstico de Sincronização"):
+    st.write(f"**ID no Banco:** {doc_id}")
+    st.write(f"**Valor na coluna 'arquivo_pdf':** `{arquivo_no_banco}`")
+    st.write(f"**Pasta onde o sistema procura:** `{PDF_DIR.absolute()}`")
     
-    nome_arquivo_str = str(arquivo_atual)
-    caminho_pdf = PDF_DIR / nome_arquivo_str
+    arquivos_na_pasta = list(PDF_DIR.glob("*.pdf"))
+    st.write(f"**Total de PDFs encontrados na pasta:** {len(arquivos_na_pasta)}")
+
+# ==========================================================
+# LÓGICA DE EXIBIÇÃO (O QUE ESTAVA DANDO ERRO)
+# ==========================================================
+# Verificamos se o banco tem algo escrito E se esse arquivo existe no disco
+if arquivo_no_banco and str(arquivo_no_banco).strip() != "" and not pd.isna(arquivo_no_banco):
+    caminho_pdf = PDF_DIR / str(arquivo_no_banco)
     
     if caminho_pdf.exists():
-        st.success(f"Arquivo associado: {nome_arquivo_str}")
-        
-        c1, c2 = st.columns(2)
-        with c1:
-            with open(caminho_pdf, "rb") as f:
-                st.download_button("⬇️ Baixar PDF", f, file_name=nome_arquivo_str, use_container_width=True)
-        with c2:
-            if st.button("🗑️ Remover PDF Atual", use_container_width=True):
-                # 1. Tenta atualizar o banco primeiro
-                sucesso = executar_sql(
-                    "UPDATE bibliografia SET arquivo_pdf = NULL WHERE id = :id", 
-                    {"id": int(doc_id)}
-                )
-                if sucesso:
-                    # 2. Se atualizou o banco, remove o arquivo físico
-                    if caminho_pdf.exists():
-                        caminho_pdf.unlink()
-                    st.success("Removido com sucesso!")
-                    st.rerun()
+        st.success(f"✅ PDF vinculado e encontrado: `{arquivo_no_banco}`")
+        with open(caminho_pdf, "rb") as f:
+            st.download_button("⬇️ Baixar PDF Atual", f, file_name=str(arquivo_no_banco))
     else:
-        st.warning(f"O registro existe no banco ({nome_arquivo_str}), mas o arquivo físico não foi encontrado.")
-        if st.button("Limpar registro inexistente no banco"):
-            executar_sql("UPDATE bibliografia SET arquivo_pdf = NULL WHERE id = :id", {"id": int(doc_id)})
-            st.rerun()
+        st.error(f"⚠️ O banco diz que o arquivo é `{arquivo_no_banco}`, mas ele NÃO está na pasta!")
+        st.info("Faça um novo upload abaixo para corrigir.")
 else:
-    st.info("Nenhum PDF associado a este documento.")
+    # ESTA É A MENSAGEM QUE ESTAVA APARECENDO PARA VOCÊ
+    st.warning("ℹ️ PDF atual: Nenhum arquivo anexado no banco de dados para este documento.")
 
-# ==========================================================
-# UPLOAD
-# ==========================================================
 st.markdown("---")
-st.subheader("📤 Novo Upload")
-uploaded_file = st.file_uploader("Selecione o arquivo PDF", type=["pdf"])
+st.subheader("Selecionar novo PDF (substituirá o atual)")
+uploaded_file = st.file_uploader("Upload", type=["pdf"], label_visibility="collapsed")
 
-if st.button("💾 Salvar PDF", use_container_width=True):
+if st.button("💾 Salvar Alterações", use_container_width=True):
     if uploaded_file:
-        try:
-            # 1. Gerar nome único
-            novo_nome = f"{uuid.uuid4()}.pdf"
-            
-            # 2. Salvar arquivo físico
-            with open(PDF_DIR / novo_nome, "wb") as f:
-                f.write(uploaded_file.getbuffer())
-            
-            # 3. Atualizar Banco de Dados
-            sucesso = executar_sql(
-                "UPDATE bibliografia SET arquivo_pdf = :nome WHERE id = :id",
-                {"nome": novo_nome, "id": int(doc_id)}
-            )
-            
-            if sucesso:
-                # 4. Remover arquivo físico antigo se ele existia
-                if arquivo_atual and not pd.isna(arquivo_atual):
-                    antigo = PDF_DIR / str(arquivo_atual)
-                    if antigo.exists():
-                        antigo.unlink()
-                
-                st.success("✅ Upload realizado com sucesso!")
-                st.rerun()
-            else:
-                # Se falhou o banco, remove o arquivo que acabou de subir para não sujar a pasta
-                (PDF_DIR / novo_nome).unlink()
-
-        except Exception as e:
-            st.error(f"Erro no processo de upload: {e}")
+        # 1. Criar novo nome
+        novo_nome = f"{uuid.uuid4()}.pdf"
+        caminho_destino = PDF_DIR / novo_nome
+        
+        # 2. Salvar arquivo físico
+        with open(caminho_destino, "wb") as f:
+            f.write(uploaded_file.getbuffer())
+        
+        # 3. Atualizar Banco
+        sucesso = executar_sql(
+            "UPDATE bibliografia SET arquivo_pdf = :nome WHERE id = :id",
+            {"nome": novo_nome, "id": int(doc_id)}
+        )
+        
+        if sucesso:
+            st.success("✅ Banco de dados atualizado e arquivo salvo!")
+            st.rerun()
     else:
-        st.warning("Selecione um arquivo PDF antes de salvar.")
+        st.error("Selecione um arquivo PDF primeiro.")
 
 # ==========================================================
 # RODAPÉ
