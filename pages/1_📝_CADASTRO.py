@@ -3,17 +3,37 @@
 # Cadastro de Bibliografia
 # Biblioteca Digital DMAPU
 # ==========================================================
-
+from sqlalchemy import text
 import streamlit as st
 from pathlib import Path
 import uuid
 import pandas as pd
-from fpdf import FPDF
+from fpdf import FPDFfrom utils.database 
+import conectar_db, inserir_documento # adicione conectar_db aqui
 # ==========================================================
 # IMPORTA FUNÇÕES DO BANCO
 # ==========================================================
 
 from utils.database import inserir_documento
+
+def verificar_duplicidade(titulo, autores):
+    """Verifica se já existe título e autor idênticos no banco."""
+    conn = conectar_db()
+    query = text("""
+        SELECT id FROM bibliografia 
+        WHERE LOWER(TRIM(titulo)) = LOWER(TRIM(:t)) 
+        AND LOWER(TRIM(autores)) = LOWER(TRIM(:a))
+    """)
+    try:
+        # Lógica para tratar Engine ou Connection
+        if hasattr(conn, 'connect'):
+            with conn.connect() as connection:
+                res = connection.execute(query, {"t": titulo, "a": autores}).fetchone()
+        else:
+            res = conn.execute(query, {"t": titulo, "a": autores}).fetchone()
+        return res is not None
+    finally:
+        if hasattr(conn, 'close'): conn.close()
 
 # ==========================================================
 # CONFIGURAÇÃO DA PÁGINA
@@ -553,37 +573,37 @@ if submitted:
     # VALIDAÇÃO
     # ======================================================
 
-    if titulo.strip() == "":
+# ==========================================================
+# PROCESSAMENTO (ATUALIZADO COM CRÍTICA)
+# ==========================================================
 
+if submitted:
+
+    # 1. VALIDAÇÃO DE CAMPOS OBRIGATÓRIOS
+    if titulo.strip() == "":
         st.error("O título é obrigatório.")
+    
+    # 2. CRÍTICA DE DUPLICIDADE (A NOVIDADE VAI AQUI)
+    elif verificar_duplicidade(titulo, autores):
+        st.warning(f"⚠️ Já existe um registro cadastrado com este título e autor(es).")
+        st.info("Verifique se o documento já não foi inserido anteriormente ou se trata de uma edição diferente.")
 
     else:
-
         try:
-
             # ==================================================
             # PDF
             # ==================================================
-
             nome_pdf = ""
-
             if uploaded_file is not None:
-
                 extensao = uploaded_file.name.split(".")[-1]
-
-                nome_pdf = (
-                    f"{uuid.uuid4()}.{extensao}"
-                )
-
+                nome_pdf = f"{uuid.uuid4()}.{extensao}"
                 caminho_pdf = PDF_DIR / nome_pdf
-
                 with open(caminho_pdf, "wb") as f:
                     f.write(uploaded_file.read())
 
             # ==================================================
-            # INSERÇÃO
+            # INSERÇÃO (Só acontece se passar na crítica acima)
             # ==================================================
-
             inserir_documento(
                 titulo=titulo,
                 autores=autores,
@@ -606,14 +626,11 @@ if submitted:
             )
 
             st.success("Cadastro realizado com sucesso!")
+            st.balloons() # Um efeito visual de sucesso
             st.toast("Dados atualizados!")
 
         except Exception as e:
-
-            st.error(
-                f"Erro ao salvar documento: {e}"
-            )
-
+            st.error(f"Erro ao salvar documento: {e}")
 
 # ==========================================================
 # RODAPÉ
