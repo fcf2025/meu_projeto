@@ -173,7 +173,7 @@ with st.form("form_cadastro", clear_on_submit=True):
                 "Estudo Transversal – análise em um único momento ou recorte.",
                 "Outro"])
     with col3:
-        regiao = st.selectbox("Região", ["", "Brasil", "América Latina", "Europa", "Global", "Outro"])
+        regiao = st.selectbox("Região", ["", "Brasil", "América Latina","América do Norte", "Europa", "Global", "Outro"])
 
     observacoes = st.text_area("Observações", height=80)
 
