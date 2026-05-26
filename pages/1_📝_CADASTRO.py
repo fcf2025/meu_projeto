@@ -151,7 +151,27 @@ with st.form("form_cadastro", clear_on_submit=True):
                 "Resiliência e adaptação às mudanças climáticas",
                 "Outro"])
     with col2:
-        metodo = st.selectbox("Método", ["", "Pesquisa de Campo", "Entrevistas", "Modelagem", "Análise Documental", "Outro"])
+        metodo = st.selectbox("Método", ["", "Pesquisa de Campo – coleta de dados diretamente em ambientes reais.",
+                "Entrevistas – estruturadas, semiestruturadas ou abertas.",
+                "Questionários/Survey – aplicação de formulários para coleta de dados.",
+                "Observação Participante – acompanhamento direto de práticas ou comunidades.",
+                "Experimento Controlado – testes em condições laboratoriais ou simuladas.",
+                "Modelagem Matemática – construção de equações e modelos analíticos.",
+                "Análise Documental – estudo de relatórios, legislações, registros históricos.",
+                "Benchmarking – comparação com padrões ou casos de referência.",
+                "Delphi/Consulta a Especialistas – coleta de opiniões de especialistas em rodadas sucessivas.",
+                "Análise Multicritério – avaliação de alternativas considerando múltiplos fatores.",
+                "Geoprocessamento/SIG – uso de Sistemas de Informação Geográfica.",
+                "Análise de Sensibilidade – testar variações em parâmetros de modelos.",
+                "Prototipagem – desenvolvimento de versões iniciais de soluções para teste.",
+                "Meta-análise – síntese quantitativa de resultados de múltiplos estudos.",
+                "Revisão Sistemática – levantamento estruturado e criterioso da literatura.",
+                "Simulação Estocástica/Monte Carlo – uso de probabilidades para prever cenários.",
+                "Análise Qualitativa – categorização e interpretação de dados não numéricos.",
+                "Análise Quantitativa – uso de estatística e métricas numéricas.",
+                "Estudo Longitudinal – acompanhamento de fenômenos ao longo do tempo.",
+                "Estudo Transversal – análise em um único momento ou recorte.",
+                "Outro"])
     with col3:
         regiao = st.selectbox("Região", ["", "Brasil", "América Latina", "Europa", "Global", "Outro"])
 
