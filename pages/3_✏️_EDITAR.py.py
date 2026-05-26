@@ -214,7 +214,7 @@ with st.form("form_edicao"):
     col_t1, col_t2 = st.columns([3, 1])
     with col_t1:
         titulo = st.text_input("Título *", value=documento.get("titulo", ""))
-    with col2:
+    with col_t2:
         # Criamos uma lista de anos de 2030 até 2000
         lista_anos = list(range(2030, 2000, -1))
         
