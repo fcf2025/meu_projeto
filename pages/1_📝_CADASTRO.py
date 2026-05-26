@@ -69,7 +69,14 @@ with st.form("form_cadastro", clear_on_submit=True):
     with col1:
         titulo = st.text_input("Título *")
     with col2:
-        ano = st.number_input("Ano", min_value=1900, max_value=2100, step=1, value=2025)
+        # Criamos uma lista de anos de 2030 até 1900
+        lista_anos = list(range(2030, 1899, -1))
+        
+        ano = st.selectbox(
+            "Ano",
+            options=lista_anos,
+            index=5 # Isso define o ano 2025 como padrão (posições: 2030=0, 2029=1...)
+        )
 
     # LINHA 2
     autores = st.text_input("Autor(es)")
