@@ -99,7 +99,7 @@ with st.form("form_cadastro", clear_on_submit=True):
                 "Controle de cheias e gestão de eventos pluviais extremos",
                 "Gestão integrada de recursos hídricos e DMAPU",
                 "Políticas públicas, regulamentação e fiscalização do manejo de águas pluviais",
-                "Participação comunitária, educação ambiental e aceitação social de obras de drenagem",
+                "Participação comunitária, educação ambiental e aceitação social de obras de drenagem","Financiamento",
                 "Outro"])
     with col2:
         subtema = st.selectbox("Subtema", ["", "Planejamento urbano integrado",
