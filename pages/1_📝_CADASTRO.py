@@ -213,7 +213,6 @@ if submitted:
             )
 
             st.success("Cadastro realizado com sucesso!")
-            st.balloons()
             st.toast("Dados atualizados!")
 
         except Exception as e:
