@@ -94,8 +94,18 @@ with st.form("form_cadastro", clear_on_submit=True):
     # LINHA 5
     col1, col2 = st.columns(2)
     with col1:
-        tema = st.selectbox("Tema", ["", "Planejamento e Planos de Drenagem", "Infraestrutura verde", "Controle de cheias", "Outro"])
-    with col2:
+        tema = st.selectbox("Tema", ["", "Planejamento e elaboração de Planos de Drenagem e Manejo de Águas Pluviais (PDMP)",
+                "Integração entre DMAPU e plano diretor municipal",
+                "Zoneamento de risco de inundações e ocupação de áreas críticas",
+                "Medidas estruturais de drenagem (bueiros, canais, reservatórios, bacias de detenção)",
+                "Infraestrutura verde e soluções baseadas na natureza na drenagem urbana",
+                "Modelagem hidrológica e hidráulica de bacias urbanas",
+                "Controle de cheias e gestão de eventos pluviais extremos",
+                "Gestão integrada de recursos hídricos e DMAPU",
+                "Políticas públicas, regulamentação e fiscalização do manejo de águas pluviais",
+                "Participação comunitária, educação ambiental e aceitação social de obras de drenagem",
+                "Outro"]
+   with col2:
         subtema = st.selectbox("Subtema", ["", "Planejamento urbano integrado", "Bacias de detenção", "Educação ambiental", "Outro"])
 
     palavras_chave = st.text_input("Palavras-chave")
