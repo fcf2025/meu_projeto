@@ -7,7 +7,7 @@ import streamlit as st
 from pathlib import Path
 import uuid
 from sqlalchemy import text
-
+import time
 # ==========================================================
 # IMPORTAÇÕES DE BANCO
 # ==========================================================
@@ -211,10 +211,11 @@ if submitted:
                 doi=doi, link=link, arquivo_pdf=nome_pdf, categoria=categoria,
                 metodo=metodo, regiao=regiao, observacoes=observacoes
             )
-
-            st.success("Cadastro realizado com sucesso!")
-            st.toast("Dados atualizados!")
-
+            placeholder = st.empty()
+            placeholder.success("Cadastro realizado com sucesso!")
+            
+            time.sleep(3)  # espera 3 segundos
+            placeholder.empty()  # apaga a mensagem
         except Exception as e:
             st.error(f"Erro ao salvar: {e}")
 
