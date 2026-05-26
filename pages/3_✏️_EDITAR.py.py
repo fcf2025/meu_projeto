@@ -214,9 +214,15 @@ with st.form("form_edicao"):
     col_t1, col_t2 = st.columns([3, 1])
     with col_t1:
         titulo = st.text_input("Título *", value=documento.get("titulo", ""))
-    with col_t2:
-        ano = st.number_input("Ano", min_value=1900, max_value=2100, 
-                             value=int(documento.get("ano")) if documento.get("ano") else 2024)
+    with col2:
+        # Criamos uma lista de anos de 2030 até 2000
+        lista_anos = list(range(2030, 2000, -1))
+        
+        ano = st.selectbox(
+            "Ano",
+            options=lista_anos,
+            index=5 # Isso define o ano 2025 como padrão (posições: 2030=0, 2029=1...)
+        )
 
     autores = st.text_input("Autores", value=documento.get("autores", ""))
     instituicao = st.text_input("Instituição", value=documento.get("instituicao", ""))
