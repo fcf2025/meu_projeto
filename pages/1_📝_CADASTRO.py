@@ -138,7 +138,18 @@ with st.form("form_cadastro", clear_on_submit=True):
     # --- LINHA 9 ---
     col1, col2, col3 = st.columns(3)
     with col1:
-        categoria = st.selectbox("Categoria", ["", "Infraestrutura", "Gestão", "Planejamento", "Educação", "Outro"])
+        categoria = st.selectbox("Categoria", ["", "Economia",
+                "Infraestrutura estrutural",
+                "Sistemas de macrodrenagem",
+                "Medidas de gestão não estruturais",
+                "Planejamento urbano e drenagem",
+                "Gestão e administração do serviço",
+                "Operação e manutenção",
+                "Regulação, normatização e fiscalização",
+                "Educação ambiental e participação social",
+                "Financiamento e tarifação",
+                "Resiliência e adaptação às mudanças climáticas",
+                "Outro"])
     with col2:
         metodo = st.selectbox("Método", ["", "Pesquisa de Campo", "Entrevistas", "Modelagem", "Análise Documental", "Outro"])
     with col3:
