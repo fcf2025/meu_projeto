@@ -14,6 +14,8 @@ from utils.database import (
 )
 from sqlalchemy import text
 from utils.database import estatisticas_gerais
+from utils.database import conectar_db
+from io import BytesIO
 # ==========================================================
 # EXPORTS
 # ==========================================================
@@ -335,14 +337,33 @@ with col1:
 # ==========================================================
 
 def exportar_excel():
-    conn = conectar_db()
-    df = pd.read_sql_query("SELECT * FROM bibliografia", conn)
-    conn.close()
-
-    caminho_excel = EXPORT_DIR / "bibliografia_export.xlsx"
-    df.to_excel(caminho_excel, index=False)
-
-    st.success(f"Arquivo Excel gerado em: {caminho_excel}")
+   
+    try:
+        # 2. Conecta ao banco
+        conn = conectar_db()
+        
+        # 3. Lê os dados
+        query = "SELECT * FROM bibliografia"
+        df = pd.read_sql(query, conn)
+        
+        # 4. Cria o arquivo Excel em memória
+        output = BytesIO()
+        with pd.ExcelWriter(output, engine='openpyxl') as writer:
+            df.to_excel(writer, index=False, sheet_name='Dados')
+        
+        # 5. Botão de download no Streamlit
+        st.download_button(
+            label="📥 Baixar Excel",
+            data=output.getvalue(),
+            file_name="bibliografia_digital.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+        
+        if hasattr(conn, 'close'):
+            conn.close()
+            
+    except Exception as e:
+        st.error(f"Erro ao exportar: {e}")
 
 
 
