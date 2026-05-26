@@ -69,8 +69,8 @@ with st.form("form_cadastro", clear_on_submit=True):
     with col1:
         titulo = st.text_input("Título *")
     with col2:
-        # Criamos uma lista de anos de 2030 até 1900
-        lista_anos = list(range(2030, 1899, -1))
+        # Criamos uma lista de anos de 2030 até 2000
+        lista_anos = list(range(2030, 2000, -1))
         
         ano = st.selectbox(
             "Ano",
