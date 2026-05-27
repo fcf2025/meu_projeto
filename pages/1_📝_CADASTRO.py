@@ -124,7 +124,7 @@ with st.form("form_cadastro", clear_on_submit=True):
         categoria = st.selectbox("Categoria", ["", "Economia",
                 "Infraestrutura estrutural",
                 "Sistemas de macrodrenagem",
-                "Medidas de gestão não estruturais
+                "Medidas de gestão não estruturais",
                 "Planejamento urbano e drenagem",
                 "Gestão e administração do serviço",
                 "Operação e manutenção",
