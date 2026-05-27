@@ -112,7 +112,9 @@ with st.form("form_cadastro", clear_on_submit=True):
     # --- LINHA 8 ---
     col1, col2 = st.columns(2)
     with col1:
-        doi = st.selectbox("Veículo de Publicação", ["Revista", "Livro", "Conferência", "Site", "Repositório", "Outro"])
+        doi = st.selectbox("Veículo de Publicação", ["Revista", "Livro", "Conferência (Anais)", "Site", "Repositório", 
+        "Data Journals (Periódicos de Dados)","Bases de Patentes","Policy Briefs (Informativos de Políticas Públicas)",
+        "Boletins Institucionais","Outro"])
     with col2:
         link = st.text_input("Link")
 
@@ -122,7 +124,7 @@ with st.form("form_cadastro", clear_on_submit=True):
         categoria = st.selectbox("Categoria", ["", "Economia",
                 "Infraestrutura estrutural",
                 "Sistemas de macrodrenagem",
-                "Medidas de gestão não estruturais",
+                "Medidas de gestão não estruturais
                 "Planejamento urbano e drenagem",
                 "Gestão e administração do serviço",
                 "Operação e manutenção",
