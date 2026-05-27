@@ -91,40 +91,20 @@ with st.form("form_cadastro", clear_on_submit=True):
     # --- LINHA 5 ---
     col1, col2 = st.columns(2)
     with col1:
-        tema = st.selectbox("Tema", ["", "Planejamento e elaboração de Planos de Drenagem e Manejo de Águas Pluviais (PDMP)",
-                "Integração entre DMAPU e plano diretor municipal",
-                "Zoneamento de risco de inundações e ocupação de áreas críticas",
-                "Medidas estruturais de drenagem (bueiros, canais, reservatórios, bacias de detenção)",
-                "Infraestrutura verde e soluções baseadas na natureza na drenagem urbana",
-                "Modelagem hidrológica e hidráulica de bacias urbanas",
-                "Controle de cheias e gestão de eventos pluviais extremos",
-                "Gestão integrada de recursos hídricos e DMAPU",
-                "Políticas públicas, regulamentação e fiscalização do manejo de águas pluviais",
-                "Participação comunitária, educação ambiental e aceitação social de obras de drenagem","Financiamento",
-                "Outro"])
+        tema = st.selectbox("Tema", ["", "Financiamento", "Tarifa (Taxas de drenagem)", "Custos (Operacionais e de Implantação)","Taxas","Regulação e Governança","Soluções Baseadas na Natureza (SbN) e Infraestrutura Verde",
+                "Planejamento Urbano e Uso do Solo","Sustentabilidade e Mudanças Climáticas","Tecnologias de Monitoramento", "Cidades Inteligentes (Smart Cities)",                    
+                "Investimentos em DMAPU","Outro"])
     with col2:
-        subtema = st.selectbox("Subtema", ["", "Planejamento urbano integrado",
-            "Diagnóstico de bacias urbanas e mapas de pontos críticos de inundação",
-            "Projeção de cenários de chuva intensa e eventos extremos",
-            "Zoneamento de risco para ocupação de margens de rios e áreas de escoamento",
-            "Obras de drenagem em bairros de baixa renda e assentamentos precários",
-            "Pavimentos permeáveis e soluções de superfície porosa em vias e calçadas",
-            "Telhados e paredes verdes em edificações urbanas",
-            "Bacias de detenção e retenção em praças, parques e áreas públicas",
-            "Microrreservatórios, reservatórios subterrâneos e cisternas coletivas",
-            "Integração de poços de infiltração e valas de drenagem com sistemas viários",
-            "Modelagem computacional de inundações urbanas (softwares como InfoWorks, SWMM, etc.)",
-            "Uso de geoprocessamento e SIG para mapear áreas de risco e drenagem",
-            "Telemetria, sensores de nível e chuva e sistemas de alerta precoce",
-            "Manual de condicionantes de parcelamento e uso do solo para proteção de drenagem",
-            "Fiscalização de loteamentos e obras que interferem em bocas de lobo e canais",
-            "Participação de associações de moradores em projetos de drenagem local",
-            "Campanhas de educação ambiental sobre descarte de resíduos e entupimento de bueiros",
-            "Modelos de financiamento para obras de drenagem e manutenção de sistemas",
-            "Indicadores de desempenho de sistemas de DMAPU (velocidade de escoamento, inundação, etc.)",
-            "Integração entre DMAPU, saneamento básico e mobilidade urbana",
-            "Monitoramento pós‑obra e avaliação de risco após implantação de sistemas de drenagem",
-            "Outros"])
+        subtema = st.selectbox("Subtema", ["", "Parcerias Público-Privadas (PPPs)","Títulos Verdes (Green Bonds)","Investimento em Propriedade Privada",
+             "Fundos Municipais de Saneamento","Financiamento Multilateral (BID/BIRD)","Cálculo por Área Impermeabilizada","Cofaturamento na Conta de Água",
+            "Estruturação de Tarifas Sociais","Incentivos por Desempenho (Taxa de Desconto)","Aceitabilidade Social da Cobrança", 
+            "Norma de Referência 12/2025 (ANA)","Indicadores de Desempenho (KPIs)","Consórcios Intermunicipais","Controle e Fiscalização","Segurança Jurídica dos Contratos"
+            "Cidades-Esponja (Sponge Cities)","Desempenho de Jardins de Chuva","Telhados Verdes e Microclima","Multifuncionalidade de Parques Lineares",
+            "Desenho Urbano Sensível à Água (WSUD)","Zonemanento e Taxas de Permeabilidade","Integração PDD (Plano Diretor de Drenagem) e Plano Diretor",
+            "Drenagem em Assentamentos Precários","Revitalização de Rios Urbanos","Adaptação a Chuvas Extremas","Gestão de Risco de Desastres",
+            "Vulnerabilidade e Justiça Climática","Resiliência Baseada em Ecossistemas (AbE)","Adaptação de Cidades Costeiras",
+            "Monitoramento em Tempo Real (IoT)","Digital Twins (Gêmeos Digitais)","IA na Previsão de Inundações","Modelagem SWMM e HEC-RAS",
+            "Uso de Drones na Inspeção","Outros"])
 
     palavras_chave = st.text_input("Palavras-chave")
     resumo = st.text_area("Resumo", height=150)
