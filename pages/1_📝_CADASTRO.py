@@ -105,7 +105,7 @@ with st.form("form_cadastro", clear_on_submit=True):
             "Drenagem em Assentamentos Precários","Revitalização de Rios Urbanos","Adaptação a Chuvas Extremas","Gestão de Risco de Desastres",
             "Vulnerabilidade e Justiça Climática","Resiliência Baseada em Ecossistemas (AbE)","Adaptação de Cidades Costeiras",
             "Monitoramento em Tempo Real (IoT)","Digital Twins (Gêmeos Digitais)","IA na Previsão de Inundações","Modelagem SWMM e HEC-RAS",
-            "Uso de Drones na Inspeção","Outros"])
+            "Uso de Drones na Inspeção","Metodologia de Cobrança","Outros"])
 
     palavras_chave = st.text_input("Palavras-chave")
     resumo = st.text_area("Resumo", height=150)
