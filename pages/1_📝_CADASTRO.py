@@ -130,7 +130,7 @@ with st.form("form_cadastro", clear_on_submit=True):
                 "Operação e manutenção",
                 "Tecnologia e Monitoramento",
                 "Outro"])
-    with col2:.
+    with col2:
         metodo = st.selectbox("Método", ["", "Pesquisa de Campo",
                 "Estudo de Caso",
                 "Questionários/Survey",
