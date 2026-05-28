@@ -114,7 +114,7 @@ with st.form("form_cadastro", clear_on_submit=True):
     # --- LINHA 8 ---
     col1, col2 = st.columns(2)
     with col1:
-        doi = st.selectbox("Veículo de Publicação", ["Revista", "Livro", "Conferência (Anais)", "Site", "Repositório", 
+        doi = st.selectbox("Veículo de Publicação", ["Revista Científica", "Journal","Livro", "Conferência (Anais)", "Site", "Repositório", 
         "Data Journals (Periódicos de Dados)","Bases de Patentes","Policy Briefs (Informativos de Políticas Públicas)",
         "Boletins Institucionais","Outro"])
     with col2:
