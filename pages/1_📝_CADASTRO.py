@@ -85,7 +85,7 @@ with st.form("form_cadastro", clear_on_submit=True):
                                                             "Relatório Técnico-Científico", "Resenha Crítica", "Resumo Expandido", "Nota Técnica","Projeto de Pesquisa", "Outros"])
     with col2:
         pais = st.selectbox("País", ["", "Brasil", "Argentina", "Chile", "Espanha", 
-                "Europa","Estados Unidos","Alemanha","Portugal", "Países Baixos","Uruguai", "Outro"])
+                "Europa","Estados Unidos","Alemanha","Portugal", "Países Baixos","Suécia","Uruguai", "Outro"])
     with col3:
         idioma = st.selectbox("Idioma", ["", "Português", "Inglês", "Espanhol", "Francês", "Outro"])
 
