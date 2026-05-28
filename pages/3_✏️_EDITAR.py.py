@@ -113,7 +113,7 @@ temas = ["",    "Planejamento e elaboração de Planos de Drenagem e Manejo de �
                 "Gestão integrada de recursos hídricos e DMAPU",
                 "Políticas públicas, regulamentação e fiscalização do manejo de águas pluviais",
                 "Participação comunitária, educação ambiental e aceitação social de obras de drenagem",
-                "Outro"]
+                "Financiamento","Outro"]
 
 veiculos = ["","Revista",
             "Journal",
