@@ -195,7 +195,7 @@ subtemas = ["","Planejamento urbano integrado",
             "Indicadores de desempenho de sistemas de DMAPU (velocidade de escoamento, inundação, etc.)",
             "Integração entre DMAPU, saneamento básico e mobilidade urbana",
             "Monitoramento pós‑obra e avaliação de risco após implantação de sistemas de drenagem",
-            "Outros"]
+            "Taxa de drenagem urbana","Outros"]
 
 # Funções auxiliares para encontrar o índice atual nos selects
 def get_index(lista, valor):
