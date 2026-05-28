@@ -76,6 +76,7 @@ with col2:
             "Métodos Analíticos",
             "Infraestrutura Verde",
             "Mudanças Climáticas",
+            "Financiamento",
             "Outro"
         ]
     )
