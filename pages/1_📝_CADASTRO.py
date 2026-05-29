@@ -132,7 +132,7 @@ with st.form("form_cadastro", clear_on_submit=True):
                 "Mudanças Climáticas e Resiliência",
                 "Operação e manutenção",
                 "Tecnologia e Monitoramento","Economia do Saneamento","Gestão Pública","Infraestrutura",
-                "Outro"]) 
+                "Engenharia Urbana","Drenagem Urbana","Gestão Ambiental","Outro"]) 
     with col2:
         metodo = st.selectbox("Método", ["", "Pesquisa de Campo",
                 "Estudo de Caso",
