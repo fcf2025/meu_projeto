@@ -298,7 +298,20 @@ if buscar:
                         PDF_DIR /
                         documento["arquivo_pdf"]
                     )
+                    #------------------------
+                    st.write("PDF_DIR:", PDF_DIR)
 
+                    st.write(
+                        "Caminho completo:",
+                        str(caminho_pdf)
+                    )
+                    
+                    st.write(
+                        "Arquivo existe?",
+                        caminho_pdf.exists()
+                    )
+                    #------------------------
+                    
                     if caminho_pdf.exists():
 
                         with open(
