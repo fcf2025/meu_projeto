@@ -110,8 +110,37 @@ with st.form("form_cadastro"):
     autores = st.text_input("Autor(es)", value=st.session_state.form_data["autores"])
     instituicao = st.text_input("Instituição", value=st.session_state.form_data["instituicao"])
 
-    # ... (Seus outros campos de Selectbox: tipo_documento, pais, idioma, etc.)
-    # Dica: No idioma, use: index=0 se st.session_state.form_data["idioma"] for "Português"...
+    tipo_documento = st.selectbox("Tipo de Documento", ["",    "Artigo",
+            "Livro",
+            "Capítulo",
+            "Dissertação",
+            "Tese",
+            "Monografia",
+            "Trabalho de Conclusão de Curso (TCC)",
+            "Anais de Congresso / Conferência",
+            "Resenha / Revisão",
+            "Estudo Técnico",
+            "Nota Técnica",
+            "Informação Técnica",
+            "Parecer Técnico",
+            "Norma Técnica (ABNT, ISO etc.)",
+            "Manual",
+            "White Paper",
+            "Mapa / Planta / Desenho Técnico",
+            "Dados Estatísticos / Base de Dados",
+            "Legislação",
+            "Regulamentação",
+            "Plano / Projeto",
+            "Patente",
+            "Guia Prático / Cartilha",
+            "Boletim Técnico / Informativo",
+            "Artigo de Opinião / Editorial",
+            "Entrevista / Depoimento",
+            "Outros", "Outro"])
+with col2:
+    pais = st.selectbox("País", ["", "Brasil", "Argentina", "Chile", "Espanha", 
+            "Europa","Estados Unidos","Alemanha","Portugal", "Países Baixos","Suécia","Uruguai", "Outro"])
+
     
     idioma = st.selectbox("Idioma", ["Português", "Inglês", "Espanhol", "Outro"])
     tema = st.selectbox("Tema", ["", "Financiamento", "Tarifa (Taxas de drenagem)", "Custos (Operacionais e de Implantação)","Taxas","Regulação e Governança","Soluções Baseadas na Natureza (SbN) e Infraestrutura Verde",
