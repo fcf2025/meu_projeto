@@ -92,28 +92,21 @@ def extrair_texto_pdf(uploaded_file):
         return ""
 
 def sugerir_metadados(texto_pdf):
-    # Definimos a lista de temas permitidos
-    temas_str = ", ".join(LISTA_TEMAS)
+    temas_txt = ", ".join(LISTA_TEMAS)
+    subtemas_txt = ", ".join(LISTA_SUBTEMAS)
     
-    # Observe o uso de {{ e }} para o JSON e { } simples para a variável temas_str
     prompt = f"""
-    Extraia os metadados do seguinte texto acadêmico/técnico. 
-    Responda APENAS em formato JSON seguindo este modelo exato:
+    Extraia metadados do texto. Responda APENAS JSON:
     {{
       "titulo": "...", 
       "autores": "...", 
       "ano": 2024, 
-      "pais": "...", 
-      "resumo": "...", 
-      "palavras_chave": "...", 
-      "instituicao": "...", 
-      "idioma": "Português", 
-      "tipo_documento": "Identifique o tipo",
-      "tema": "Escolha um destes: {temas_str}"
+      "tema": "Escolha um: {temas_txt}",
+      "subtema": "Escolha um: {subtemas_txt}",
+      "resumo": "...",
+      "palavras_chave": "..."
     }}
-    
-    Texto para análise:
-    {texto_pdf[:4000]}
+    Texto: {texto_pdf[:4000]}
     """
     
     try:
@@ -193,9 +186,20 @@ with st.form("form_cadastro"):
         pais = st.selectbox("País", ["Brasil", "Portugal", "Espanha", "EUA", "Outros"])
     with col_idioma:
         idioma = st.selectbox("Idioma", ["Português", "Inglês", "Espanhol", "Outro"])
+# --- BLOCO DE TEMAS ---
+    col_tema, col_sub = st.columns(2)
+    
+    with col_tema:
+        # Pega o valor que veio da IA ou do estado anterior
+        val_tema = st.session_state.form_data.get("tema", "")
+        # Se o valor da IA não estiver na lista, volta para o índice 0 (vazio)
+        idx_tema = LISTA_TEMAS.index(val_tema) if val_tema in LISTA_TEMAS else 0
+        tema = st.selectbox("Tema", options=LISTA_TEMAS, index=idx_tema)
 
-    tema = st.selectbox("Tema", ["", "Financiamento", "Tarifa", "Drenagem Urbana", "SBN", "Outro"])
-    subtema = st.selectbox("Subtema", ["", "PPP", "Cidades-Esponja", "Fiscalização", "Outro"])
+    with col_sub:
+        val_sub = st.session_state.form_data.get("subtema", "")
+        idx_sub = LISTA_SUBTEMAS.index(val_sub) if val_sub in LISTA_SUBTEMAS else 0
+        subtema = st.selectbox("Subtema", options=LISTA_SUBTEMAS, index=idx_sub)
 
     palavras_chave = st.text_input("Palavras-chave", value=st.session_state.form_data["palavras_chave"])
     resumo = st.text_area("Resumo", value=st.session_state.form_data["resumo"], height=150)
