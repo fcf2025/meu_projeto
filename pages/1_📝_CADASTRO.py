@@ -94,7 +94,7 @@ with st.expander("📂 Upload e Extração Automática", expanded=True):
 # FORMULÁRIO
 # ==========================================================
 with st.form("form_cadastro"):
-    col1, col2 = st.columns([3, 1])
+    col1, col2 = st.columns(2)
     with col1:
         # Usamos o session_state para preencher o valor padrão
         titulo = st.text_input("Título *", value=st.session_state.form_data["titulo"])
@@ -137,8 +137,7 @@ with st.form("form_cadastro"):
                 "Artigo de Opinião / Editorial",
                 "Entrevista / Depoimento",
                 "Outros", "Outro"])
-#with col2:
-        pais = st.selectbox("País", ["", "Brasil", "Argentina", "Chile", "Espanha", 
+       pais = st.selectbox("País", ["", "Brasil", "Argentina", "Chile", "Espanha", 
                 "Europa","Estados Unidos","Alemanha","Portugal", "Países Baixos","Suécia","Uruguai", "Outro"])
     
         
@@ -148,7 +147,7 @@ with st.form("form_cadastro"):
                     "Investimentos em DMAPU","Cidades Inteligentes","Manejo de Águas Pluviais Urbanas (MAPU)",
                     "Saneamento Básico","Direitos Fundamentais","Drenagem Urbana",
                     "Recursos Hídricos","Outro"]
-    )
+        )
         subtema = st.selectbox("Subtema", ["", "Parcerias Público-Privadas (PPPs)","Títulos Verdes (Green Bonds)","Investimento em Propriedade Privada",
                  "Fundos Municipais de Saneamento","Financiamento Multilateral (BID/BIRD)","Cálculo por Área Impermeabilizada","Cofaturamento na Conta de Água",
                 "Estruturação de Tarifas Sociais","Incentivos por Desempenho (Taxa de Desconto)","Aceitabilidade Social da Cobrança", 
@@ -161,10 +160,10 @@ with st.form("form_cadastro"):
                 "Uso de Drones na Inspeção","Metodologia de Cobrança","Governança Urbana e Cidades Inteligentes",
                 "Simulação de Taxa de Drenagem", "Planejamento e Avaliação de Políticas Públicas",
                 "Implementação de sistemas sustentáveis","Eficiência Econômica","Custos Operacionais","Regulação","Outros"]
-    )
+        )
 
-    palavras_chave = st.text_input("Palavras-chave", value=st.session_state.form_data["palavras_chave"])
-    resumo = st.text_area("Resumo", value=st.session_state.form_data["resumo"], height=150)
+        palavras_chave = st.text_input("Palavras-chave", value=st.session_state.form_data["palavras_chave"])
+        resumo = st.text_area("Resumo", value=st.session_state.form_data["resumo"], height=150)
 
     # Campos de rodapé
     col_v, col_l = st.columns(2)
