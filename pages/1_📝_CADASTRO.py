@@ -20,10 +20,33 @@ st.set_page_config(page_title="Cadastro de Bibliografia", page_icon="📝", layo
 
 # Lista de Tipos de Documento (Definida fora para ser usada no index)
 LISTA_TIPOS = [
-    "", "Artigo", "Livro", "Capítulo", "Dissertação", "Tese", 
-    "Monografia", "TCC", "Relatório Técnico", "Norma Técnica", "Outros"
-]
-
+    "", "Artigo",
+                "Livro",
+                "Capítulo",
+                "Dissertação",
+                "Tese",
+                "Monografia",
+                "Trabalho de Conclusão de Curso (TCC)",
+                "Anais de Congresso / Conferência",
+                "Resenha / Revisão",
+                "Estudo Técnico",
+                "Nota Técnica",
+                "Informação Técnica",
+                "Parecer Técnico",
+                "Norma Técnica (ABNT, ISO etc.)",
+                "Manual",
+                "White Paper",
+                "Mapa / Planta / Desenho Técnico",
+                "Dados Estatísticos / Base de Dados",
+                "Legislação",
+                "Regulamentação",
+                "Plano / Projeto",
+                "Patente",
+                "Guia Prático / Cartilha",
+                "Boletim Técnico / Informativo",
+                "Artigo de Opinião / Editorial",
+                "Entrevista / Depoimento",
+                "Outros", "Outro"]
 # Inicializar Session State com tipo_documento
 if 'form_data' not in st.session_state:
     st.session_state.form_data = {
