@@ -387,18 +387,18 @@ with st.form("form_cadastro"):
     with col_cat:
         categoria = st.selectbox(
             "Categoria",
-            LISTA_CATEGORIA
+            LISTA_CATEGORIAS
         )
     
     with col_met:
         metodo = st.selectbox(
             "Método",
-            LISTA_METODO
+            LISTA_METODOS
         )
     
     regiao = st.selectbox(
         "Região",
-        LISTA_REGIAO
+        LISTA_REGIOES
     )
     
     observacoes = st.text_area(
