@@ -92,10 +92,13 @@ def extrair_texto_pdf(uploaded_file):
         return ""
 
 def sugerir_metadados(texto_pdf):
-    # Adicionado "tipo_documento" ao prompt
+    # Definimos a lista de temas permitidos
+    temas_str = ", ".join(LISTA_TEMAS)
+    
+    # Observe o uso de {{ e }} para o JSON e { } simples para a variável temas_str
     prompt = f"""
-    Extraia os metadados do seguinte texto. 
-    Responda APENAS em formato JSON:
+    Extraia os metadados do seguinte texto acadêmico/técnico. 
+    Responda APENAS em formato JSON seguindo este modelo exato:
     {{
       "titulo": "...", 
       "autores": "...", 
@@ -105,11 +108,14 @@ def sugerir_metadados(texto_pdf):
       "palavras_chave": "...", 
       "instituicao": "...", 
       "idioma": "Português", 
-      "tipo_documento": "Escolha entre: {', '.join(LISTA_TIPOS)}",
-      "tema": "Escolha OBRIGATORIAMENTE um destes: {temas_str}"
+      "tipo_documento": "Identifique o tipo",
+      "tema": "Escolha um destes: {temas_str}"
     }}
-    Texto: {texto_pdf[:4000]}
+    
+    Texto para análise:
+    {texto_pdf[:4000]}
     """
+    
     try:
         response = client.chat.completions.create(
             model="gpt-4o-mini",
