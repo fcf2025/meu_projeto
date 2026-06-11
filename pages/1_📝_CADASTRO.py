@@ -235,11 +235,26 @@ def extrair_texto_pdf(uploaded_file):
         return ""
 
 def sugerir_metadados(texto_pdf):
-    temas_txt = ", ".join(LISTA_TEMAS)
-    subtemas_txt = ", ".join(LISTA_SUBTEMAS)
-    
+    # Transformamos as listas em texto para a IA conhecer as opções
+    tipos_str = ", ".join(LISTA_TIPOS[1:])
+    temas_str = ", ".join(LISTA_TEMAS[1:])
+    subtemas_str = ", ".join(LISTA_SUBTEMAS[1:])
+
     prompt = f"""
-    Extraia metadados do texto. Responda APENAS JSON:
+    Você é um bibliotecário especialista. Sua tarefa é extrair metadados do texto fornecido.
+    
+    REGRAS CRÍTICAS:
+    1. Você DEVE preencher TODOS os campos do JSON abaixo. Nenhum campo pode ser vazio ou nulo.
+    2. Se uma informação não estiver explícita, use seu conhecimento para INFERIR a resposta mais provável com base no contexto técnico do documento.
+    3. Para 'tipo_documento', escolha obrigatoriamente um destes: [{tipos_str}].
+    4. Para 'tema', escolha obrigatoriamente um destes: [{temas_str}].
+    5. Para 'subtema', escolha obrigatoriamente um destes: [{subtemas_str}].
+    6. Se não encontrar o Ano, use '2024'.
+    7. Se não encontrar a Instituição, coloque 'Não identificada'.
+    8. Gere um resumo técnico de pelo menos 3 parágrafos.
+    9. No campo 'pais', se não houver menção, analise o idioma e as referências geográficas para deduzir.
+    
+    RESPONDA APENAS O JSON NO SEGUINTE FORMATO::
     {{
       "titulo": "",
       "autores": "",
@@ -260,14 +275,17 @@ def sugerir_metadados(texto_pdf):
       "palavras_chave": ""
     }}
     
-    Texto:
-    {texto_pdf[:4000]}
+    TEXTO DO PDF:
+    {texto_pdf[:5000]}
     """
-    
+
     try:
         response = client.chat.completions.create(
             model="gpt-4o-mini",
-            messages=[{"role": "user", "content": prompt}],
+            messages=[
+                {"role": "system", "content": "Você é um extrator de metadados que nunca deixa campos vazios."},
+                {"role": "user", "content": prompt}
+            ],
             response_format={ "type": "json_object" }
         )
         return json.loads(response.choices[0].message.content)
