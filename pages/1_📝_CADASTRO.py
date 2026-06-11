@@ -142,9 +142,26 @@ with st.form("form_cadastro", clear_on_submit=True):
     # --- LINHA 8 ---
     col1, col2 = st.columns(2)
     with col1:
-        doi = st.selectbox("Veículo de Publicação", ["Revista Científica", "Journal","Livro", "Conferência (Anais)", "Site", "Repositório", 
-        "Data Journals (Periódicos de Dados)","Bases de Patentes","Policy Briefs (Informativos de Políticas Públicas)",
-        "Boletins Institucionais","Outro"])
+        doi = st.selectbox("Veículo de Publicação", ["","Revista",
+            "Journal",
+            "Periódico",
+            "Conferência",
+            "Livro",
+            "Capítulo de Livro","Financiamento", "Tarifa (Taxas de drenagem)", "Custos (Operacionais e de Implantação)","Taxas","Regulação e Governança","Soluções Baseadas na Natureza (SbN) e Infraestrutura Verde",
+                "Planejamento Urbano e Uso do Solo","Sustentabilidade e Mudanças Climáticas","Tecnologias de Monitoramento", "Cidades Inteligentes (Smart Cities)",                    
+                "Investimentos em DMAPU","Cidades Inteligentes","Outro"
+            "Site",
+            "Repositório",
+            "Anais de Congresso / Proceedings",
+            "Boletim Técnico",
+            "Newsletter",
+            "Plataforma Digital Acadêmica (ex.: ResearchGate, Academia.edu)",
+            "Biblioteca Digital (ex.: BDTD, Scielo, JSTOR)",
+            "Base de Dados Estatística (ex.: IBGE, ONU Data)",
+            "Documento Oficial / Institucional (ex.: ONU, OMS, IBGE)",
+            "Enciclopédia / Dicionário Especializado",
+            "Blog Técnico ou Acadêmico",
+            "Outro"])
     with col2:
         link = st.text_input("Link")
 
