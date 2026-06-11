@@ -1,294 +1,93 @@
+# ==========================================================
+# pages/cadastro.py
+# Cadastro de Bibliografia - Biblioteca Digital DMAPLU
+# ==========================================================
+
 import streamlit as st
-import uuid
-import time
-import json
-from pathlib import Path
-from sqlalchemy import text
-from PyPDF2 import PdfReader
-from openai import OpenAI
-# ==========================================================
-# DEFINIÇÃO DAS LISTAS GLOBAIS
-#==========================================================
-LISTA_TIPOS = ["", "Artigo",
-                "Livro",
-                "Capítulo",
-                "Dissertação",
-                "Tese",
-                "Monografia",
-                "Trabalho de Conclusão de Curso (TCC)",
-                "Anais de Congresso / Conferência",
-                "Resenha / Revisão",
-                "Estudo Técnico",
-                "Nota Técnica", 
-                "Informação Técnica",
-                "Parecer Técnico",
-                "Norma Técnica (ABNT, ISO etc.)",
-                "Manual",
-                "White Paper",
-                "Mapa / Planta / Desenho Técnico",
-                "Dados Estatísticos / Base de Dados",
-                "Legislação",
-                "Regulamentação",
-                "Plano / Projeto",
-                "Patente",
-                "Guia Prático / Cartilha",
-                "Boletim Técnico / Informativo",
-                "Artigo de Opinião / Editorial",
-                "Entrevista / Depoimento",
-                "Outros"]
-LISTA_TEMAS = ["", "Financiamento",
-                "Tarifa (Taxas de drenagem)",
-                "Custos (Operacionais e de Implantação)",
-                "Taxas",
-                "Regulação e Governança",
-                "Soluções Baseadas na Natureza (SbN) e Infraestrutura Verde",
-                "Planejamento Urbano e Uso do Solo",
-                "Sustentabilidade e Mudanças Climáticas",
-                "Tecnologias de Monitoramento",
-                "Cidades Inteligentes (Smart Cities)",
-                "Investimentos em DMAPU",
-                "Manejo de Águas Pluviais Urbanas (MAPU)",
-                "Saneamento Básico",
-                "Direitos Fundamentais",
-                "Drenagem Urbana",
-                "Recursos Hídricos",
-                "Gestão de Riscos e Desastres Hidrológicos",
-                "Microdrenagem e Sistemas de Coleta",
-                "Macrodrenagem e Controle de Cheias",
-                "Modelagem Hidrodinâmica e Simulação de Vazão",
-                "Controle de Erosão e Assoreamento",
-                "Qualidade das Águas e Poluição Difusa",
-                "Técnicas de Baixo Impacto (LID - Low Impact Development)",
-                "Bacias de Detenção e Retenção (Piscinões)",
-                "Planos Diretores de Drenagem Urbana (PDDU)",
-                "Participação Social e Mobilização Comunitária",
-                "Educação Ambiental e Percepção de Risco",
-                "Manutenção Corretiva e Preventiva de ativos",
-                "Saúde Pública e Doenças de Veiculação Hídrica",
-                "Impermeabilização do Solo e Coeficientes de Escoamento",
-                "Pavimentos Permeáveis e Dispositivos de Infiltração",
-                "Sistemas de Alerta Precoce e Telemetria",
-                "Instrumentos de Outorga e Legislação de Águas",
-                "Recuperação de Rios Urbanos e Renaturalização",
-                "Interoperabilidade entre Sistemas de Drenagem e Esgoto",
-                "Parcerias Público-Privadas (PPP) e Concessões",
-                "Outro"]
-LISTA_SUBTEMAS = ["", "Parcerias Público-Privadas (PPPs)","Títulos Verdes (Green Bonds)","Investimento em Propriedade Privada",
-                "Fundos Municipais de Saneamento","Financiamento Multilateral (BID/BIRD)","Cálculo por Área Impermeabilizada","Cofaturamento na Conta de Água",
-                "Estruturação de Tarifas Sociais","Incentivos por Desempenho (Taxa de Desconto)","Aceitabilidade Social da Cobrança", 
-                "Norma de Referência 12/2025 (ANA)","Indicadores de Desempenho (KPIs)","Consórcios Intermunicipais","Controle e Fiscalização","Segurança Jurídica dos Contratos"
-                "Cidades-Esponja (Sponge Cities)","Desempenho de Jardins de Chuva","Telhados Verdes e Microclima","Multifuncionalidade de Parques Lineares",
-                "Desenho Urbano Sensível à Água (WSUD)","Zonemanento e Taxas de Permeabilidade","Integração PDD (Plano Diretor de Drenagem) e Plano Diretor",
-                "Drenagem em Assentamentos Precários","Revitalização de Rios Urbanos","Adaptação a Chuvas Extremas","Gestão de Risco de Desastres",
-                "Vulnerabilidade e Justiça Climática","Resiliência Baseada em Ecossistemas (AbE)","Adaptação de Cidades Costeiras",
-                "Monitoramento em Tempo Real (IoT)","Digital Twins (Gêmeos Digitais)","IA na Previsão de Inundações","Modelagem SWMM e HEC-RAS",
-                "Uso de Drones na Inspeção","Metodologia de Cobrança","Governança Urbana e Cidades Inteligentes",
-                "Simulação de Taxa de Drenagem", "Planejamento e Avaliação de Políticas Públicas",
-                "Implementação de sistemas sustentáveis","Eficiência Econômica","Custos Operacionais","Regulação","Outros"]
-LISTA_DOI = [
-                "",
-                "Revista",
-                "Repositorio",
-                "Anais",
-                "Periódico Científico",
-                "Tese de Doutorado",
-                "Dissertação de Mestrado",
-                "Relatório Técnico-Científico",
-                "Manual ou Guia Técnico",
-                "Livro",
-                "Capítulo de Livro",
-                "Nota Técnica",
-                "Boletim Informativo ou Epidemiológico",
-                "Plano Diretor (Documento Oficial)",
-                "Cartilha Educativa",
-                "Norma Técnica (ABNT/Entidades Reguladoras)",
-                "Diário Oficial (União, Estado ou Município)",
-                "Monografia",
-                "Portal de Dados Abertos / Dashboard",
-                "Documento de Patente",
-                "Caderno de Resumos de Eventos",
-                "Site ou Blog Institucional",
-                "Podcast ou Webinar (Transcrição/Mídia)",
-                "Estudo de Impacto Ambiental (EIA/RIMA)",
-                "Projetos de Lei e Decretos",
-                "Informativo de Conselho Municipal",
-                "Termo de Referência (TR)",
-                "Manual de Drenagem Urbana (Municipal/Estadual)",
-                "Artigo de Opinião/Jornalístico",
-                "Memoriais Descritivos",
-                "Base de Dados Georreferenciados (Metadados)",
-                "Outro"]
-LISTA_CATEGORIAS = ["", "Regulação e Governança",
-                "Sustentabilidade Financeira",
-                "Infraestrutura e Engenharia",
-                "Soluções Baseadas na Natureza (SbN)",
-                "Planejamento Urbano e Territorial",
-                "Mudanças Climáticas e Resiliência",
-                "Operação e manutenção",
-                "Tecnologia e Monitoramento",
-                "Microdrenagem e Redes Coletoras",
-                "Macrodrenagem e Canalização",
-                "Sistemas de Detenção e Retenção (Piscinões)",
-                "Modelagem Hidrológica e Hidrodinâmica",
-                "Qualidade da Água Pluvial e Poluição Difusa",
-                "Planos Diretores de Drenagem Urbana (PDDU)",
-                "Controle de Processos Erosivos e Assoreamento",
-                "Técnicas de Baixo Impacto (LID)",
-                "Pavimentos Permeáveis e Superfícies Filtrantes",
-                "Sistemas de Alerta e Gestão de Emergências",
-                "Mapeamento de Áreas de Risco e Inundação",
-                "Mecanismos de Cobrança e Tarifação de Drenagem",
-                "Interoperabilidade com Esgotamento Sanitário",
-                "Gestão de Resíduos Sólidos em Sistemas de Drenagem",
-                "Reabilitação e Renaturalização de Rios",
-                "Hidrologia e Séries Temporais de Precipitação",
-                "Gestão da Impermeabilização do Solo",
-                "Normatização e Manuais Técnicos",
-                "Educação Ambiental para o Manejo de Águas",
-                "Dragagem e Desobstrução de Galerias",
-                "Cadastramento de Ativos e Geoprocessamento",
-                "Inovação em Dispositivos de Drenagem",
-                "Outro"]
-LISTA_METODOS = ["", "Pesquisa de Campo – coleta de dados diretamente em ambientes reais.",
-                "Entrevistas – estruturadas, semiestruturadas ou abertas.",
-                "Questionários/Survey – aplicação de formulários para coleta de dados.",
-                "Observação Participante – acompanhamento direto de práticas ou comunidades.",
-                "Experimento Controlado – testes em condições laboratoriais ou simuladas.",
-                "Modelagem Matemática – construção de equações e modelos analíticos.",
-                "Análise Documental – estudo de relatórios, legislações, registros históricos.",
-                "Benchmarking – comparação com padrões ou casos de referência.",
-                "Delphi/Consulta a Especialistas – coleta de opiniões de especialistas em rodadas sucessivas.",
-                "Análise Multicritério – avaliação de alternativas considerando múltiplos fatores.",
-                "Geoprocessamento/SIG – uso de Sistemas de Informação Geográfica.",
-                "Análise de Sensibilidade – testar variações em parâmetros de modelos.",
-                "Prototipagem – desenvolvimento de versões iniciais de soluções para teste.",
-                "Meta-análise – síntese quantitativa de resultados de múltiplos estudos.",
-                "Revisão Sistemática – levantamento estruturado e criterioso da literatura.",
-                "Simulação Estocástica/Monte Carlo – uso de probabilidades para prever cenários.",
-                "Análise Qualitativa – categorização e interpretação de dados não numéricos.",
-                "Análise Quantitativa – uso de estatística e métricas numéricas.",
-                "Estudo Longitudinal – acompanhamento de fenômenos ao longo do tempo.",
-                "Estudo Transversal – análise em um único momento ou recorte.",
-                "Outro"]
-LISTA_REGIOES = ["", "Brasil",
-                "América Latina",
-                "Europa",
-                "América do Norte",
-                "Ásia",
-                "África",
-                "Global",
-                "Outro"]
-
-# Inicializar Session State com tipo_documento
-if 'form_data' not in st.session_state:
-    st.session_state.form_data = {
-        "titulo": "",
-        "autores": "",
-        "ano": 2025,
-        "instituicao": "",
-        "pais": "",
-        "idioma": "Português",
-        "tipo_documento": "",
-        "tema": "",
-        "subtema": "",
-        "categoria": "",
-        "metodo": "",
-        "regiao": "",
-        "observacoes": "",
-        "doi": "",
-        "link": "",
-        "resumo": "",
-        "palavras_chave": ""
-    }
-# ==========================================================
-# CONFIGURAÇÃO E CHAVES
-# ==========================================================
 DATABASE_URL = st.secrets["DATABASE_URL"]
+SUPABASE_URL = st.secrets["SUPABASE_URL"]
+SUPABASE_KEY = st.secrets["SUPABASE_KEY"]
 OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
-client = OpenAI(api_key=OPENAI_API_KEY)
-
+from pathlib import Path
+import uuid
+from sqlalchemy import text
+import time
+# ==========================================================
+# IMPORTAÇÕES DE BANCO
+# ==========================================================
 from utils.database import conectar_db, inserir_documento
 
-st.set_page_config(page_title="Cadastro de Bibliografia", page_icon="📝", layout="wide")
+# ==========================================================
+# CONFIGURAÇÃO DA PÁGINA
+# ==========================================================
+st.set_page_config(
+    page_title="Cadastro de Bibliografia",
+    page_icon="📝",
+    layout="wide"
+)
 
-# Lista de Tipos de Documento (Definida fora para ser usada no index)
-
-
-
+# ==========================================================
+# CAMINHO PDFs
+# ==========================================================
 BASE_DIR = Path(__file__).resolve().parent.parent
 PDF_DIR = BASE_DIR / "pdfs"
 PDF_DIR.mkdir(exist_ok=True)
 
 # ==========================================================
-# FUNÇÕES DE APOIO
+# FUNÇÃO DE CRÍTICA
 # ==========================================================
-def extrair_texto_pdf(uploaded_file):
+def verificar_duplicidade(titulo, autores):
+    """Verifica se já existe título e autor idênticos no banco."""
+    conn = conectar_db()
+    query = text("""
+        SELECT id FROM bibliografia 
+        WHERE LOWER(TRIM(titulo)) = LOWER(TRIM(:t)) 
+        AND LOWER(TRIM(autores)) = LOWER(TRIM(:a))
+    """)
     try:
-        reader = PdfReader(uploaded_file)
-        texto = ""
-        for i in range(min(len(reader.pages), 30)):
-            page_text = reader.pages[i].extract_text()
-            if page_text: texto += page_text
-        return texto
-    except Exception as e:
-        st.error(f"Erro ao ler PDF: {e}")
-        return ""
+        if hasattr(conn, 'connect'):
+            with conn.connect() as connection:
+                res = connection.execute(query, {"t": titulo, "a": autores}).fetchone()
+        else:
+            res = conn.execute(query, {"t": titulo, "a": autores}).fetchone()
+        return res is not None
+    except Exception:
+        return False
+    finally:
+        if hasattr(conn, 'close'): 
+            conn.close()
+
+# ==========================================================
+# TÍTULO
+# ==========================================================
+st.title("📝 Cadastro de Referências Bibliográficas")
+st.markdown("Preencha os campos abaixo para inserir um novo documento.")
+st.markdown("---")
+# ==========================================================
+# FUNÇÕES DE APOIO (NOVO)
+# ==========================================================
+
+def extrair_texto_pdf(uploaded_file):
+    """Extrai as primeiras páginas do PDF para análise."""
+    reader = PdfReader(uploaded_file)
+    texto = ""
+    # Lemos apenas as primeiras 4 páginas para economizar tokens e focar no essencial
+    for i in range(min(len(reader.pages), 4)):
+        texto += reader.pages[i].extract_text()
+    return texto
 
 def sugerir_metadados(texto_pdf):
-    # 1. Transformamos TODAS as listas em texto para a IA não inventar opções
-    tipos_str = ", ".join(LISTA_TIPOS[1:])
-    temas_str = ", ".join(LISTA_TEMAS[1:])
-    subtemas_str = ", ".join(LISTA_SUBTEMAS[1:])
-    categorias_str = ", ".join(LISTA_CATEGORIAS[1:]) # ADICIONADO
-    metodos_str = ", ".join(LISTA_METODOS[1:])       # ADICIONADO
-    regioes_str = ", ".join(LISTA_REGIOES[1:])       # ADICIONADO
-
+    """Usa IA para extrair metadados do texto."""
     prompt = f"""
-    Você é um bibliotecário especialista. Sua tarefa é extrair metadados do texto fornecido.
-    
-    REGRAS CRÍTICAS:
-    1. Você DEVE preencher TODOS os campos do JSON abaixo. Nenhum campo pode ser vazio ou nulo.
-    2. Se uma informação não estiver explícita, use seu conhecimento para INFERIR a resposta mais provável com base no contexto técnico do documento.
-    3. Para 'tipo_documento', escolha obrigatoriamente um destes: [{tipos_str}].
-    4. Para 'tema', escolha obrigatoriamente um destes: [{temas_str}].
-    5. Para 'subtema', escolha obrigatoriamente um destes: [{subtemas_str}].
-    6. Para 'categoria', escolha obrigatoriamente um destes: [{categorias_str}].
-    7. Para 'metodo', escolha obrigatoriamente um destes: [{metodos_str}].
-    8. Para 'regiao', escolha obrigatoriamente um destes: [{regioes_str}].
-    9. Se não encontrar o Ano, use '2024'. Se não encontrar a Instituição, use 'Não identificada'.
-    10. No campo 'pais', deduza pelo contexto ou idioma.
-    11. O campo 'observacoes' deve conter uma breve nota sobre a relevância do documento.
-    
-    RESPONDA APENAS O JSON NO SEGUINTE FORMATO:
-    {{
-      "titulo": "",
-      "autores": "",
-      "ano": 2024,
-      "instituicao": "",
-      "pais": "",
-      "idioma": "Português",
-      "tipo_documento": "",
-      "tema": "",
-      "subtema": "",
-      "categoria": "",
-      "metodo": "",
-      "regiao": "",
-      "observacoes":"",
-      "doi": "",
-      "link": "",
-      "resumo": "",
-      "palavras_chave": ""
-    }}
-    
-    TEXTO DO PDF:
-    {texto_pdf[:5000]}
+    Extraia os metadados do seguinte texto de um documento técnico/acadêmico. 
+    Responda APENAS em formato JSON estrito com as chaves: 
+    "titulo", "autores", "ano", "resumo", "palavras_chave", "instituicao", "idioma".
+    Texto: {texto_pdf[:4000]}
     """
-
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[{"role": "system", "content": "Você é um bibliotecário que preenche formulários técnicos e nunca deixa campos em branco."},
-                      {"role": "user", "content": prompt}],
+            model="gpt-4o-mini", # Ou gpt-3.5-turbo
+            messages=[{"role": "user", "content": prompt}],
             response_format={ "type": "json_object" }
         )
         return json.loads(response.choices[0].message.content)
@@ -306,139 +105,196 @@ def verificar_duplicidade(titulo, autores):
     except: return False
 
 # ==========================================================
-# UI - UPLOAD
+# UI - UPLOAD E EXTRAÇÃO (NOVO)
 # ==========================================================
 st.title("📝 Cadastro de Referências Bibliográficas")
 
-with st.expander("📂 Importar dados de PDF (Opcional)", expanded=True):
-    u_file = st.file_uploader("Selecione um PDF para preenchimento automático", type=["pdf"])
-    if u_file and st.button("🤖 Extrair com IA"):
+with st.expander("📂 Upload e Extração Automática", expanded=True):
+    uploaded_file = st.file_uploader("Arraste o PDF aqui para preencher o formulário automaticamente", type=["pdf"])
+    
+    if uploaded_file and st.button("🤖 Extrair Dados com IA"):
         with st.spinner("Analisando PDF..."):
-            texto_pdf = extrair_texto_pdf(u_file)
-            dados = sugerir_metadados(texto_pdf)
-            if dados:
-                st.session_state.form_data.update(dados)
-                st.success("Dados extraídos!")
-                time.sleep(1)
-                st.rerun()
-
-# ==========================================================
-# FORMULÁRIO DE CADASTRO
-# ==========================================================
-with st.form("form_cadastro"):
-    # Linha 1
-    c1, c2 = st.columns([3, 1])
-    with c1:
-        titulo = st.text_input("Título *", value=st.session_state.form_data["titulo"])
-    with c2:
-        lista_anos = list(range(2026, 1899, -1))
-        try:
-            ano_idx = lista_anos.index(int(st.session_state.form_data["ano"]))
-        except:
-            ano_idx = 1
-        ano = st.selectbox("Ano", options=lista_anos, index=ano_idx)
-
-    # Linha 2
-    c_aut, c_inst = st.columns(2)
-    with c_aut:
-        autores = st.text_input("Autor(es)", value=st.session_state.form_data["autores"])
-    with c_inst:
-        instituicao = st.text_input("Instituição", value=st.session_state.form_data["instituicao"])
-
-    # Linha 3 - CORREÇÃO DO TIPO DE DOCUMENTO
-    col_tipo, col_pais, col_idioma = st.columns(3)
-    with col_tipo:
-        # Lógica para selecionar o índice vindo da IA
-        tipo_ia = st.session_state.form_data.get("tipo_documento", "")
-        try:
-            # Tenta encontrar o que a IA mandou na nossa lista oficial
-            idx_tipo_default = LISTA_TIPOS.index(tipo_ia) if tipo_ia in LISTA_TIPOS else 0
-        except:
-            idx_tipo_default = 0
+            texto = extrair_texto_pdf(uploaded_file)
+            dados_sugeridos = sugerir_metadados(texto)
             
-        tipo_documento = st.selectbox("Tipo de Documento", options=LISTA_TIPOS, index=idx_tipo_default)
+            if dados_sugeridos:
+                st.session_state.form_data.update(dados_sugeridos)
+                st.success("Dados extraídos! Confira os campos abaixo.")
+                # Força o recarregamento para mostrar nos inputs
+                st.rerun()
+# ==========================================================
+# FORMULÁRIO
+# ==========================================================
+with st.form("form_cadastro", clear_on_submit=True):
 
-    with col_pais:
-        pais = st.selectbox("País", ["Brasil", "Portugal", "Espanha", "EUA", "Outros"])
-    with col_idioma:
-        idioma = st.selectbox("Idioma", ["Português", "Inglês", "Espanhol", "Outro"])
-# --- BLOCO DE TEMAS ---
-    col_tema, col_sub = st.columns(2)
-    
-    with col_tema:
-        # Pega o valor que veio da IA ou do estado anterior
-        val_tema = st.session_state.form_data.get("tema", "")
-        # Se o valor da IA não estiver na lista, volta para o índice 0 (vazio)
-        idx_tema = LISTA_TEMAS.index(val_tema) if val_tema in LISTA_TEMAS else 0
-        tema = st.selectbox("Tema", options=LISTA_TEMAS, index=idx_tema)
+    # --- LINHA 1 ---
+    col1, col2 = st.columns([3, 1])
+    with col1:
+        titulo = st.text_input("Título *")
+    with col2:
+        # ANO COMO SELECIONÁVEL
+        lista_anos = list(range(2026, 1899, -1))
+        ano = st.selectbox("Ano", options=lista_anos, index=1) # index 1 = 2025
 
-    with col_sub:
-        val_sub = st.session_state.form_data.get("subtema", "")
-        idx_sub = LISTA_SUBTEMAS.index(val_sub) if val_sub in LISTA_SUBTEMAS else 0
-        subtema = st.selectbox("Subtema", options=LISTA_SUBTEMAS, index=idx_sub)
+    # --- LINHA 2 ---
+    autores = st.text_input("Autor(es)")
+    instituicao = st.text_input("Instituição do Autor/Afiliação")
 
-    palavras_chave = st.text_input("Palavras-chave", value=st.session_state.form_data["palavras_chave"])
-    resumo = st.text_area("Resumo", value=st.session_state.form_data["resumo"], height=150)
-    #------------------------------------------------------------------------------------
-    # Categoria, Método e Região
+    # --- LINHA 3 ---
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        tipo_documento = st.selectbox("Tipo de Documento", ["",    "Artigo",
+                "Livro",
+                "Capítulo",
+                "Dissertação",
+                "Tese",
+                "Monografia",
+                "Trabalho de Conclusão de Curso (TCC)",
+                "Anais de Congresso / Conferência",
+                "Resenha / Revisão",
+                "Estudo Técnico",
+                "Nota Técnica",
+                "Informação Técnica",
+                "Parecer Técnico",
+                "Norma Técnica (ABNT, ISO etc.)",
+                "Manual",
+                "White Paper",
+                "Mapa / Planta / Desenho Técnico",
+                "Dados Estatísticos / Base de Dados",
+                "Legislação",
+                "Regulamentação",
+                "Plano / Projeto",
+                "Patente",
+                "Guia Prático / Cartilha",
+                "Boletim Técnico / Informativo",
+                "Artigo de Opinião / Editorial",
+                "Entrevista / Depoimento",
+                "Outros", "Outro"])
+    with col2:
+        pais = st.selectbox("País", ["", "Brasil", "Argentina", "Chile", "Espanha", 
+                "Europa","Estados Unidos","Alemanha","Portugal", "Países Baixos","Suécia","Uruguai", "Outro"])
+    with col3:
+        idioma = st.selectbox("Idioma", ["", "Português", "Inglês", "Espanhol", "Francês", "Outro"])
 
-    col_cat, col_met = st.columns(2)
-    
-    with col_cat:
-        categoria = st.selectbox(
-            "Categoria",
-            LISTA_CATEGORIAS
-        )
-    
-    with col_met:
-        metodo = st.selectbox(
-            "Método",
-            LISTA_METODOS
-        )
-    
-    regiao = st.selectbox(
-        "Região",
-        LISTA_REGIOES
-    )
-    
-    observacoes = st.text_area(
-        "Observações",
-        height=120
-    )
-    # Linha Final
-    cv, cl = st.columns(2)
-    with cv: doi = st.text_input("Veículo / DOI")
-    with cl: link = st.text_input("Link")
-    
+    # --- LINHA 5 ---
+    col1, col2 = st.columns(2)
+    with col1:
+        tema = st.selectbox("Tema", ["", "Financiamento", "Tarifa (Taxas de drenagem)", "Custos (Operacionais e de Implantação)","Taxas","Regulação e Governança","Soluções Baseadas na Natureza (SbN) e Infraestrutura Verde",
+                "Planejamento Urbano e Uso do Solo","Sustentabilidade e Mudanças Climáticas","Tecnologias de Monitoramento", "Cidades Inteligentes (Smart Cities)",                    
+                "Investimentos em DMAPU","Cidades Inteligentes","Manejo de Águas Pluviais Urbanas (MAPU)",
+                "Saneamento Básico","Direitos Fundamentais","Drenagem Urbana",
+                "Recursos Hídricos","Outro"])
+    with col2:
+        subtema = st.selectbox("Subtema", ["", "Parcerias Público-Privadas (PPPs)","Títulos Verdes (Green Bonds)","Investimento em Propriedade Privada",
+             "Fundos Municipais de Saneamento","Financiamento Multilateral (BID/BIRD)","Cálculo por Área Impermeabilizada","Cofaturamento na Conta de Água",
+            "Estruturação de Tarifas Sociais","Incentivos por Desempenho (Taxa de Desconto)","Aceitabilidade Social da Cobrança", 
+            "Norma de Referência 12/2025 (ANA)","Indicadores de Desempenho (KPIs)","Consórcios Intermunicipais","Controle e Fiscalização","Segurança Jurídica dos Contratos"
+            "Cidades-Esponja (Sponge Cities)","Desempenho de Jardins de Chuva","Telhados Verdes e Microclima","Multifuncionalidade de Parques Lineares",
+            "Desenho Urbano Sensível à Água (WSUD)","Zonemanento e Taxas de Permeabilidade","Integração PDD (Plano Diretor de Drenagem) e Plano Diretor",
+            "Drenagem em Assentamentos Precários","Revitalização de Rios Urbanos","Adaptação a Chuvas Extremas","Gestão de Risco de Desastres",
+            "Vulnerabilidade e Justiça Climática","Resiliência Baseada em Ecossistemas (AbE)","Adaptação de Cidades Costeiras",
+            "Monitoramento em Tempo Real (IoT)","Digital Twins (Gêmeos Digitais)","IA na Previsão de Inundações","Modelagem SWMM e HEC-RAS",
+            "Uso de Drones na Inspeção","Metodologia de Cobrança","Governança Urbana e Cidades Inteligentes",
+            "Simulação de Taxa de Drenagem", "Planejamento e Avaliação de Políticas Públicas",
+            "Implementação de sistemas sustentáveis","Eficiência Econômica","Custos Operacionais","Regulação","Outros"])
+
+    palavras_chave = st.text_input("Palavras-chave")
+    resumo = st.text_area("Resumo", height=150)
+
+    # --- LINHA 8 ---
+    col1, col2 = st.columns(2)
+    with col1:
+        doi = st.selectbox("Veículo de Publicação["", "Parcerias Público-Privadas (PPPs)","Títulos Verdes (Green Bonds)","Investimento em Propriedade Privada",
+             "Fundos Municipais de Saneamento","Financiamento Multilateral (BID/BIRD)","Cálculo por Área Impermeabilizada","Cofaturamento na Conta de Água",
+            "Estruturação de Tarifas Sociais","Incentivos por Desempenho (Taxa de Desconto)","Aceitabilidade Social da Cobrança", 
+            "Norma de Referência 12/2025 (ANA)","Indicadores de Desempenho (KPIs)","Consórcios Intermunicipais","Controle e Fiscalização","Segurança Jurídica dos Contratos"
+            "Cidades-Esponja (Sponge Cities)","Desempenho de Jardins de Chuva","Telhados Verdes e Microclima","Multifuncionalidade de Parques Lineares",
+            "Desenho Urbano Sensível à Água (WSUD)","Zonemanento e Taxas de Permeabilidade","Integração PDD (Plano Diretor de Drenagem) e Plano Diretor",
+            "Drenagem em Assentamentos Precários","Revitalização de Rios Urbanos","Adaptação a Chuvas Extremas","Gestão de Risco de Desastres",
+            "Vulnerabilidade e Justiça Climática","Resiliência Baseada em Ecossistemas (AbE)","Adaptação de Cidades Costeiras",
+            "Monitoramento em Tempo Real (IoT)","Digital Twins (Gêmeos Digitais)","IA na Previsão de Inundações","Modelagem SWMM e HEC-RAS",
+            "Uso de Drones na Inspeção","Metodologia de Cobrança","Governança Urbana e Cidades Inteligentes",
+            "Simulação de Taxa de Drenagem", "Planejamento e Avaliação de Políticas Públicas",
+            "Implementação de sistemas sustentáveis","Eficiência Econômica","Custos Operacionais","Regulação","Outros"])
+    with col2:
+        link = st.text_input("Link")
+
+    # --- LINHA 9 ---
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        categoria = st.selectbox("Categoria", ["", "Regulação e Governança",
+                "Sustentabilidade Financeira",
+                "Infraestrutura e Engenharia",
+                "Soluções Baseadas na Natureza (SbN)",
+                "Planejamento Urbano e Territorial",
+                "Mudanças Climáticas e Resiliência",
+                "Operação e manutenção",
+                "Tecnologia e Monitoramento","Economia do Saneamento","Gestão Pública","Infraestrutura",
+                "Engenharia Urbana","Drenagem Urbana","Gestão Ambiental","Outro"]) 
+    with col2:
+        metodo = st.selectbox("Método", ["", "Pesquisa de Campo",
+                "Estudo de Caso",
+                "Questionários/Survey",
+                "Revisão Bibliográfica/Sistemática",
+                "Experimento Controlado",
+                "Modelagem Matemática",
+                "Análise Documental",
+                "Benchmarking",
+                "Análise Econômico-Financeira",
+                "Análise Multicritério",
+                "Geoprocessamento/SIG",
+                "Análise de Dados Secundários/Estatística",
+                "Simulação Estocástica/Monte Carlo",
+                "Outro"])
+    with col3:
+        regiao = st.selectbox("Região", ["", "Brasil", "América Latina","América do Norte", "Europa", "Global", "Outro"])
+
+    observacoes = st.text_area("Observações", height=80)
+
+    # --- UPLOAD ---
+    st.markdown("### 📎 Upload de PDF")
+    uploaded_file = st.file_uploader("Selecione um PDF", type=["pdf"])
+
+    # --- BOTÃO ---
     submitted = st.form_submit_button("💾 Salvar Documento", use_container_width=True)
 
 # ==========================================================
-# SALVAMENTO
+# PROCESSAMENTO (ESTA PARTE DEVE FICAR FORA DO WITH FORM)
 # ==========================================================
 if submitted:
-    if not titulo.strip():
+    if titulo.strip() == "":
         st.error("O título é obrigatório.")
+    
     elif verificar_duplicidade(titulo, autores):
-        st.warning("⚠️ Documento já existe.")
+        st.warning("⚠️ Este documento (Título + Autor) já existe no sistema.")
+        
     else:
         try:
-            nome_arquivo = ""
-            if u_file:
-                nome_arquivo = f"{uuid.uuid4()}.pdf"
-                with open(PDF_DIR / nome_arquivo, "wb") as f:
-                    f.write(u_file.getbuffer())
+            nome_pdf = ""
+            if uploaded_file is not None:
+                extensao = "pdf"
+                nome_pdf = f"{uuid.uuid4()}.{extensao}"
+                caminho_pdf = PDF_DIR / nome_pdf
+                with open(caminho_pdf, "wb") as f:
+                    f.write(uploaded_file.read())
 
             inserir_documento(
                 titulo=titulo, autores=autores, ano=ano, tipo_documento=tipo_documento,
                 instituicao=instituicao, pais=pais, idioma=idioma, tema=tema,
                 subtema=subtema, resumo=resumo, palavras_chave=palavras_chave,
-                doi=doi, link=link, categoria=categoria, metodo=metodo, regiao=regiao, observacoes=observacoes, arquivo_pdf=nome_arquivo
+                doi=doi, link=link, arquivo_pdf=nome_pdf, categoria=categoria,
+                metodo=metodo, regiao=regiao, observacoes=observacoes
             )
+            placeholder = st.empty()
+            placeholder.success("Cadastro realizado com sucesso!")
             
-            st.success("✅ Salvo com sucesso!")
-            st.session_state.form_data = {k: "" for k in st.session_state.form_data}
-            st.session_state.form_data["ano"] = 2025
-            time.sleep(1)
-            st.rerun()
+            time.sleep(3)  # espera 3 segundos
+            placeholder.empty()  # apaga a mensagem
         except Exception as e:
             st.error(f"Erro ao salvar: {e}")
+
+# ==========================================================
+# RODAPÉ
+# ==========================================================
+st.markdown("---")
+st.caption("Biblioteca Digital DMAPLU • Cadastro")
