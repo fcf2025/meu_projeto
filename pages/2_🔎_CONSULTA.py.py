@@ -275,7 +275,17 @@ if buscar:
                     st.markdown(
                         f"[Acessar Documento]({documento['link']})"
                     )
+                # DEBUG
+                # DEBUG
+                st.markdown("### DEBUG")
+                
+                st.write("Documento retornado pelo banco:")
+                st.write(documento)
+                
+                st.write("Campo arquivo_pdf:")
+                st.write(documento.get("arquivo_pdf"))
 
+                
                 # ==========================================
                 # PDF
                 # ==========================================
