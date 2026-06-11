@@ -175,6 +175,10 @@ def sugerir_metadados(texto_pdf):
       "tipo_documento": "",
       "tema": "",
       "subtema": "",
+      "categoria":"",
+      "metodo":"",
+      "regiao":"",
+      "observacoes":"",
       "doi": "",
       "link": "",
       "resumo": "",
@@ -307,7 +311,7 @@ if submitted:
                 titulo=titulo, autores=autores, ano=ano, tipo_documento=tipo_documento,
                 instituicao=instituicao, pais=pais, idioma=idioma, tema=tema,
                 subtema=subtema, resumo=resumo, palavras_chave=palavras_chave,
-                doi=doi, link=link, arquivo_pdf=nome_arquivo
+                doi=doi, link=link, categoria=categoria, metodo=metodo, regiao=regiao, observacoes=observacoes, arquivo_pdf=nome_arquivo
             )
             
             st.success("✅ Salvo com sucesso!")
