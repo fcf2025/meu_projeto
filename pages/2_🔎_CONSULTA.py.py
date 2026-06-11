@@ -366,7 +366,11 @@ if buscar:
         st.error(
             f"Erro na consulta: {e}"
         )
-
+        st.write("Documento completo:")
+        st.json(documento)
+        
+        st.write("Nome do arquivo PDF:")
+        st.write(documento.get("arquivo_pdf"))
 # ==========================================================
 # RODAPÉ
 # ==========================================================
