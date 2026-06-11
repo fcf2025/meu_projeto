@@ -7,7 +7,7 @@ import streamlit as st
 DATABASE_URL = st.secrets["DATABASE_URL"]
 SUPABASE_URL = st.secrets["SUPABASE_URL"]
 SUPABASE_KEY = st.secrets["SUPABASE_KEY"]
-OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
+
 from pathlib import Path
 import uuid
 from sqlalchemy import text
@@ -63,65 +63,7 @@ def verificar_duplicidade(titulo, autores):
 st.title("📝 Cadastro de Referências Bibliográficas")
 st.markdown("Preencha os campos abaixo para inserir um novo documento.")
 st.markdown("---")
-# ==========================================================
-# FUNÇÕES DE APOIO (NOVO)
-# ==========================================================
 
-def extrair_texto_pdf(uploaded_file):
-    """Extrai as primeiras páginas do PDF para análise."""
-    reader = PdfReader(uploaded_file)
-    texto = ""
-    # Lemos apenas as primeiras 4 páginas para economizar tokens e focar no essencial
-    for i in range(min(len(reader.pages), 4)):
-        texto += reader.pages[i].extract_text()
-    return texto
-
-def sugerir_metadados(texto_pdf):
-    """Usa IA para extrair metadados do texto."""
-    prompt = f"""
-    Extraia os metadados do seguinte texto de um documento técnico/acadêmico. 
-    Responda APENAS em formato JSON estrito com as chaves: 
-    "titulo", "autores", "ano", "resumo", "palavras_chave", "instituicao", "idioma".
-    Texto: {texto_pdf[:4000]}
-    """
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini", # Ou gpt-3.5-turbo
-            messages=[{"role": "user", "content": prompt}],
-            response_format={ "type": "json_object" }
-        )
-        return json.loads(response.choices[0].message.content)
-    except Exception as e:
-        st.error(f"Erro na IA: {e}")
-        return None
-
-def verificar_duplicidade(titulo, autores):
-    conn = conectar_db()
-    query = text("SELECT id FROM bibliografia WHERE LOWER(TRIM(titulo)) = LOWER(TRIM(:t))")
-    try:
-        with conn.connect() as connection:
-            res = connection.execute(query, {"t": titulo}).fetchone()
-        return res is not None
-    except: return False
-
-# ==========================================================
-# UI - UPLOAD E EXTRAÇÃO (NOVO)
-# ==========================================================
-st.title("📝 Cadastro de Referências Bibliográficas")
-
-with st.expander("📂 Upload e Extração Automática", expanded=True):
-    uploaded_file = st.file_uploader("Arraste o PDF aqui para preencher o formulário automaticamente", type=["pdf"])
-    
-    if uploaded_file and st.button("🤖 Extrair Dados com IA"):
-        with st.spinner("Analisando PDF..."):
-            texto = extrair_texto_pdf(uploaded_file)
-            dados_sugeridos = sugerir_metadados(texto)
-            
-            if dados_sugeridos:
-                st.session_state.form_data.update(dados_sugeridos)
-                st.success("Dados extraídos! Confira os campos abaixo.")
-                # Força o recarregamento para mostrar nos inputs
-                st.rerun()
 # ==========================================================
 # FORMULÁRIO
 # ==========================================================
