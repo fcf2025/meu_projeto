@@ -170,7 +170,7 @@ LISTA_METODOS = ["", "Pesquisa de Campo – coleta de dados diretamente em ambie
                 "Estudo Longitudinal – acompanhamento de fenômenos ao longo do tempo.",
                 "Estudo Transversal – análise em um único momento ou recorte.",
                 "Outro"]
-LISTA_REGIAO = ["", "Brasil",
+LISTA_REGIOES = ["", "Brasil",
                 "América Latina",
                 "Europa",
                 "América do Norte",
