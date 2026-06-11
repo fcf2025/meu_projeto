@@ -139,7 +139,7 @@ with st.form("form_cadastro"):
 
     # Campos de rodapé
     col_v, col_l = st.columns(2)
-    with col_v: doi = st.text_input("Veículo/DOI",["", "Parcerias Público-Privadas (PPPs)","Títulos Verdes (Green Bonds)","Investimento em Propriedade Privada",
+    with col_v: doi = st.selectbox("Veículo de Publicação["", "Parcerias Público-Privadas (PPPs)","Títulos Verdes (Green Bonds)","Investimento em Propriedade Privada",
              "Fundos Municipais de Saneamento","Financiamento Multilateral (BID/BIRD)","Cálculo por Área Impermeabilizada","Cofaturamento na Conta de Água",
             "Estruturação de Tarifas Sociais","Incentivos por Desempenho (Taxa de Desconto)","Aceitabilidade Social da Cobrança", 
             "Norma de Referência 12/2025 (ANA)","Indicadores de Desempenho (KPIs)","Consórcios Intermunicipais","Controle e Fiscalização","Segurança Jurídica dos Contratos"
@@ -150,8 +150,8 @@ with st.form("form_cadastro"):
             "Monitoramento em Tempo Real (IoT)","Digital Twins (Gêmeos Digitais)","IA na Previsão de Inundações","Modelagem SWMM e HEC-RAS",
             "Uso de Drones na Inspeção","Metodologia de Cobrança","Governança Urbana e Cidades Inteligentes",
             "Simulação de Taxa de Drenagem", "Planejamento e Avaliação de Políticas Públicas",
-            "Implementação de sistemas sustentáveis","Eficiência Econômica","Custos Operacionais","Regulação","Outros"]
-)
+            "Implementação de sistemas sustentáveis","Eficiência Econômica","Custos Operacionais","Regulação","Outros"])
+
     with col_l: link = st.text_input("Link")
 
     submitted = st.form_submit_button("💾 Salvar no Banco de Dados", use_container_width=True)
