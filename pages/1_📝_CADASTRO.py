@@ -22,7 +22,7 @@ st.set_page_config(page_title="Cadastro de Bibliografia", page_icon="📝", layo
 # Inicializar Session State para os campos (NOVO)
 if 'form_data' not in st.session_state:
     st.session_state.form_data = {
-        "titulo": "", "autores": "", "ano": 2025,"pais":"", "resumo": "", 
+        "titulo": "", "autores": "", "ano": 2025,"pais": "", "resumo": "", 
         "palavras_chave": "", "instituicao": "", "idioma": "Português"
     }
 
@@ -48,7 +48,7 @@ def sugerir_metadados(texto_pdf):
     prompt = f"""
     Extraia os metadados do seguinte texto de um documento técnico/acadêmico. 
     Responda APENAS em formato JSON estrito com as chaves: 
-    "titulo", "autores", "ano","pis", "resumo", "palavras_chave", "instituicao", "idioma".
+    "titulo", "autores", "ano","pais", "resumo", "palavras_chave", "instituicao", "idioma".
     Texto: {texto_pdf[:4000]}
     """
     try:
