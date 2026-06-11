@@ -265,7 +265,7 @@ def sugerir_metadados(texto_pdf):
       "tipo_documento": "",
       "tema": "",
       "subtema": "",
-      "categoria":""Escolha um: {', '.join(LISTA_CATEGORIAS)}",
+      "categoria":"Escolha um: {', '.join(LISTA_CATEGORIAS)}",
       "metodo":"Escolha um: {', '.join(LISTA_METODOS)}",
       "regiao":"Escolha um: {', '.join(LISTA_REGIOES)}",
       "observacoes":"",
