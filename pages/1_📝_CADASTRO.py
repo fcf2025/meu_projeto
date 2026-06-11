@@ -235,10 +235,13 @@ def extrair_texto_pdf(uploaded_file):
         return ""
 
 def sugerir_metadados(texto_pdf):
-    # Transformamos as listas em texto para a IA conhecer as opções
+    # 1. Transformamos TODAS as listas em texto para a IA não inventar opções
     tipos_str = ", ".join(LISTA_TIPOS[1:])
     temas_str = ", ".join(LISTA_TEMAS[1:])
     subtemas_str = ", ".join(LISTA_SUBTEMAS[1:])
+    categorias_str = ", ".join(LISTA_CATEGORIAS[1:]) # ADICIONADO
+    metodos_str = ", ".join(LISTA_METODOS[1:])       # ADICIONADO
+    regioes_str = ", ".join(LISTA_REGIOES[1:])       # ADICIONADO
 
     prompt = f"""
     Você é um bibliotecário especialista. Sua tarefa é extrair metadados do texto fornecido.
@@ -249,25 +252,27 @@ def sugerir_metadados(texto_pdf):
     3. Para 'tipo_documento', escolha obrigatoriamente um destes: [{tipos_str}].
     4. Para 'tema', escolha obrigatoriamente um destes: [{temas_str}].
     5. Para 'subtema', escolha obrigatoriamente um destes: [{subtemas_str}].
-    6. Se não encontrar o Ano, use '2024'.
-    7. Se não encontrar a Instituição, coloque 'Não identificada'.
-    8. Gere um resumo técnico de pelo menos 3 parágrafos.
-    9. No campo 'pais', se não houver menção, analise o idioma e as referências geográficas para deduzir.
+    6. Para 'categoria', escolha obrigatoriamente um destes: [{categorias_str}].
+    7. Para 'metodo', escolha obrigatoriamente um destes: [{metodos_str}].
+    8. Para 'regiao', escolha obrigatoriamente um destes: [{regioes_str}].
+    9. Se não encontrar o Ano, use '2024'. Se não encontrar a Instituição, use 'Não identificada'.
+    10. No campo 'pais', deduza pelo contexto ou idioma.
+    11. O campo 'observacoes' deve conter uma breve nota sobre a relevância do documento.
     
-    Extraia metadados do texto fornecido. RESPONDA APENAS O JSON NO SEGUINTE FORMATO::
+    RESPONDA APENAS O JSON NO SEGUINTE FORMATO:
     {{
       "titulo": "",
       "autores": "",
-      "ano": 0,
+      "ano": 2024,
       "instituicao": "",
       "pais": "",
-      "idioma": "",
+      "idioma": "Português",
       "tipo_documento": "",
       "tema": "",
       "subtema": "",
-      "categoria":"Escolha um: {', '.join(LISTA_CATEGORIAS)}",
-      "metodo":"Escolha um: {', '.join(LISTA_METODOS)}",
-      "regiao":"Escolha um: {', '.join(LISTA_REGIOES)}",
+      "categoria": "",
+      "metodo": "",
+      "regiao": "",
       "observacoes":"",
       "doi": "",
       "link": "",
@@ -282,7 +287,7 @@ def sugerir_metadados(texto_pdf):
     try:
         response = client.chat.completions.create(
             model="gpt-4o-mini",
-            messages=[{"role": "system", "content": "Você é um bibliotecário que preenche formulários técnicos."},
+            messages=[{"role": "system", "content": "Você é um bibliotecário que preenche formulários técnicos e nunca deixa campos em branco."},
                       {"role": "user", "content": prompt}],
             response_format={ "type": "json_object" }
         )
