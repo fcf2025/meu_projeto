@@ -289,36 +289,51 @@ if buscar:
                 # ==========================================
                 # PDF
                 # ==========================================
-
+                
                 st.markdown("### 📎 PDF")
-
+                
                 if documento["arquivo_pdf"]:
-
+                
                     caminho_pdf = (
                         PDF_DIR /
                         documento["arquivo_pdf"]
                     )
-                    #------------------------
+                
+                    # DEBUG
                     st.write("PDF_DIR:", PDF_DIR)
-
+                
                     st.write(
                         "Caminho completo:",
                         str(caminho_pdf)
                     )
-                    
+                
                     st.write(
                         "Arquivo existe?",
                         caminho_pdf.exists()
                     )
-                    #------------------------
-                    
+                
+                    # NOVO DEBUG
+                    if PDF_DIR.exists():
+                
+                        st.write("Arquivos encontrados na pasta:")
+                
+                        st.write(
+                            [f.name for f in PDF_DIR.iterdir()]
+                        )
+                
+                    else:
+                
+                        st.error(
+                            f"Pasta não existe: {PDF_DIR}"
+                        )
+                
                     if caminho_pdf.exists():
-
+                
                         with open(
                             caminho_pdf,
                             "rb"
                         ) as pdf_file:
-
+                
                             st.download_button(
                                 label="⬇️ Download PDF",
                                 data=pdf_file,
@@ -326,25 +341,18 @@ if buscar:
                                 mime="application/pdf",
                                 use_container_width=True
                             )
-
+                
                     else:
-
+                
                         st.warning(
                             "Arquivo PDF não encontrado."
                         )
-
+                
                 else:
-
+                
                     st.info(
                         "Documento sem PDF anexado."
                     )
-                    #-------------------------------------
-                    st.write("Conteúdo da pasta PDFs:")
-                    
-                    if PDF_DIR.exists():
-                        st.write([f.name for f in PDF_DIR.iterdir()])
-                    else:
-                        st.error(f"Pasta não existe: {PDF_DIR}")
                 # ==========================================
                 # OBSERVAÇÕES
                 # ==========================================
