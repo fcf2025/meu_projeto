@@ -48,7 +48,7 @@ def sugerir_metadados(texto_pdf):
     prompt = f"""
     Extraia os metadados do seguinte texto de um documento técnico/acadêmico. 
     Responda APENAS em formato JSON estrito com as chaves: 
-    "titulo", "autores", "ano", "resumo", "palavras_chave", "instituicao", "idioma".
+    "titulo", "autores", "ano","pis", "resumo", "palavras_chave", "instituicao", "idioma".
     Texto: {texto_pdf[:4000]}
     """
     try:
