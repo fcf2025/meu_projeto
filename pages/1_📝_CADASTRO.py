@@ -69,7 +69,7 @@ if 'form_data' not in st.session_state:
     st.session_state.form_data = {
         "titulo": "", "autores": "", "ano": 2025, "pais": "Brasil", 
         "resumo": "", "palavras_chave": "", "instituicao": "", 
-        "idioma": "Português", "tipo_documento": ""
+        "idioma": "Português", "tipo_documento": "","tema": "","subtema": ""
     }
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -94,11 +94,19 @@ def extrair_texto_pdf(uploaded_file):
 def sugerir_metadados(texto_pdf):
     # Adicionado "tipo_documento" ao prompt
     prompt = f"""
-    Extraia os metadados do seguinte texto. Responda APENAS em formato JSON:
+    Extraia os metadados do seguinte texto. 
+    Responda APENAS em formato JSON:
     {{
-      "titulo": "...", "autores": "...", "ano": 2024, "pais": "...", 
-      "resumo": "...", "palavras_chave": "...", "instituicao": "...", 
-      "idioma": "Português", "tipo_documento": "Artigo ou Tese ou Livro..."
+      "titulo": "...", 
+      "autores": "...", 
+      "ano": 2024, 
+      "pais": "...", 
+      "resumo": "...", 
+      "palavras_chave": "...", 
+      "instituicao": "...", 
+      "idioma": "Português", 
+      "tipo_documento": "Escolha entre: {', '.join(LISTA_TIPOS)}",
+      "tema": "Escolha OBRIGATORIAMENTE um destes: {temas_str}"
     }}
     Texto: {texto_pdf[:4000]}
     """
