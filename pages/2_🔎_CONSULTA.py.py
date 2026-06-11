@@ -338,7 +338,13 @@ if buscar:
                     st.info(
                         "Documento sem PDF anexado."
                     )
-
+                    #-------------------------------------
+                    st.write("Conteúdo da pasta PDFs:")
+                    
+                    if PDF_DIR.exists():
+                        st.write([f.name for f in PDF_DIR.iterdir()])
+                    else:
+                        st.error(f"Pasta não existe: {PDF_DIR}")
                 # ==========================================
                 # OBSERVAÇÕES
                 # ==========================================
