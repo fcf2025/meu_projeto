@@ -226,7 +226,7 @@ def extrair_texto_pdf(uploaded_file):
     try:
         reader = PdfReader(uploaded_file)
         texto = ""
-        for i in range(min(len(reader.pages), 15)):
+        for i in range(min(len(reader.pages), 30)):
             page_text = reader.pages[i].extract_text()
             if page_text: texto += page_text
         return texto
