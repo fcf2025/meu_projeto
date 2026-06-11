@@ -252,6 +252,28 @@ with st.form("form_edicao"):
     st.markdown("---")
     st.subheader("📎 Atualizar PDF")
     st.info(f"PDF atual: {documento.get('arquivo_pdf') if documento.get('arquivo_pdf') else 'Nenhum arquivo anexado'}")
+
+    #------------------------------------------------------
+    #
+    #------------------------------------------------------
+    arquivo_pdf = documento.get("arquivo_pdf")
+
+    if arquivo_pdf:
+    
+        caminho_pdf = PDF_DIR / arquivo_pdf
+    
+        if caminho_pdf.exists():
+    
+            with open(caminho_pdf, "rb") as pdf_file:
+    
+                st.download_button(
+                    label="📥 Baixar PDF Atual",
+                    data=pdf_file,
+                    file_name=arquivo_pdf,
+                    mime="application/pdf",
+                    use_container_width=True
+                )
+    
     uploaded_file = st.file_uploader("Selecionar novo PDF (substituirá o atual)", type=["pdf"])
 
     # Botão de Envio dentro do formulário
