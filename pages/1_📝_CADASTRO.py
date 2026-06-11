@@ -95,6 +95,7 @@ LISTA_METODO = ["", "Pesquisa de Campo – coleta de dados diretamente em ambien
                 "Estudo Longitudinal – acompanhamento de fenômenos ao longo do tempo.",
                 "Estudo Transversal – análise em um único momento ou recorte.",
                 "Outro"]
+LISTA_REGIAO = []
 
 # Inicializar Session State com tipo_documento
 if 'form_data' not in st.session_state:
@@ -110,7 +111,7 @@ if 'form_data' not in st.session_state:
         "subtema": "",
         "categoria":"",
         "metodo":"",
-      
+        "regiao":"",
         "doi": "",
         "link": "",
         "resumo": "",
