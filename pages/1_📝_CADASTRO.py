@@ -283,12 +283,37 @@ with st.form("form_cadastro"):
 
     palavras_chave = st.text_input("Palavras-chave", value=st.session_state.form_data["palavras_chave"])
     resumo = st.text_area("Resumo", value=st.session_state.form_data["resumo"], height=150)
+    #------------------------------------------------------------------------------------
+    # Categoria, Método e Região
 
+    col_cat, col_met = st.columns(2)
+    
+    with col_cat:
+        categoria = st.selectbox(
+            "Categoria",
+            LISTA_CATEGORIA
+        )
+    
+    with col_met:
+        metodo = st.selectbox(
+            "Método",
+            LISTA_METODO
+        )
+    
+    regiao = st.selectbox(
+        "Região",
+        LISTA_REGIAO
+    )
+    
+    observacoes = st.text_area(
+        "Observações",
+        height=120
+    )
     # Linha Final
     cv, cl = st.columns(2)
     with cv: doi = st.text_input("Veículo / DOI")
     with cl: link = st.text_input("Link")
-
+    
     submitted = st.form_submit_button("💾 Salvar Documento", use_container_width=True)
 
 # ==========================================================
