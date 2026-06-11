@@ -107,61 +107,61 @@ with st.form("form_cadastro"):
             ano_idx = 1
         ano = st.selectbox("Ano", options=lista_anos, index=ano_idx)
 
-    autores = st.text_input("Autor(es)", value=st.session_state.form_data["autores"])
-    instituicao = st.text_input("Instituição", value=st.session_state.form_data["instituicao"])
+        autores = st.text_input("Autor(es)", value=st.session_state.form_data["autores"])
+        instituicao = st.text_input("Instituição", value=st.session_state.form_data["instituicao"])
 
-    tipo_documento = st.selectbox("Tipo de Documento", ["",    "Artigo",
-            "Livro",
-            "Capítulo",
-            "Dissertação",
-            "Tese",
-            "Monografia",
-            "Trabalho de Conclusão de Curso (TCC)",
-            "Anais de Congresso / Conferência",
-            "Resenha / Revisão",
-            "Estudo Técnico",
-            "Nota Técnica",
-            "Informação Técnica",
-            "Parecer Técnico",
-            "Norma Técnica (ABNT, ISO etc.)",
-            "Manual",
-            "White Paper",
-            "Mapa / Planta / Desenho Técnico",
-            "Dados Estatísticos / Base de Dados",
-            "Legislação",
-            "Regulamentação",
-            "Plano / Projeto",
-            "Patente",
-            "Guia Prático / Cartilha",
-            "Boletim Técnico / Informativo",
-            "Artigo de Opinião / Editorial",
-            "Entrevista / Depoimento",
-            "Outros", "Outro"])
-with col2:
-    pais = st.selectbox("País", ["", "Brasil", "Argentina", "Chile", "Espanha", 
-            "Europa","Estados Unidos","Alemanha","Portugal", "Países Baixos","Suécia","Uruguai", "Outro"])
-
+        tipo_documento = st.selectbox("Tipo de Documento", ["",    "Artigo",
+                "Livro",
+                "Capítulo",
+                "Dissertação",
+                "Tese",
+                "Monografia",
+                "Trabalho de Conclusão de Curso (TCC)",
+                "Anais de Congresso / Conferência",
+                "Resenha / Revisão",
+                "Estudo Técnico",
+                "Nota Técnica",
+                "Informação Técnica",
+                "Parecer Técnico",
+                "Norma Técnica (ABNT, ISO etc.)",
+                "Manual",
+                "White Paper",
+                "Mapa / Planta / Desenho Técnico",
+                "Dados Estatísticos / Base de Dados",
+                "Legislação",
+                "Regulamentação",
+                "Plano / Projeto",
+                "Patente",
+                "Guia Prático / Cartilha",
+                "Boletim Técnico / Informativo",
+                "Artigo de Opinião / Editorial",
+                "Entrevista / Depoimento",
+                "Outros", "Outro"])
+#with col2:
+        pais = st.selectbox("País", ["", "Brasil", "Argentina", "Chile", "Espanha", 
+                "Europa","Estados Unidos","Alemanha","Portugal", "Países Baixos","Suécia","Uruguai", "Outro"])
     
-    idioma = st.selectbox("Idioma", ["Português", "Inglês", "Espanhol", "Outro"])
-    tema = st.selectbox("Tema", ["", "Financiamento", "Tarifa (Taxas de drenagem)", "Custos (Operacionais e de Implantação)","Taxas","Regulação e Governança","Soluções Baseadas na Natureza (SbN) e Infraestrutura Verde",
-                "Planejamento Urbano e Uso do Solo","Sustentabilidade e Mudanças Climáticas","Tecnologias de Monitoramento", "Cidades Inteligentes (Smart Cities)",                    
-                "Investimentos em DMAPU","Cidades Inteligentes","Manejo de Águas Pluviais Urbanas (MAPU)",
-                "Saneamento Básico","Direitos Fundamentais","Drenagem Urbana",
-                "Recursos Hídricos","Outro"]
-)
-    subtema = st.selectbox("Subtema", ["", "Parcerias Público-Privadas (PPPs)","Títulos Verdes (Green Bonds)","Investimento em Propriedade Privada",
-             "Fundos Municipais de Saneamento","Financiamento Multilateral (BID/BIRD)","Cálculo por Área Impermeabilizada","Cofaturamento na Conta de Água",
-            "Estruturação de Tarifas Sociais","Incentivos por Desempenho (Taxa de Desconto)","Aceitabilidade Social da Cobrança", 
-            "Norma de Referência 12/2025 (ANA)","Indicadores de Desempenho (KPIs)","Consórcios Intermunicipais","Controle e Fiscalização","Segurança Jurídica dos Contratos"
-            "Cidades-Esponja (Sponge Cities)","Desempenho de Jardins de Chuva","Telhados Verdes e Microclima","Multifuncionalidade de Parques Lineares",
-            "Desenho Urbano Sensível à Água (WSUD)","Zonemanento e Taxas de Permeabilidade","Integração PDD (Plano Diretor de Drenagem) e Plano Diretor",
-            "Drenagem em Assentamentos Precários","Revitalização de Rios Urbanos","Adaptação a Chuvas Extremas","Gestão de Risco de Desastres",
-            "Vulnerabilidade e Justiça Climática","Resiliência Baseada em Ecossistemas (AbE)","Adaptação de Cidades Costeiras",
-            "Monitoramento em Tempo Real (IoT)","Digital Twins (Gêmeos Digitais)","IA na Previsão de Inundações","Modelagem SWMM e HEC-RAS",
-            "Uso de Drones na Inspeção","Metodologia de Cobrança","Governança Urbana e Cidades Inteligentes",
-            "Simulação de Taxa de Drenagem", "Planejamento e Avaliação de Políticas Públicas",
-            "Implementação de sistemas sustentáveis","Eficiência Econômica","Custos Operacionais","Regulação","Outros"]
-)
+        
+        idioma = st.selectbox("Idioma", ["Português", "Inglês", "Espanhol", "Outro"])
+        tema = st.selectbox("Tema", ["", "Financiamento", "Tarifa (Taxas de drenagem)", "Custos (Operacionais e de Implantação)","Taxas","Regulação e Governança","Soluções Baseadas na Natureza (SbN) e Infraestrutura Verde",
+                    "Planejamento Urbano e Uso do Solo","Sustentabilidade e Mudanças Climáticas","Tecnologias de Monitoramento", "Cidades Inteligentes (Smart Cities)",                    
+                    "Investimentos em DMAPU","Cidades Inteligentes","Manejo de Águas Pluviais Urbanas (MAPU)",
+                    "Saneamento Básico","Direitos Fundamentais","Drenagem Urbana",
+                    "Recursos Hídricos","Outro"]
+    )
+        subtema = st.selectbox("Subtema", ["", "Parcerias Público-Privadas (PPPs)","Títulos Verdes (Green Bonds)","Investimento em Propriedade Privada",
+                 "Fundos Municipais de Saneamento","Financiamento Multilateral (BID/BIRD)","Cálculo por Área Impermeabilizada","Cofaturamento na Conta de Água",
+                "Estruturação de Tarifas Sociais","Incentivos por Desempenho (Taxa de Desconto)","Aceitabilidade Social da Cobrança", 
+                "Norma de Referência 12/2025 (ANA)","Indicadores de Desempenho (KPIs)","Consórcios Intermunicipais","Controle e Fiscalização","Segurança Jurídica dos Contratos"
+                "Cidades-Esponja (Sponge Cities)","Desempenho de Jardins de Chuva","Telhados Verdes e Microclima","Multifuncionalidade de Parques Lineares",
+                "Desenho Urbano Sensível à Água (WSUD)","Zonemanento e Taxas de Permeabilidade","Integração PDD (Plano Diretor de Drenagem) e Plano Diretor",
+                "Drenagem em Assentamentos Precários","Revitalização de Rios Urbanos","Adaptação a Chuvas Extremas","Gestão de Risco de Desastres",
+                "Vulnerabilidade e Justiça Climática","Resiliência Baseada em Ecossistemas (AbE)","Adaptação de Cidades Costeiras",
+                "Monitoramento em Tempo Real (IoT)","Digital Twins (Gêmeos Digitais)","IA na Previsão de Inundações","Modelagem SWMM e HEC-RAS",
+                "Uso de Drones na Inspeção","Metodologia de Cobrança","Governança Urbana e Cidades Inteligentes",
+                "Simulação de Taxa de Drenagem", "Planejamento e Avaliação de Políticas Públicas",
+                "Implementação de sistemas sustentáveis","Eficiência Econômica","Custos Operacionais","Regulação","Outros"]
+    )
 
     palavras_chave = st.text_input("Palavras-chave", value=st.session_state.form_data["palavras_chave"])
     resumo = st.text_area("Resumo", value=st.session_state.form_data["resumo"], height=150)
