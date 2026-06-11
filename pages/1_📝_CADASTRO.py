@@ -239,7 +239,7 @@ with st.form("form_cadastro"):
 
     # Linha Final
     cv, cl = st.columns(2)
-    with cv: veiculo = st.text_input("Veículo / DOI")
+    with cv: doi = st.text_input("Veículo / DOI")
     with cl: link = st.text_input("Link")
 
     submitted = st.form_submit_button("💾 Salvar Documento", use_container_width=True)
@@ -264,7 +264,7 @@ if submitted:
                 titulo=titulo, autores=autores, ano=ano, tipo_documento=tipo_documento,
                 instituicao=instituicao, pais=pais, idioma=idioma, tema=tema,
                 subtema=subtema, resumo=resumo, palavras_chave=palavras_chave,
-                veiculo_publicacao=veiculo, link=link, arquivo_pdf=nome_arquivo
+                doi=doi, link=link, arquivo_pdf=nome_arquivo
             )
             
             st.success("✅ Salvo com sucesso!")
