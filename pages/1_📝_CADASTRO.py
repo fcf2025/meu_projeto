@@ -65,7 +65,17 @@ LISTA_DOI = [
             "Universidade de São Paulo",
             "Congresso Brasileiro de Engenharia Sanitária",
             "Outro"]
-LISTA_CATEGORIA = []
+LISTA_CATEGORIA = ["","Regulação e Governança",
+                "Sustentabilidade Financeira",
+                "Infraestrutura e Engenharia",
+                "Soluções Baseadas na Natureza (SbN)",
+                "Planejamento Urbano e Territorial",
+                "Mudanças Climáticas e Resiliência",
+                "Operação e manutenção",
+                "Tecnologia e Monitoramento",
+                "Outro"]
+LISTA_METODO = []
+
 # Inicializar Session State com tipo_documento
 if 'form_data' not in st.session_state:
     st.session_state.form_data = {
@@ -79,7 +89,7 @@ if 'form_data' not in st.session_state:
         "tema": "",
         "subtema": "",
         "categoria":"",
-
+        "metodo":"",
       
         "doi": "",
         "link": "",
