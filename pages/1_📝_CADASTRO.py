@@ -81,8 +81,33 @@ with st.form("form_cadastro", clear_on_submit=True):
     # --- LINHA 3 ---
     col1, col2, col3 = st.columns(3)
     with col1:
-        tipo_documento = st.selectbox("Tipo de Documento", ["", "Artigo", "Livro", "Capítulo", "Dissertação", "Tese", "Monografia", "TCC", "Anais de Eventos (ou Proceedings)",
-                                                            "Relatório Técnico-Científico", "Resenha Crítica", "Resumo Expandido", "Nota Técnica","Projeto de Pesquisa", "Outros"])
+        tipo_documento = st.selectbox("Tipo de Documento", ["",    "Artigo",
+                "Livro",
+                "Capítulo",
+                "Dissertação",
+                "Tese",
+                "Monografia",
+                "Trabalho de Conclusão de Curso (TCC)",
+                "Anais de Congresso / Conferência",
+                "Resenha / Revisão",
+                "Estudo Técnico",
+                "Nota Técnica",
+                "Informação Técnica",
+                "Parecer Técnico",
+                "Norma Técnica (ABNT, ISO etc.)",
+                "Manual",
+                "White Paper",
+                "Mapa / Planta / Desenho Técnico",
+                "Dados Estatísticos / Base de Dados",
+                "Legislação",
+                "Regulamentação",
+                "Plano / Projeto",
+                "Patente",
+                "Guia Prático / Cartilha",
+                "Boletim Técnico / Informativo",
+                "Artigo de Opinião / Editorial",
+                "Entrevista / Depoimento",
+                "Outros", "Outro"])
     with col2:
         pais = st.selectbox("País", ["", "Brasil", "Argentina", "Chile", "Espanha", 
                 "Europa","Estados Unidos","Alemanha","Portugal", "Países Baixos","Suécia","Uruguai", "Outro"])
