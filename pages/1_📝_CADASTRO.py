@@ -114,7 +114,7 @@ with st.form("form_cadastro"):
     # Dica: No idioma, use: index=0 se st.session_state.form_data["idioma"] for "Português"...
     
     idioma = st.selectbox("Idioma", ["Português", "Inglês", "Espanhol", "Outro"])
-    tema = st.selectbox("Tema", ", ["", "Financiamento", "Tarifa (Taxas de drenagem)", "Custos (Operacionais e de Implantação)","Taxas","Regulação e Governança","Soluções Baseadas na Natureza (SbN) e Infraestrutura Verde",
+    tema = st.selectbox("Tema", ["", "Financiamento", "Tarifa (Taxas de drenagem)", "Custos (Operacionais e de Implantação)","Taxas","Regulação e Governança","Soluções Baseadas na Natureza (SbN) e Infraestrutura Verde",
                 "Planejamento Urbano e Uso do Solo","Sustentabilidade e Mudanças Climáticas","Tecnologias de Monitoramento", "Cidades Inteligentes (Smart Cities)",                    
                 "Investimentos em DMAPU","Cidades Inteligentes","Manejo de Águas Pluviais Urbanas (MAPU)",
                 "Saneamento Básico","Direitos Fundamentais","Drenagem Urbana",
