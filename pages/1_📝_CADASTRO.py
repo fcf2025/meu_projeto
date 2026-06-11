@@ -53,12 +53,34 @@ LISTA_SUBTEMAS = ["", "Parcerias Público-Privadas (PPPs)","Títulos Verdes (Gre
             "Uso de Drones na Inspeção","Metodologia de Cobrança","Governança Urbana e Cidades Inteligentes",
             "Simulação de Taxa de Drenagem", "Planejamento e Avaliação de Políticas Públicas",
             "Implementação de sistemas sustentáveis","Eficiência Econômica","Custos Operacionais","Regulação","Outros"]
+LISTA_VEICULO_PUBLICACAO = [
+            "",
+            "ANA",
+            "ABES",
+            "IPEA",
+            "Ministério das Cidades",
+            "Revista DAE",
+            "Revista Brasileira de Recursos Hídricos",
+            "Universidade Federal do Rio de Janeiro",
+            "Universidade de São Paulo",
+            "Congresso Brasileiro de Engenharia Sanitária",
+            "Outro"]
 # Inicializar Session State com tipo_documento
 if 'form_data' not in st.session_state:
     st.session_state.form_data = {
-        "titulo": "", "autores": "", "ano": 2025, "pais": "Brasil", 
-        "resumo": "", "palavras_chave": "", "instituicao": "", 
-        "idioma": "Português", "tipo_documento": "","tema": "","subtema": ""
+        "titulo": "",
+        "autores": "",
+        "ano": 2025,
+        "instituicao": "",
+        "pais": "",
+        "idioma": "Português",
+        "tipo_documento": "",
+        "tema": "",
+        "subtema": "",
+        "veiculo_publicacao": "",
+        "link": "",
+        "resumo": "",
+        "palavras_chave": ""
     }
 # ==========================================================
 # CONFIGURAÇÃO E CHAVES
@@ -110,6 +132,8 @@ def sugerir_metadados(texto_pdf):
       "tipo_documento": "",
       "tema": "",
       "subtema": "",
+      "veiculo_publicacao": "",
+      "link": "",
       "resumo": "",
       "palavras_chave": ""
     }}
