@@ -18,11 +18,18 @@ from utils.database import conectar_db, inserir_documento
 
 st.set_page_config(page_title="Cadastro de Bibliografia", page_icon="📝", layout="wide")
 
-# Inicializar Session State para evitar erros de valor ausente
+# Lista de Tipos de Documento (Definida fora para ser usada no index)
+LISTA_TIPOS = [
+    "", "Artigo", "Livro", "Capítulo", "Dissertação", "Tese", 
+    "Monografia", "TCC", "Relatório Técnico", "Norma Técnica", "Outros"
+]
+
+# Inicializar Session State com tipo_documento
 if 'form_data' not in st.session_state:
     st.session_state.form_data = {
         "titulo": "", "autores": "", "ano": 2025, "pais": "Brasil", 
-        "resumo": "", "palavras_chave": "", "instituicao": "", "idioma": "Português"
+        "resumo": "", "palavras_chave": "", "instituicao": "", 
+        "idioma": "Português", "tipo_documento": ""
     }
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,22 +43,22 @@ def extrair_texto_pdf(uploaded_file):
     try:
         reader = PdfReader(uploaded_file)
         texto = ""
-        # Lemos as primeiras 4 páginas
         for i in range(min(len(reader.pages), 4)):
             page_text = reader.pages[i].extract_text()
-            if page_text:
-                texto += page_text
+            if page_text: texto += page_text
         return texto
     except Exception as e:
         st.error(f"Erro ao ler PDF: {e}")
         return ""
 
 def sugerir_metadados(texto_pdf):
+    # Adicionado "tipo_documento" ao prompt
     prompt = f"""
     Extraia os metadados do seguinte texto. Responda APENAS em formato JSON:
     {{
       "titulo": "...", "autores": "...", "ano": 2024, "pais": "...", 
-      "resumo": "...", "palavras_chave": "...", "instituicao": "...", "idioma": "..."
+      "resumo": "...", "palavras_chave": "...", "instituicao": "...", 
+      "idioma": "Português", "tipo_documento": "Artigo ou Tese ou Livro..."
     }}
     Texto: {texto_pdf[:4000]}
     """
@@ -70,17 +77,13 @@ def verificar_duplicidade(titulo, autores):
     conn = conectar_db()
     query = text("SELECT id FROM bibliografia WHERE LOWER(TRIM(titulo)) = LOWER(TRIM(:t))")
     try:
-        if hasattr(conn, 'connect'):
-            with conn.connect() as connection:
-                res = connection.execute(query, {"t": titulo}).fetchone()
-        else:
-            res = conn.execute(query, {"t": titulo}).fetchone()
+        with conn.connect() as connection:
+            res = connection.execute(query, {"t": titulo}).fetchone()
         return res is not None
-    except:
-        return False
+    except: return False
 
 # ==========================================================
-# UI - UPLOAD E EXTRAÇÃO
+# UI - UPLOAD
 # ==========================================================
 st.title("📝 Cadastro de Referências Bibliográficas")
 
@@ -92,7 +95,7 @@ with st.expander("📂 Importar dados de PDF (Opcional)", expanded=True):
             dados = sugerir_metadados(texto_pdf)
             if dados:
                 st.session_state.form_data.update(dados)
-                st.success("Dados extraídos! Confira os campos abaixo.")
+                st.success("Dados extraídos!")
                 time.sleep(1)
                 st.rerun()
 
@@ -107,8 +110,7 @@ with st.form("form_cadastro"):
     with c2:
         lista_anos = list(range(2026, 1899, -1))
         try:
-            val_ano = int(st.session_state.form_data["ano"])
-            ano_idx = lista_anos.index(val_ano)
+            ano_idx = lista_anos.index(int(st.session_state.form_data["ano"]))
         except:
             ano_idx = 1
         ano = st.selectbox("Ano", options=lista_anos, index=ano_idx)
@@ -120,39 +122,45 @@ with st.form("form_cadastro"):
     with c_inst:
         instituicao = st.text_input("Instituição", value=st.session_state.form_data["instituicao"])
 
-    # Linha 3
+    # Linha 3 - CORREÇÃO DO TIPO DE DOCUMENTO
     col_tipo, col_pais, col_idioma = st.columns(3)
     with col_tipo:
-        tipo_doc = st.selectbox("Tipo de Documento", ["", "Artigo", "Livro", "Capítulo", "Dissertação", "Tese", "Relatório", "Outros"])
-    with col_pais:
-        pais = st.selectbox("País", ["", "Brasil", "Espanha", "Portugal", "EUA", "Argentina", "Chile", "Outros"])
-    with col_idioma:
-        idioma = st.selectbox("Idioma", ["Português", "Inglês", "Espanhol", "Francês", "Outro"])
+        # Lógica para selecionar o índice vindo da IA
+        tipo_ia = st.session_state.form_data.get("tipo_documento", "")
+        try:
+            # Tenta encontrar o que a IA mandou na nossa lista oficial
+            idx_tipo_default = LISTA_TIPOS.index(tipo_ia) if tipo_ia in LISTA_TIPOS else 0
+        except:
+            idx_tipo_default = 0
+            
+        tipo_documento = st.selectbox("Tipo de Documento", options=LISTA_TIPOS, index=idx_tipo_default)
 
-    # Temas
-    tema = st.selectbox("Tema", ["", "Financiamento", "Tarifa", "Drenagem Urbana", "SBN", "Sustentabilidade", "Outro"])
-    subtema = st.selectbox("Subtema", ["", "PPP", "Cidades-Esponja", "Controle e Fiscalização", "Jardins de Chuva", "Outro"])
+    with col_pais:
+        pais = st.selectbox("País", ["Brasil", "Portugal", "Espanha", "EUA", "Outros"])
+    with col_idioma:
+        idioma = st.selectbox("Idioma", ["Português", "Inglês", "Espanhol", "Outro"])
+
+    tema = st.selectbox("Tema", ["", "Financiamento", "Tarifa", "Drenagem Urbana", "SBN", "Outro"])
+    subtema = st.selectbox("Subtema", ["", "PPP", "Cidades-Esponja", "Fiscalização", "Outro"])
 
     palavras_chave = st.text_input("Palavras-chave", value=st.session_state.form_data["palavras_chave"])
     resumo = st.text_area("Resumo", value=st.session_state.form_data["resumo"], height=150)
 
-    # Rodapé
-    col_v, col_l = st.columns(2)
-    with col_v:
-        veiculo = st.text_input("Veículo de Publicação / DOI")
-    with col_l:
-        link = st.text_input("Link")
+    # Linha Final
+    cv, cl = st.columns(2)
+    with cv: veiculo = st.text_input("Veículo / DOI")
+    with cl: link = st.text_input("Link")
 
     submitted = st.form_submit_button("💾 Salvar Documento", use_container_width=True)
 
 # ==========================================================
-# SALVAMENTO NO BANCO
+# SALVAMENTO
 # ==========================================================
 if submitted:
     if not titulo.strip():
         st.error("O título é obrigatório.")
     elif verificar_duplicidade(titulo, autores):
-        st.warning("⚠️ Este documento já existe no sistema.")
+        st.warning("⚠️ Documento já existe.")
     else:
         try:
             nome_arquivo = ""
@@ -162,17 +170,16 @@ if submitted:
                     f.write(u_file.getbuffer())
 
             inserir_documento(
-                titulo=titulo, autores=autores, ano=ano, tipo_documento=tipo_doc,
+                titulo=titulo, autores=autores, ano=ano, tipo_documento=tipo_documento,
                 instituicao=instituicao, pais=pais, idioma=idioma, tema=tema,
                 subtema=subtema, resumo=resumo, palavras_chave=palavras_chave,
                 veiculo_publicacao=veiculo, link=link, arquivo_pdf=nome_arquivo
             )
             
-            st.success("✅ Cadastro realizado com sucesso!")
-            # Resetar estado
+            st.success("✅ Salvo com sucesso!")
             st.session_state.form_data = {k: "" for k in st.session_state.form_data}
             st.session_state.form_data["ano"] = 2025
-            time.sleep(2)
+            time.sleep(1)
             st.rerun()
         except Exception as e:
             st.error(f"Erro ao salvar: {e}")
