@@ -7,3 +7,6 @@ reportlab
 SQLAlchemy
 psycopg2-binary
 fpdf
+supabase
+openai
+pymupdf
