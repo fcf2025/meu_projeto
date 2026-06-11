@@ -106,10 +106,10 @@ with st.form("form_cadastro"):
         except:
             ano_idx = 1
         ano = st.selectbox("Ano", options=lista_anos, index=ano_idx)
-
+    
         autores = st.text_input("Autor(es)", value=st.session_state.form_data["autores"])
         instituicao = st.text_input("Instituição", value=st.session_state.form_data["instituicao"])
-
+    
         tipo_documento = st.selectbox("Tipo de Documento", ["",    "Artigo",
                 "Livro",
                 "Capítulo",
@@ -141,14 +141,14 @@ with st.form("form_cadastro"):
                 "Europa","Estados Unidos","Alemanha","Portugal", "Países Baixos","Suécia","Uruguai", "Outro"])
     
         
-        idioma = st.selectbox("Idioma", ["Português", "Inglês", "Espanhol", "Outro"])
-        tema = st.selectbox("Tema", ["", "Financiamento", "Tarifa (Taxas de drenagem)", "Custos (Operacionais e de Implantação)","Taxas","Regulação e Governança","Soluções Baseadas na Natureza (SbN) e Infraestrutura Verde",
+       idioma = st.selectbox("Idioma", ["Português", "Inglês", "Espanhol", "Outro"])
+       tema = st.selectbox("Tema", ["", "Financiamento", "Tarifa (Taxas de drenagem)", "Custos (Operacionais e de Implantação)","Taxas","Regulação e Governança","Soluções Baseadas na Natureza (SbN) e Infraestrutura Verde",
                     "Planejamento Urbano e Uso do Solo","Sustentabilidade e Mudanças Climáticas","Tecnologias de Monitoramento", "Cidades Inteligentes (Smart Cities)",                    
                     "Investimentos em DMAPU","Cidades Inteligentes","Manejo de Águas Pluviais Urbanas (MAPU)",
                     "Saneamento Básico","Direitos Fundamentais","Drenagem Urbana",
                     "Recursos Hídricos","Outro"]
-        )
-        subtema = st.selectbox("Subtema", ["", "Parcerias Público-Privadas (PPPs)","Títulos Verdes (Green Bonds)","Investimento em Propriedade Privada",
+       )
+       subtema = st.selectbox("Subtema", ["", "Parcerias Público-Privadas (PPPs)","Títulos Verdes (Green Bonds)","Investimento em Propriedade Privada",
                  "Fundos Municipais de Saneamento","Financiamento Multilateral (BID/BIRD)","Cálculo por Área Impermeabilizada","Cofaturamento na Conta de Água",
                 "Estruturação de Tarifas Sociais","Incentivos por Desempenho (Taxa de Desconto)","Aceitabilidade Social da Cobrança", 
                 "Norma de Referência 12/2025 (ANA)","Indicadores de Desempenho (KPIs)","Consórcios Intermunicipais","Controle e Fiscalização","Segurança Jurídica dos Contratos"
