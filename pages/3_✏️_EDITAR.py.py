@@ -252,10 +252,9 @@ with st.form("form_edicao"):
     st.markdown("---")
     st.subheader("📎 Atualizar PDF")
     st.info(f"PDF atual: {documento.get('arquivo_pdf') if documento.get('arquivo_pdf') else 'Nenhum arquivo anexado'}")
+    arquivo_pdf = documento.get("arquivo_pdf")
     if arquivo_pdf:
-    
         caminho_pdf = PDF_DIR / arquivo_pdf
-    
         if caminho_pdf.exists():
     
             with open(caminho_pdf, "rb") as pdf_file:
@@ -271,7 +270,7 @@ with st.form("form_edicao"):
     #------------------------------------------------------
     #
     #------------------------------------------------------
-    arquivo_pdf = documento.get("arquivo_pdf")
+    
 
 
     
