@@ -118,7 +118,7 @@ LISTA_DOI = [
                 "Memoriais Descritivos",
                 "Base de Dados Georreferenciados (Metadados)",
                 "Outro"]
-LISTA_CATEGORIA = ["", "Regulação e Governança",
+LISTA_CATEGORIAS = ["", "Regulação e Governança",
                 "Sustentabilidade Financeira",
                 "Infraestrutura e Engenharia",
                 "Soluções Baseadas na Natureza (SbN)",
