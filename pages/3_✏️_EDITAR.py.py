@@ -186,30 +186,7 @@ def get_index(lista, valor):
         return lista.index(valor) if valor in lista else 0
     except:
         return 0
-# ==========================================================
-# DOWNLOAD DO PDF
-# ==========================================================
 
-arquivo_pdf = documento.get("arquivo_pdf")
-
-if arquivo_pdf:
-
-    caminho_pdf = PDF_DIR / arquivo_pdf
-
-    if caminho_pdf.exists():
-
-        with open(caminho_pdf, "rb") as pdf_file:
-            pdf_bytes = pdf_file.read()
-
-        st.download_button(
-            label="📥 Baixar PDF Atual",
-            data=pdf_bytes,
-            file_name=arquivo_pdf,
-            mime="application/pdf",
-            use_container_width=True
-        )
-
-st.markdown("---")
 # ==========================================================
 # FORMULÁRIO DE EDIÇÃO
 # ==========================================================
@@ -326,7 +303,30 @@ if salvar:
             st.success("✅ Documento atualizado com sucesso!")
         except Exception as e:
             st.error(f"Erro ao salvar alterações: {e}")
+# ==========================================================
+# DOWNLOAD DO PDF
+# ==========================================================
 
+arquivo_pdf = documento.get("arquivo_pdf")
+
+if arquivo_pdf:
+
+    caminho_pdf = PDF_DIR / arquivo_pdf
+
+    if caminho_pdf.exists():
+
+        with open(caminho_pdf, "rb") as pdf_file:
+            pdf_bytes = pdf_file.read()
+
+        st.download_button(
+            label="📥 Baixar PDF Atual",
+            data=pdf_bytes,
+            file_name=arquivo_pdf,
+            mime="application/pdf",
+            use_container_width=True
+        )
+
+st.markdown("---")
 # ==========================================================
 # BOTÃO DE EXCLUSÃO DE DOCUMENTO
 # ==========================================================
