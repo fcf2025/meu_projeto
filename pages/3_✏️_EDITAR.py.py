@@ -186,7 +186,30 @@ def get_index(lista, valor):
         return lista.index(valor) if valor in lista else 0
     except:
         return 0
+# ==========================================================
+# DOWNLOAD DO PDF
+# ==========================================================
 
+arquivo_pdf = documento.get("arquivo_pdf")
+
+if arquivo_pdf:
+
+    caminho_pdf = PDF_DIR / arquivo_pdf
+
+    if caminho_pdf.exists():
+
+        with open(caminho_pdf, "rb") as pdf_file:
+            pdf_bytes = pdf_file.read()
+
+        st.download_button(
+            label="📥 Baixar PDF Atual",
+            data=pdf_bytes,
+            file_name=arquivo_pdf,
+            mime="application/pdf",
+            use_container_width=True
+        )
+
+st.markdown("---")
 # ==========================================================
 # FORMULÁRIO DE EDIÇÃO
 # ==========================================================
@@ -249,30 +272,8 @@ with st.form("form_edicao"):
 
     observacoes = st.text_area("Observações", value=documento.get("observacoes", ""), height=100)
 
-    st.markdown("---")
     st.subheader("📎 Atualizar PDF")
     st.info(f"PDF atual: {documento.get('arquivo_pdf') if documento.get('arquivo_pdf') else 'Nenhum arquivo anexado'}")
-    arquivo_pdf = documento.get("arquivo_pdf")
-    if arquivo_pdf:
-        caminho_pdf = PDF_DIR / arquivo_pdf
-        if caminho_pdf.exists():
-    
-            with open(caminho_pdf, "rb") as pdf_file:
-    
-                st.download_button(
-                    "📥 Baixar PDF Atual",
-                    data=pdf_file,
-                    file_name=arquivo_pdf,
-                    mime="application/pdf"
-                )
-
-        st.caption("Ou visualize o PDF abaixo")
-    #------------------------------------------------------
-    #
-    #------------------------------------------------------
-    
-
-
     
     uploaded_file = st.file_uploader("Selecionar novo PDF (substituirá o atual)", type=["pdf"])
 
