@@ -53,7 +53,7 @@ LISTA_SUBTEMAS = ["", "Parcerias Público-Privadas (PPPs)","Títulos Verdes (Gre
             "Uso de Drones na Inspeção","Metodologia de Cobrança","Governança Urbana e Cidades Inteligentes",
             "Simulação de Taxa de Drenagem", "Planejamento e Avaliação de Políticas Públicas",
             "Implementação de sistemas sustentáveis","Eficiência Econômica","Custos Operacionais","Regulação","Outros"]
-LISTA_VEICULO_PUBLICACAO = [
+LISTA_DOI = [
             "",
             "ANA",
             "ABES",
@@ -77,7 +77,7 @@ if 'form_data' not in st.session_state:
         "tipo_documento": "",
         "tema": "",
         "subtema": "",
-        "veiculo_publicacao": "",
+        "doi": "",
         "link": "",
         "resumo": "",
         "palavras_chave": ""
@@ -132,7 +132,7 @@ def sugerir_metadados(texto_pdf):
       "tipo_documento": "",
       "tema": "",
       "subtema": "",
-      "veiculo_publicacao": "",
+      "doi": "",
       "link": "",
       "resumo": "",
       "palavras_chave": ""
