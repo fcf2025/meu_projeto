@@ -254,7 +254,7 @@ def sugerir_metadados(texto_pdf):
     8. Gere um resumo técnico de pelo menos 3 parágrafos.
     9. No campo 'pais', se não houver menção, analise o idioma e as referências geográficas para deduzir.
     
-    RESPONDA APENAS O JSON NO SEGUINTE FORMATO::
+    Extraia metadados do texto fornecido. RESPONDA APENAS O JSON NO SEGUINTE FORMATO::
     {{
       "titulo": "",
       "autores": "",
@@ -265,9 +265,9 @@ def sugerir_metadados(texto_pdf):
       "tipo_documento": "",
       "tema": "",
       "subtema": "",
-      "categoria":"",
-      "metodo":"",
-      "regiao":"",
+      "categoria":""Escolha um: {', '.join(LISTA_CATEGORIAS)}",",
+      "metodo":"Escolha um: {', '.join(LISTA_METODOS)}",
+      "regiao":"Escolha um: {', '.join(LISTA_REGIOES)}",
       "observacoes":"",
       "doi": "",
       "link": "",
@@ -282,10 +282,8 @@ def sugerir_metadados(texto_pdf):
     try:
         response = client.chat.completions.create(
             model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": "Você é um extrator de metadados que nunca deixa campos vazios."},
-                {"role": "user", "content": prompt}
-            ],
+            messages=[{"role": "system", "content": "Você é um bibliotecário que preenche formulários técnicos."},
+                      {"role": "user", "content": prompt}],
             response_format={ "type": "json_object" }
         )
         return json.loads(response.choices[0].message.content)
