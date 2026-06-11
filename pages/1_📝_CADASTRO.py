@@ -149,7 +149,7 @@ LISTA_CATEGORIAS = ["", "Regulação e Governança",
                 "Cadastramento de Ativos e Geoprocessamento",
                 "Inovação em Dispositivos de Drenagem",
                 "Outro"]
-LISTA_METODO = ["", "Pesquisa de Campo – coleta de dados diretamente em ambientes reais.",
+LISTA_METODOS = ["", "Pesquisa de Campo – coleta de dados diretamente em ambientes reais.",
                 "Entrevistas – estruturadas, semiestruturadas ou abertas.",
                 "Questionários/Survey – aplicação de formulários para coleta de dados.",
                 "Observação Participante – acompanhamento direto de práticas ou comunidades.",
