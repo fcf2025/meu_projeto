@@ -184,7 +184,6 @@ with col2:
     with col_l: link = st.text_input("Link")
 
     submitted = st.form_submit_button("💾 Salvar no Banco de Dados", use_container_width=True)
-
 # ==========================================================
 # PROCESSAMENTO FINAL
 # ==========================================================
