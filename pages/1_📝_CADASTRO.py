@@ -173,12 +173,12 @@ if submitted:
                     f.write(uploaded_file.getbuffer())
 
             inserir_documento(
-                titulo=titulo, autores=autores, ano=ano, resumo=resumo,
-                palavras_chave=palavras_chave, arquivo_pdf=nome_arquivo,
-                instituicao=instituicao, idioma=idioma, tema=tema,
-                subtema=subtema, link=link
-                # Adicione os outros campos conforme sua função inserir_documento
-            )
+                            titulo=titulo, autores=autores, ano=ano, tipo_documento=tipo_documento,
+                            instituicao=instituicao, pais=pais, idioma=idioma, tema=tema,
+                            subtema=subtema, resumo=resumo, palavras_chave=palavras_chave,
+                            veiculo_publicacao=veiculo_publicacao, link=link, arquivo_pdf=nome_pdf, categoria=categoria,
+                            metodo=metodo, regiao=regiao, observacoes=observacoes)
+
             st.success("Salvo com sucesso!")
             # Limpa o estado após salvar
             st.session_state.form_data = {"titulo": "", "autores": "", "ano": 2025, "resumo": "", "palavras_chave": "", "instituicao": "", "idioma": "Português"}
