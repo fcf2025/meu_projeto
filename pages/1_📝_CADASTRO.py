@@ -54,7 +54,12 @@ LISTA_SUBTEMAS = ["", "Parcerias Público-Privadas (PPPs)","Títulos Verdes (Gre
             "Simulação de Taxa de Drenagem", "Planejamento e Avaliação de Políticas Públicas",
             "Implementação de sistemas sustentáveis","Eficiência Econômica","Custos Operacionais","Regulação","Outros"]
 # Inicializar Session State com tipo_documento
-
+if 'form_data' not in st.session_state:
+    st.session_state.form_data = {
+        "titulo": "", "autores": "", "ano": 2025, "pais": "Brasil", 
+        "resumo": "", "palavras_chave": "", "instituicao": "", 
+        "idioma": "Português", "tipo_documento": "","tema": "","subtema": ""
+    }
 # ==========================================================
 # CONFIGURAÇÃO E CHAVES
 # ==========================================================
@@ -68,12 +73,7 @@ st.set_page_config(page_title="Cadastro de Bibliografia", page_icon="📝", layo
 
 # Lista de Tipos de Documento (Definida fora para ser usada no index)
 
-if 'form_data' not in st.session_state:
-    st.session_state.form_data = {
-        "titulo": "", "autores": "", "ano": 2025, "pais": "Brasil", 
-        "resumo": "", "palavras_chave": "", "instituicao": "", 
-        "idioma": "Português", "tipo_documento": "","tema": "","subtema": ""
-    }
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 PDF_DIR = BASE_DIR / "pdfs"
