@@ -326,7 +326,13 @@ if buscar:
                 
                     st.markdown("### 📝 Observações")
                 
-                    st.write(observacoes)
+                    st.text_area(
+                        "Observações",
+                        value=observacoes,
+                        height=150,
+                        disabled=True,
+                        label_visibility="collapsed"
+                    )
                 
                 else:
                 
