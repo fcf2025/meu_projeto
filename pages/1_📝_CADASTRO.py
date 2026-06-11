@@ -6,21 +6,10 @@ from pathlib import Path
 from sqlalchemy import text
 from PyPDF2 import PdfReader
 from openai import OpenAI
-
 # ==========================================================
-# CONFIGURAÇÃO E CHAVES
-# ==========================================================
-DATABASE_URL = st.secrets["DATABASE_URL"]
-OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
-client = OpenAI(api_key=OPENAI_API_KEY)
-
-from utils.database import conectar_db, inserir_documento
-
-st.set_page_config(page_title="Cadastro de Bibliografia", page_icon="📝", layout="wide")
-
-# Lista de Tipos de Documento (Definida fora para ser usada no index)
-LISTA_TIPOS = [
-    "", "Artigo",
+# DEFINIÇÃO DAS LISTAS GLOBAIS
+#==========================================================
+LISTA_TIPOS = ["", "Artigo",
                 "Livro",
                 "Capítulo",
                 "Dissertação",
@@ -65,6 +54,20 @@ LISTA_SUBTEMAS = ["", "Parcerias Público-Privadas (PPPs)","Títulos Verdes (Gre
             "Simulação de Taxa de Drenagem", "Planejamento e Avaliação de Políticas Públicas",
             "Implementação de sistemas sustentáveis","Eficiência Econômica","Custos Operacionais","Regulação","Outros"]
 # Inicializar Session State com tipo_documento
+
+# ==========================================================
+# CONFIGURAÇÃO E CHAVES
+# ==========================================================
+DATABASE_URL = st.secrets["DATABASE_URL"]
+OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
+client = OpenAI(api_key=OPENAI_API_KEY)
+
+from utils.database import conectar_db, inserir_documento
+
+st.set_page_config(page_title="Cadastro de Bibliografia", page_icon="📝", layout="wide")
+
+# Lista de Tipos de Documento (Definida fora para ser usada no index)
+
 if 'form_data' not in st.session_state:
     st.session_state.form_data = {
         "titulo": "", "autores": "", "ano": 2025, "pais": "Brasil", 
