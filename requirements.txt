@@ -10,3 +10,4 @@ fpdf
 supabase
 openai
 pymupdf
+PyPDF2
