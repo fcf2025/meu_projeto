@@ -22,7 +22,7 @@ st.set_page_config(page_title="Cadastro de Bibliografia", page_icon="📝", layo
 # Inicializar Session State para os campos (NOVO)
 if 'form_data' not in st.session_state:
     st.session_state.form_data = {
-        "titulo": "", "autores": "", "ano": 2025, "resumo": "", 
+        "titulo": "", "autores": "", "ano": 2025,"pais":"", "resumo": "", 
         "palavras_chave": "", "instituicao": "", "idioma": "Português"
     }
 
