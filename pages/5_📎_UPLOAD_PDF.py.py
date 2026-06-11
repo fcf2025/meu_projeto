@@ -34,7 +34,7 @@ def executar_sql(query, params):
 def carregar_documentos():
     conn = conectar_db()
     try:
-        return pd.read_sql("SELECT id, titulo, arquivo_pdf FROM bibliografia ORDER BY titulo", conn)
+        return pd.read_sql("SELECT id, titulo, arquivo_pdf FROM bibliografia ORDER BY titulo DESC", conn)
     finally:
         if hasattr(conn, 'close'): conn.close()
 
