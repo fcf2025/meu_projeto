@@ -101,15 +101,21 @@ def sugerir_metadados(texto_pdf):
     prompt = f"""
     Extraia metadados do texto. Responda APENAS JSON:
     {{
-      "titulo": "...", 
-      "autores": "...", 
-      "ano": 2024, 
-      "tema": "Escolha um: {temas_txt}",
-      "subtema": "Escolha um: {subtemas_txt}",
-      "resumo": "...",
-      "palavras_chave": "..."
+      "titulo": "",
+      "autores": "",
+      "ano": 0,
+      "instituicao": "",
+      "pais": "",
+      "idioma": "",
+      "tipo_documento": "",
+      "tema": "",
+      "subtema": "",
+      "resumo": "",
+      "palavras_chave": ""
     }}
-    Texto: {texto_pdf[:4000]}
+    
+    Texto:
+    {texto_pdf[:4000]}
     """
     
     try:
