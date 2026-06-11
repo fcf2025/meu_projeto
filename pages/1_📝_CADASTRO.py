@@ -119,6 +119,7 @@ if 'form_data' not in st.session_state:
         "categoria":"",
         "metodo":"",
         "regiao":"",
+        "observacoes":"",
         "doi": "",
         "link": "",
         "resumo": "",
