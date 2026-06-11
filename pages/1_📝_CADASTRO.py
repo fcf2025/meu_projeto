@@ -47,6 +47,14 @@ LISTA_TIPOS = [
                 "Artigo de Opinião / Editorial",
                 "Entrevista / Depoimento",
                 "Outros", "Outro"]
+LISTA_TEMAS = [
+    "", "Financiamento", "Tarifa (Taxas de drenagem)", "Custos (Operacionais e de Implantação)",
+    "Taxas", "Regulação e Governança", "Soluções Baseadas na Natureza (SbN) e Infraestrutura Verde",
+    "Planejamento Urbano e Uso do Solo", "Sustentabilidade e Mudanças Climáticas", 
+    "Tecnologias de Monitoramento", "Cidades Inteligentes (Smart Cities)", "Outro"
+]
+
+
 # Inicializar Session State com tipo_documento
 if 'form_data' not in st.session_state:
     st.session_state.form_data = {
