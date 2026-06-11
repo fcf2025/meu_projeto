@@ -319,12 +319,18 @@ if buscar:
                 # ==========================================
                 # OBSERVAÇÕES
                 # ==========================================
-
-                if documento["observacoes"]:
-
+                
+                observacoes = documento.get("observacoes")
+                
+                if observacoes and str(observacoes).strip():
+                
                     st.markdown("### 📝 Observações")
-
-                    st.write(documento["observacoes"])
+                
+                    st.write(observacoes)
+                
+                else:
+                
+                    st.info("Nenhuma observação cadastrada.")
 
                 # ==========================================
                 # EXCLUSÃO
